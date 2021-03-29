@@ -62,3 +62,18 @@ New-AzVirtualNetworkGateway -Name $GWName -ResourceGroupName $RG `
 #
 $Gateway=Get-AzVirtualNetworkGateway -Name $GWName -ResourceGroup $RG
 Set-AzVirtualNetworkGateway -VirtualNetworkGateway $Gateway -VpnClientAddressPool $VPNClientAddressPool
+#
+#This works - you will now have to configure AD 
+#How to get tenant id?
+#    This gives 2 values
+#Which value to use?
+#
+#
+#You will need to use the tenantId and then fill in the 3 values
+#https://docs.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#enable-authentication
+#    Tenant=https://login.microsoftonline.com/$tenantid
+#    Audience=41b23e61-6c1e-4545-b367-cd054e0ed4b4
+#    Issuer=https://sts.windows.net/41b23e61-6c1e-4545-b367-cd054e0ed4b4/
+#
+
+
