@@ -34,10 +34,11 @@ $rgroup="rg-demo-apim"
 $location="uksouth"
 $apim="sauapim"
 $adminEmail="saurabh_dasgupta@hotmail.com"
-$apimProduct="Contoso"
+$productTitle="Demo title of my product"
+$productId="123"
 #######################################################################
 "Creating resource group $rgroup"
-New-AzResourceGroup -Name $rgroup -Location $location
+New-AzResourceGroup -Name $rgroup -Location $location -Force
 "Resource group $rgroup creted"
 #
 #
@@ -53,11 +54,26 @@ New-AzApiManagement -Name $apim -ResourceGroupName $rgroup `
 $apimObject=Get-AzAPIManagement -ResourceGroupName $rgroup -Name $apim
 "Got context from APIM"
 $apiContext = New-AzApiManagementContext -ResourceGroupName $apimObject.resourcegroupname -ServiceName $apimObject.name
-
-"Creating new product $apimProduct"
-$newProduct = New-AzApiManagementProduct -Context $apiContext -ProductId "123" `
--Title "Demo title" -Description "Demo API Product for Contoso" -State "Published" 
-"New product $apimProduct created"
+#
+#Delete existing product
+#
+$existingProduct=Get-AzApiManagementProduct -ProductId $productId -Context $apiContext -ErrorAction Continue
+if ($existingProduct -ne $null)
+{
+    "Deleting product with title:$productTitle and id:$productId"
+    Remove-AzApiManagementProduct -ProductId $existingProduct.ProductId  -Context $apiContext -DeleteSubscriptions
+}
+else
+{
+    "Not deleting product with title:$productTitle and id:$productId was found"
+}
+#
+#Create new product
+#
+"Creating new product $productTitle"
+$newProduct = New-AzApiManagementProduct -Context $apiContext -ProductId $productId `
+-Title $productTitle -Description "Demo API Product for Contoso" -State "Published" 
+"New product $productTitle created"
 
 #add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
 
