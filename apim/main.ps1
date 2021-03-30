@@ -74,6 +74,33 @@ else
 $newProduct = New-AzApiManagementProduct -Context $apiContext -ProductId $productId `
 -Title $productTitle -Description "Demo API Product for Contoso" -State "Published" 
 "New product $productTitle created"
+#
+#
+#
+"Going to delete all existing APIs"
+$allExistingApis=Get-AzApiManagementApi -Context $apiContext
+foreach($existingApi in $allExistingApis)
+{
+    "Deleting API {0}" -f $existingApi.ServiceUrl
+    
+    Remove-AzApiManagementApi -Context $apiContext -ApiId $existingApi.ApiId
+}
+"Deletion complete"
+
+
+
+$uri = "https://bbc.co.uk/"
+ 
+$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('http','https') -path "testapi" -Verbose
+
+#Add 
+New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/HttpEndPoint"
+
+#Add to product
+You were here
+#You were able to drop and create new APIs
+#But, the line below is failing - adding new API to Product
+add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
 
 #add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
 
