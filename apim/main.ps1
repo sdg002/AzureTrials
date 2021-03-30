@@ -25,14 +25,33 @@ Guided tutorial
 ---------------
 https://www.cloudsma.com/2019/09/configure-azure-api-management-powershell/
 
+
+How to get the URL of the Azure function app?
+---------------------------------------------
+    $azFuncApp=Get-AzFunctionApp -ResourceGroupName $rgroup
+    $uri = "https://"+$azFuncApp.DefaultHostName
+    #Thsi will give you 'https://mysimpleazurefunc001.azurewebsites.net'
+
+What is the actual Azure function app URL?
+------------------------------------------
+    https://mysimpleazurefunc001.azurewebsites.net/api/Function1?code=Zaat7Dzw1QIBnv6GqN5zAA9bBMMHa1teaIPQujpX46d2TI20flSoZA==&name=cool
+
+How do we add the above end point to APIM?
+------------------------------------------
+    $newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('http','https') -path "/" -Verbose
+    #Add A GET operation to the API
+    New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/api/Function1"
+    #Pay attention to the 'path' parameter. We are passing "/" 
+    #Pay attention to the '/api/Function1". This comes from the Azure function
+
 #>
 
 Set-StrictMode -Version "2.0"
 cls
 $ErrorActionPreference="Stop"
-$rgroup="rg-demo-apim"
+$rgroup="rg-demo-apim-001"
 $location="uksouth"
-$apim="sauapim"
+$apim="sauapim-001"
 $adminEmail="saurabh_dasgupta@hotmail.com"
 $productTitle="Demo title of my product"
 $productId="123"
@@ -89,15 +108,17 @@ foreach($existingApi in $allExistingApis)
 
 
 
-$uri = "https://bbc.co.uk/"
- 
-$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('http','https') -path "testapi" -Verbose
+$azFuncApp=Get-AzFunctionApp -ResourceGroupName $rgroup
 
-#Add 
-New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/HttpEndPoint"
+$uri = "https://"+$azFuncApp.DefaultHostName
+ 
+$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('http','https') -path "/" -Verbose
+
+#Add A GET operation to the API
+New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/api/Function1"
 
 #Add to product
-You were here
+#You were here
 #You were able to drop and create new APIs
 #But, the line below is failing - adding new API to Product
 add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
@@ -110,20 +131,4 @@ add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.prod
 #"Get function app using Get-AzFunctionApp"
 #"Get webapp url using $app.defaulthostname"
  # Find-Module -Filter "az.functions"
-
-
- <#
- #Get URL of the Azure function app
- $azwebapp = get-azwebapp -ResourceGroupName yourresourcegroup
- $uri = "https://" + $azwebapp.defaulthostname
-
- #New API
- $newapi = New-AzApiManagementApi -context $apiContext -name "azure function" -ServiceUrl $uri -protocols @('http','https') -path "testapi"
- New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "POST" -UrlTemplate "/HttpEndPoint"
-
- #Create API operation
- New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "POST" -UrlTemplate "/HttpEndPoint"
-
- #>
-
 
