@@ -44,6 +44,13 @@ How do we add the above end point to APIM?
     #Pay attention to the 'path' parameter. We are passing "/" 
     #Pay attention to the '/api/Function1". This comes from the Azure function
 
+
+How to set subscription required to false?
+-------------------------------------------
+    $newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('https') -path "/" -Verbose -SubscriptionRequired
+    $newapi.SubscriptionRequired=$false
+    Set-AzApiManagementApi -InputObject $newapi -Name $newapi.Name
+
 #>
 
 Set-StrictMode -Version "2.0"
@@ -107,28 +114,41 @@ foreach($existingApi in $allExistingApis)
 "Deletion complete"
 
 
-
+"Getting function app in current resource group"
 $azFuncApp=Get-AzFunctionApp -ResourceGroupName $rgroup
+"Got function app: {0}" -f $azFuncApp.Name
+
 
 $uri = "https://"+$azFuncApp.DefaultHostName
- 
-$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('http','https') -path "/" -Verbose
+"URL of function is $uri"
+
+$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('https') -path "/" -Verbose -SubscriptionRequired
+"Added new API"
+
+"Setting subscription required false for api:{0}" -f $newapi.Name
+$newapi.SubscriptionRequired=$false
+Set-AzApiManagementApi -InputObject $newapi -Name $newapi.Name
+#-Context $apiContext -ApiId $newapi.ApiId -SubscriptionRequired $false
+"Subscription is not set to false for api:{0}" -f $newapi.Name
 
 #Add A GET operation to the API
 New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/api/Function1"
+"Added operation to API"
 
+
+<#
+something wrong below, produces an error
 #Add to product
 #You were here
 #You were able to drop and create new APIs
 #But, the line below is failing - adding new API to Product
+"Going to add API to product"
 add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
+"Added API to product"
+#>
 
 #add-AzApiManagementApiToProduct -context $apiContext -ProductId $newproduct.productid -apiid $newapi.id
 
-#
-#Get the function app url
-#
-#"Get function app using Get-AzFunctionApp"
-#"Get webapp url using $app.defaulthostname"
- # Find-Module -Filter "az.functions"
-
+<#
+We need to understand the sub-structure under API
+#>
