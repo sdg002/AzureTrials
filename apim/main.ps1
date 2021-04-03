@@ -135,6 +135,16 @@ Set-AzApiManagementApi -InputObject $newapi -Name $newapi.Name
 New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/api/Function1"
 "Added operation to API"
 
+"----------------------------------------"
+"Deleting all existing version sets"
+$versionSets=Get-AzApiManagementApiVersionSet -Context $apiContext 
+foreach($versionSet in $versionSets)
+{
+    "Removing version set {0}" -f $versionSet.DisplayName
+    Remove-AzApiManagementApiVersionSet -Context $apiContext -ApiVersionSetId $versionSet.ApiVersionSetId
+}
+"All existing version sets deleted"
+
 
 <#
 something wrong below, produces an error
