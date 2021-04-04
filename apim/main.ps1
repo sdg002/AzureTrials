@@ -137,7 +137,7 @@ New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -Operatio
 
 "----------------------------------------"
 "Deleting all existing version sets"
-$versionSets=Get-AzApiManagementApiVersionSet -Context $apiContext 
+$versionSets=Get-AzApiManagementApiVersionSet -Context $apiContext
 foreach($versionSet in $versionSets)
 {
     "Removing version set {0}" -f $versionSet.DisplayName
