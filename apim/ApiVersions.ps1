@@ -28,7 +28,7 @@ foreach($versionSet in $versionSets)
 "All existing version sets deleted"
 "------------------------------------------------------------------------"
 "Creating new version set"
-$v2VersionSet=New-AzApiManagementApiVersionSet -Context $apiContext  -Name "v2" -Scheme Segment -Description "My v2 version"
+$v2VersionSet=New-AzApiManagementApiVersionSet -Context $apiContext  -Name "v2versionset" -Scheme Segment -Description "My v2 version"
 "New version set created"
 $v2VersionSet
 "------------------------------------------------------------------------"
@@ -42,8 +42,11 @@ $uri = "https://"+$azFuncApp.DefaultHostName
 "URL of function is $uri"
 "------------------------------------------------------------------------"
 "Adding new API"
-$newapi = New-AzApiManagementApi -context $apiContext -name "my azure function" -ServiceUrl $uri -protocols @('https') -path "/blah" -Verbose -ApiVersionSetId $v2VersionSet.ApiVersionSetId
+$newapi = New-AzApiManagementApi -context $apiContext -name "another azure function" -ServiceUrl $uri -Description "some description"  -protocols @('https') -path "/blah" -Verbose `
+ -ApiVersionSetId $v2VersionSet.ApiVersionSetId  -ApiVersion v6
 "Added new API"
+# You need -ApiVersion v5 because this is what is displayed under the VersionSet
+# Do not use -SourceApiId "My source api id" , this has a different purpose
 
 
 New-AzApiManagementOperation -Context $apiContext -ApiId $newapi.apiid -OperationId "operation1" -Name "HttpEndPoint" -Method "GET" -UrlTemplate "/api/Function1" 
