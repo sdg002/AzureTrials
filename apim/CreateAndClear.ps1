@@ -12,6 +12,7 @@ $rgroup="rg-demo-apim-001"
 $location="uksouth"
 $apim="sauapim-001"
 $adminEmail="saurabh_dasgupta@hotmail.com"
+$appInsightsName="myappinsights"
 $separator="-------------------------------------------------------------"
 #
 #Initialize global variables above
@@ -20,6 +21,24 @@ $separator="-------------------------------------------------------------"
 "Creating resource group $rgroup"
 New-AzResourceGroup -Name $rgroup -Location $location -Force
 "Resource group $rgroup creted"
+$separator
+#
+#Create Application Insights
+#
+"Creating application insights"
+$appInsights=Get-AzApplicationInsights -ResourceGroupName $rgroup -Name $appInsightsName -ErrorAction Continue
+if ($appInsights -eq $null)
+{
+    New-AzApplicationInsights -ResourceGroupName $rgroup -Name $appInsights -location $location
+    "Application insights created"
+}
+else
+{
+    "Application insights already exists. Not creating"
+}
+$appInsights=Get-AzApplicationInsights -ResourceGroupName $rgroup -Name $appInsightsName
+
+
 $separator
 #
 #
