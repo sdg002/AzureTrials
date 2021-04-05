@@ -52,6 +52,25 @@ $apimObject=Get-AzAPIManagement -ResourceGroupName $rgroup -Name $apim
 "Got context from APIM"
 $apiContext = New-AzApiManagementContext -ResourceGroupName $apimObject.resourcegroupname -ServiceName $apimObject.name
 #
+#Attach logger
+#
+$separator
+"Removing existing loggers"
+$loggers=Get-AzApiManagementLogger -Context $apiContext 
+if ($loggers -ne $null)
+{
+    "Found existing loggers"
+    foreach($logger in $loggers)
+    {
+        Remove-AzApiManagementLogger -Context $apiContext -LoggerId $logger.LoggerId
+        "Removed existing logger"
+    }
+}
+$separator
+"Attaching logger"
+New-AzApiManagementLogger -Context $apiContext -InstrumentationKey $appInsights.InstrumentationKey -LoggerId $appInsights.Name
+"Logger attached"
+#
 #Delete all existing API end points
 #
 "Going to delete all existing APIs"
