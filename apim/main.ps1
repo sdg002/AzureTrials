@@ -51,6 +51,11 @@ How to set subscription required to false?
     $newapi.SubscriptionRequired=$false
     Set-AzApiManagementApi -InputObject $newapi -Name $newapi.Name
 
+The importance of the path parameter while adding an API
+--------------------------------------------------------
+    When you pass "/blahpath" using the -path parameter of the New-AzApiManagementApi cmdlet, then the URL becomes
+    https://sauapim-001.azure-api.net/blahpath/v1/api/customers/234
+
 #>
 
 Set-StrictMode -Version "2.0"

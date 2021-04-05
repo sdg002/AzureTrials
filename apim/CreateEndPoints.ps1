@@ -34,7 +34,7 @@ $ordersVersionSet=New-AzApiManagementApiVersionSet -Context $apiContext  -Name "
 "New version set for Orders created"
 $ordersVersionSet
 #
-#Create the version set for Orders
+#Create the version set for Customers
 #
 $separator
 "Creating new version set for Customers"
@@ -77,12 +77,34 @@ New-AzApiManagementOperation -Context $apiContext -ApiId $newapiOrders.apiid -Op
 -UrlTemplate "/api/customers/{customerid}/{orderid}/orderlineitems"  -TemplateParameters @($customerId,$orderId)
 "Added new operation to get order line items"
 
+<#
+
+#>
+
 #
-#Add Customers end point
+#Add Customers API
 #
+"Adding new API Customers"
+$newapiCustomers = New-AzApiManagementApi -context $apiContext -name "Customers end point" -ServiceUrl $uri -Description "Customers end point description" `
+ -protocols @('https') -path "/customerspath" -Verbose `
+ -ApiVersionSetId $customersVersionSet.ApiVersionSetId  -ApiVersion v1
+"Added new API "
+$newapiCustomers
+$newapiCustomers.SubscriptionRequired=$false
+Set-AzApiManagementApi -InputObject $newapiCustomers -Name $newapiCustomers.Name
+"Added new API"
+$separator
+#
+#Add GetCustomer operation
+#
+$customerId=CreateStringParameter -name "customerid" -description "customer id"
+New-AzApiManagementOperation -Context $apiContext -ApiId $newapiCustomers.apiid -OperationId "GetCustomers" -Name "GetCustomers" -Method "GET" `
+-UrlTemplate "/api/customers/{customerid}"  -TemplateParameters @($customerid)
+"Added new operation to get orders"
+$separator
 
 <#
 You were here, 
-    Add new operation under Orders to get Order line items
-    add end point for Customers
+    Try out policies
+
 #>
