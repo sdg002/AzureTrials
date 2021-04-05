@@ -1,3 +1,4 @@
+. $PSScriptRoot\Common.ps1
 <#
 This script assumes that APIM instance has been created
 This script will do the actual work
@@ -7,6 +8,7 @@ This script will do the actual work
 Set-StrictMode -Version "2.0"
 Clear-Host
 $ErrorActionPreference="Stop"
+
 #
 #Initialize global variables
 #
@@ -49,27 +51,38 @@ $azFuncApp=Get-AzFunctionApp -ResourceGroupName $rgroup
 $uri = "https://"+$azFuncApp.DefaultHostName
 "URL of function is $uri"
 #
-#Add Orders end point
+#Add Orders API
 #
-"Adding new API"
+"Adding new API orders"
 $newapiOrders = New-AzApiManagementApi -context $apiContext -name "Orders end point" -ServiceUrl $uri -Description "Orders end pointdescription"  -protocols @('https') -path "/" -Verbose `
  -ApiVersionSetId $ordersVersionSet.ApiVersionSetId  -ApiVersion v1
 "Added new API "
 $newapiOrders
 $newapiOrders.SubscriptionRequired=$false
 Set-AzApiManagementApi -InputObject $newapiOrders -Name $newapiOrders.Name
-
-
-$RID = New-Object -TypeName Microsoft.Azure.Commands.ApiManagement.ServiceManagement.Models.PsApiManagementParameter
-$RID.Name = "id"
-$RID.Description = "Resource identifier"
-$RID.Type = "string"
-
+$separator
+#
+#Add GetOrders operation
+#
+$customerId=CreateStringParameter -name "customerid" -description "customer id"
 New-AzApiManagementOperation -Context $apiContext -ApiId $newapiOrders.apiid -OperationId "GetOrders" -Name "GetOrders" -Method "GET" `
--UrlTemplate "/api/customers/{id}/orders"  -TemplateParameters @($RID)
+-UrlTemplate "/api/customers/{customerid}/orders"  -TemplateParameters @($customerid)
 "Added new operation to get orders"
+$separator
+#
+#Add GetOrderLineItems operation
+#
+$orderId=CreateStringParameter -name "orderid" -description "order id"
+New-AzApiManagementOperation -Context $apiContext -ApiId $newapiOrders.apiid -OperationId "GetOrderLineItems" -Name "GetOrderLineItems" -Method "GET" `
+-UrlTemplate "/api/customers/{customerid}/{orderid}/orderlineitems"  -TemplateParameters @($customerId,$orderId)
+"Added new operation to get order line items"
 
+#
+#Add Customers end point
+#
 
 <#
-You were here, add end point for Customers
+You were here, 
+    Add new operation under Orders to get Order line items
+    add end point for Customers
 #>
