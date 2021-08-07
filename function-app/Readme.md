@@ -1,4 +1,4 @@
-# # What is this project about?
+# What is this project about?
 Demonstrates the following:
 - Deploy an Azure function consumption plan
 - Deploy 2 App functions using this plan
@@ -16,13 +16,13 @@ There is an ARM template, which has been stripped off ApplicationInsights and Fu
 # How to run?
 - Open a PowerShell core session
 - Ensure you have the Az.Functions module
-- Ensure you have done a `Connect-AxAccount`
+- Ensure you have done a `Connect-AzAccount`
 - Navigate to this folder
 - Run `deploy.ps`
 
 # How to zip deploy an Azure Function from local workstation?
 ## First step
-You should have created the Plan and App
+You should have created the Plan and App by running `deploy.ps1`
 
 ## Compile and publish
 ```
