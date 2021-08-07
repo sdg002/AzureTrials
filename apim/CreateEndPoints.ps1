@@ -106,5 +106,8 @@ $separator
 <#
 You were here, 
     Try out policies
+    Try out IP addresses
+    Remember to document the v2 and versionset hierarchy business
+
 
 #>
