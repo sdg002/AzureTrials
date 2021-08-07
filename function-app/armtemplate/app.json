@@ -1,0 +1,75 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionId": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "hostingPlanName": {
+        "type": "string"
+      },
+      "serverFarmResourceGroup": {
+        "type": "string"
+      },
+      "alwaysOn": {
+        "type": "bool"
+      },
+      "storageAccountName": {
+        "type": "string"
+      },
+      "use32BitWorkerProcess": {
+        "type": "bool"
+      },
+      "storageAccountConnectionString": {
+        "type": "string"
+      }
+    },
+    "resources": [
+      {
+        "apiVersion": "2018-11-01",
+        "name": "[parameters('name')]",
+        "type": "Microsoft.Web/sites",
+        "kind": "functionapp",
+        "location": "[parameters('location')]",
+        "tags": {
+          
+        },
+        "properties": {
+          "name": "[parameters('name')]",
+          "siteConfig": {
+            "appSettings": [
+              {
+                "name": "FUNCTIONS_EXTENSION_VERSION",
+                "value": "~3"
+              },
+              {
+                "name": "FUNCTIONS_WORKER_RUNTIME",
+                "value": "dotnet"
+              },
+              {
+                "name": "AzureWebJobsStorage",
+                "value": "[parameters('storageAccountConnectionString')]"
+              },
+              {
+                "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                "value": "[parameters('storageAccountConnectionString')]"
+              },
+              {
+                "name": "WEBSITE_CONTENTSHARE",
+                "value": "[concat(toLower(parameters('name')), 'aaad')]"
+              }
+            ],
+            "use32BitWorkerProcess": "[parameters('use32BitWorkerProcess')]"
+          },
+          "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+          "clientAffinityEnabled": false
+        }
+      }
+    ]
+  }
