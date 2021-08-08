@@ -28,5 +28,9 @@ else
 New-AzStorageContainer  -Name $TerraformStateContainer -Context $tfStorageAccount.Context -Permission Blob -ErrorAction SilentlyContinue
 Write-Host "Storage container created "
 
+Write-Host "Fetching TF state storage account key so that TERRAFORM INIT can be carried using environment variables"
+$stoKeys=Get-AzStorageAccountKey -ResourceGroupName $ResourceGroup -Name $TerraformStorageAccountName
+Write-Host "Displaying the storage account key. You should set the value of ARM_ACCESS_KEY"
+Write-Host $stoKeys[0].Value
 
 

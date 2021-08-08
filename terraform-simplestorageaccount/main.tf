@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-demo-terraform-simple-storage-container"
-    storage_account_name = "mydemotfstoragestate"
+    storage_account_name = "<THIS WILL BE REPLACED VIA -backend-config>"
     container_name       = "tfstate"
     key                  = "mydemo.tfstate"
 
