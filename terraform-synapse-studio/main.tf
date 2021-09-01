@@ -40,3 +40,5 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "example" {
   name               = "example123"
   storage_account_id = azurerm_storage_account.example.id
 }
+
+
