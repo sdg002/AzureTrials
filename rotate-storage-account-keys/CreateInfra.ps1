@@ -33,15 +33,3 @@ else
     Write-Host ("URL={0}" -f  $KeyVaultResource.VaultUri)
 }
 
-$ctx=Get-AzContext
-$email=$ctx.Account.Id
-$PrincipalName="saurabh_dasgupta_hotmail.com#EXT#@saurabhdasguptahotmail.onmicrosoft.com"
-Set-AzKeyVaultAccessPolicy -VaultName $KeyVaultName -UserPrincipalName $PrincipalName  -PermissionsToKeys create,import,delete,list,get -PermissionsToSecrets set,delete,get,list -PassThru
-
-
-Get-AzKeyVaultSecret -AsPlainText -VaultName $KeyVaultName -Name "key1"
-Read-Host -Prompt "Do you want to set a new secret?"
-$NewSecretValue=(Get-Date).ToString("s")
-Write-Host "New secret is $NewSecretValue"
-$Secret = ConvertTo-SecureString -String $NewSecretValue -AsPlainText -Force
-Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name "key1" -SecretValue $Secret
