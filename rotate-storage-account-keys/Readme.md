@@ -60,7 +60,7 @@ Rotation of keys is a fairly straightfoward approach. How does it help? I could 
 
 # How does the presence of Azure Key Vault for key rotation solution?
 
-![Key vault architecture](images/keyvault-azurefunction.png)
+![Key vault architecture](images/keyvault-azurefunction.PNG)
 
 
 talk about how Azure functions and web apps can seamlessly access Key Vault secrets
