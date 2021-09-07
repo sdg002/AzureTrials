@@ -1,29 +1,29 @@
 
 
-# Implementing a robust Key rotation solution for Azure Storage accounts and Azure CosmosDB
+# Implementing a robust Key rotation solution for Azure Storage accounts and Azure Cosmos DB
 
 # Overview
 In this short article, I have explained the idea of "Key rotation" in the context of Azure Cloud. 
-I have also provided a very simple PowerShell script which when executed, will carry out a rotation of keys (listed in a CSV file) without any application downtime and without the neccessity for any code deployments.
-To drive my article, I have used Azure Storage Accounts as an example. The approach for Azure CosmosDB would not be any different.
+I have also provided a very simple PowerShell script which when executed, will carry out a rotation of keys (listed in a CSV file) without any application downtime and without the necessity for any code deployments.
+To drive my article, I have used Azure Storage Accounts as an example. The approach for Azure Cosmos DB would not be any different.
 
 ---
 
 # Securing your Azure storage accounts and Cosmos accounts
-Securing a Azure Storge Account or a Cosmos Account can be achieved by one or combination of the following ways:
+Securing an Azure Storge Account or a Cosmos Account can be achieved by one or combination of the following ways:
 
 ## Multi Factor Authentication (MFA)
 This is a must have from day one. Enable 2 factor authentication for all developers and information workers who are accessing any resources via the Azure Portal. 
-This secures Azure Portal from an attacker who might have fraudently obtained the login/password from one of the employees.
-Bear in mind that enabling MFA in itself does not prevent a malicious attack on your Storage account and CosmosDB account. This is just the first step.
+This secures Azure Portal from an attacker who might have fraudulently obtained the login/password from one of the employees.
+Bear in mind that enabling MFA in itself does not prevent a malicious attack on your Storage account and Cosmos DB account. This is just the first step.
 
 [How it works: Azure AD Multi-Factor Authentication](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-mfa-howitworks)
 
 
 
 ## Virtual Private Network
-Implementing MFA is the first big step. But, what happens when an attacker steals the connection strings and keys of Azure Storage accounts and CosmosDB accounts.
-MFA will not prevent an attacker from connecting to CosmosDB or a Storage account using the fraudently obtained keys. 
+Implementing MFA is the first big step. But, what happens when an attacker steals the connection strings and keys of Azure Storage accounts and Cosmos DB accounts.
+MFA will not prevent an attacker from connecting to Cosmos DB or a Storage account using the fraudulent obtained keys. 
 A malware installed on the laptop of the employee could simply screen scrape the connection strings while you browse the Azure portal.
 
 This is why it is important to ring fence your Azure resources using a Virtual Private Network. A VPN provides another layer of protection. 
@@ -38,15 +38,15 @@ This is why it is important to ring fence your Azure resources using a Virtual P
 
 ## Rotation of keys
 
-Implementing a VPN , while the best of solutions, is not trivial. The network topology must be designed to support VPN and network rules must be applied to the Azure Storage accounts and Comos accounts so that any access outside of the specified VNETs is prohibited.
-Rotation of keys is a fairly straightfoward approach. How does it help? . 
-Regular key rotation significantly limits your company's exposure in the unexpected event that a Storage account or CosmosDB account key were to fall in the hands of an attacker.
+Implementing a VPN, while the best of solutions, is not trivial. The network topology must be designed to support VPN and network rules must be applied to the Azure Storage accounts and Comos DB accounts so that any access outside of the specified VNETs is prohibited.
+Rotation of keys is a fairly straightforward approach. How does it help? 
+Regular key rotation significantly limits your company's exposure in the unexpected event that a Storage account or Cosmos DB account key were to fall in the hands of an attacker.
 
 ---
 
 # What is the idea behind key rotation?
 The workflow is as follows:
-- Both Storage accounts and CosmosDB accounts come with a pair of keys. (Named as Primary/Secondary in case of CosmosDB, Key1/Key2 in case of Storage account)
+- Both Storage accounts and Cosmos DB accounts come with a pair of keys. (Named as Primary/Secondary in case of Cosmos DB, Key1/Key2 in case of Storage account)
 - Your application configuration is wired up with the *Primary key* (as an example, could have been *Secondary key*)
 - You want to rotate the keys every N days
 - Generate a new *Secondary key* by using the Portal/CLI/PowerShell. You selected *Secondary key* because the *Primary key* was active.
@@ -67,21 +67,21 @@ The workflow is as follows:
 
 Azure functions or Azure web apps should be configured to read confidential configuration settings from the key vault.
 
-## Passing configuration without a KeyVault
+## Passing configuration without a Key Vault
 Setting configuration parameters in this way is perfectly all right for non-sensitive data items. But, when used for sensitive items like connection keys and strings, this leads to proliferation of sensitive data item.
 ```
-databasekey=mycosmosdbkey
+databasekey=myCosmos DBkey
 ```
 
-## The KeyVault way of passing configuration
+## The Key Vault way of passing configuration
 
-Microsoft has documented the [following syntax](https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references#reference-syntax)which will make the Azure function to seamlessly pick the confidential information from the Azure KeyVault
+Microsoft has documented the [following syntax](https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references#reference-syntax) which will make the Azure function to seamlessly pick the confidential information from the Azure Key Vault
 
 ```
 databasekey=@Microsoft.KeyVault(VaultName=myvault;SecretName=mycosmosdbkey)
 ```
 
-How does KeyVault help? KeyVault provides another layer of indirection for the Azure function/webapp. With the KeyVault in the mix, you can safely update the Storage account or CosmosDB acocunt key in the KeyVault.
+How does Key Vault help? Azure Key Vault provides another layer of indirection for the Azure function/webapp. With the KeyVault in the mix, you can safely update the Storage account or Cosmos DB account key in the KeyVault.
 No need to update the configuration of every Azure function.
 
 ---
@@ -95,7 +95,7 @@ No need to update the configuration of every Azure function.
 
 # PowerShell script for key rotation
 The full script can be found in the file **RotateKeys.ps1**. 
-In the interest of brevity, I am only presenting a high level view of the key cmdlets used in this script
+In the interest of brevity, I am only presenting a high-level view of the key cmdlets used in this script
 ```
 Start
 	|
@@ -127,6 +127,12 @@ Start
 	|
 End
 ```
+
+# How to schedule the rotation of the keys?
+It is recommended that the script be executed at periodic intervals.
+If you are using Azure Devops for your CI/CD then a scheduled trigger can be easily configured.
+Microsoft's documentation can be found [here](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/triggers?view=azure-devops#scheduled-release-triggers)
+![Azure Devops](images/azure-devops-schedule-trigger.png)
 
 # PowerShell script to create the demo infrastructure
 The accompanying script **CreateInfra.ps1** will help in doing a quick demonstration of the main PowerShell script **RotateKeys.p1**
@@ -174,17 +180,6 @@ $PrincipalName="THIS IS THE ACCOUNT WHICH HAS BEEN USED FOR Connect-AzAccount"
 Set-AzKeyVaultAccessPolicy -VaultName $KeyVaultName -UserPrincipalName $PrincipalName  -PermissionsToKeys create,import,delete,list,get -PermissionsToSecrets set,delete,get,list -PassThru
 
 ```
-
-
-
-# What next?
-- You got the rotation script to work via CSV
-- Clean up the CreateInfra.ps1 script
-- Write article
-- Do not use default.html
-- Write in Readme.md
-- Create an images folder
-- Keep all script snippets under References
 
 
 
