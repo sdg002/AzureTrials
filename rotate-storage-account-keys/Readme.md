@@ -1,8 +1,10 @@
-[[_TOC_]]
+
+
+# Implementing a robust Key rotation solution for Azure Storage accounts and Azure CosmosDB
 
 # Overview
 In this short article, I have explained the idea of "Key rotation" in the context of Azure Cloud. 
-I have also provided a very simple PowerShell script which when executed, will carry out a rotation of keys (listed in a CSV file) without any application downtime.
+I have also provided a very simple PowerShell script which when executed, will carry out a rotation of keys (listed in a CSV file) without any application downtime and without the neccessity for any code deployments.
 To drive my article, I have used Azure Storage Accounts as an example. The approach for Azure CosmosDB would not be any different.
 
 ---
@@ -13,18 +15,18 @@ Securing a Azure Storge Account or a Cosmos Account can be achieved by one or co
 ## Multi Factory Authentication
 This is a must have from day one. Enable 2 factory authentication for all developers and information workers who are accessing any resources via the Azure Portal. 
 This secures Azure Portal from an attacker who might have fraudently obtained the login/password from one of the employees.
-Bear in mind that enabling MFA in itself does not prevent a malicious attack on your Storage account and CosmosDB account.
+Bear in mind that enabling MFA in itself does not prevent a malicious attack on your Storage account and CosmosDB account. This is just the first step.
 
 [How it works: Azure AD Multi-Factor Authentication](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-mfa-howitworks)
 
 
 
 ## Virtual Private Network
-Implementing MFA is the first big step. But, what happens when an attacker steals the connection strings and keys of Storage Accounts and Cosmos Accounts.
-MFA will not prevent an attacher from connecting to Cosmos or a Storage account using the fraudently obtained keys. A malware installed on the laptop of the employee could simply screen scrape the connection strings.
-MFA will not prevent an Employee from getting infected by malware.
+Implementing MFA is the first big step. But, what happens when an attacker steals the connection strings and keys of Azure Storage accounts and CosmosDB accounts.
+MFA will not prevent an attacker from connecting to CosmosDB or a Storage account using the fraudently obtained keys. 
+A malware installed on the laptop of the employee could simply screen scrape the connection strings while you browse the Azure portal.
 
-This is why it is important to Ring fence your Azure resources using a Virtual Private Network. 
+This is why it is important to ring fence your Azure resources using a Virtual Private Network. A VPN provides another layer of protection. 
 
 [VPN security: How VPNs help secure data and control access](https://www.cloudflare.com/en-gb/learning/access-management/vpn-security/)
 
@@ -37,15 +39,16 @@ This is why it is important to Ring fence your Azure resources using a Virtual P
 ## Rotation of keys
 
 Implementing a VPN , while the best of solutions, is not trivial. The network topology must be designed to support VPN and network rules must be applied to the Azure Storage accounts and Comos accounts so that any access outside of the specified VNETs is prohibited.
-Rotation of keys is a fairly straightfoward approach. How does it help? I could not find a response better than Google's documentation that can be found [here](https://cloud.google.com/kms/docs/key-rotation). Regular key rotation significantly limits your company's exposure in the event that a Storage account or Cosmos account key is breached.
+Rotation of keys is a fairly straightfoward approach. How does it help? . 
+Regular key rotation significantly limits your company's exposure in the unexpected event that a Storage account or CosmosDB account key were to fall in the hands of an attacker.
 
 ---
 
 # What is the idea behind key rotation?
-
+The workflow is as follows:
 - Both Storage accounts and CosmosDB accounts come with a pair of keys. (Named as Primary/Secondary in case of CosmosDB, Key1/Key2 in case of Storage account)
-- Your application configuration is wired up with the *Primary key* (as an example)
-- You want to rotate the keys
+- Your application configuration is wired up with the *Primary key* (as an example, could have been *Secondary key*)
+- You want to rotate the keys every N days
 - Generate a new *Secondary key* by using the Portal/CLI/PowerShell. You selected *Secondary key* because the *Primary key* was active.
 - Update the application configuration so that it is now wired up with the *Secondary key*
 - Important - You will regenerate the key which is not currently being used by the application configuration. You do not want to disrupt any code which is inflight.
@@ -58,15 +61,28 @@ Rotation of keys is a fairly straightfoward approach. How does it help? I could 
 ---
 
 
-# How does the presence of Azure Key Vault for key rotation solution?
+# How does the presence of Azure Key Vault simplify key rotation solution?
 
 ![Key vault architecture](images/keyvault-azurefunction.PNG)
 
+Azure functions or Azure web apps should be configured to read confidential configuration settings from the key vault.
 
-talk about how Azure functions and web apps can seamlessly access Key Vault secrets
-stress on another layer of indirection
+## Naive way of passing configuration
+The Function configuration would have the raw value of the connection key.
+```
+databasekey=mycosmosdbkey
+```
 
-[to be done]
+## The KeyVault way of passing configuration
+
+Microsoft has documented the [following syntax](https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references#reference-syntax)which will make the Azure function to seamlessly pick the confidential information from the Azure KeyVault
+
+```
+databasekey=@Microsoft.KeyVault(VaultName=myvault;SecretName=mycosmosdbkey)
+```
+
+How does KeyVault help? KeyVault provides another layer of indirection for the Azure function/webapp. With the KeyVault in the mix, you can safely update the Storage account or CosmosDB acocunt key in the KeyVault.
+No need to update the configuration of every Azure function.
 
 ---
 
@@ -79,7 +95,7 @@ stress on another layer of indirection
 
 
 # Azure PowerShell reference
-These are just for reference. I found them valuable while authoring this article.
+These snippets are just for reference. I found them valuable while authoring this article.
 # Get the keys of a storage account
 ```
 $keys=Get-AzStorageAccountKey -ResourceGroupName $ResourceGroup -Name $DemoAccountName
