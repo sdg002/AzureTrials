@@ -12,8 +12,8 @@ To drive my article, I have used Azure Storage Accounts as an example. The appro
 # Securing your Azure storage accounts and Cosmos accounts
 Securing a Azure Storge Account or a Cosmos Account can be achieved by one or combination of the following ways:
 
-## Multi Factory Authentication
-This is a must have from day one. Enable 2 factory authentication for all developers and information workers who are accessing any resources via the Azure Portal. 
+## Multi Factor Authentication (MFA)
+This is a must have from day one. Enable 2 factor authentication for all developers and information workers who are accessing any resources via the Azure Portal. 
 This secures Azure Portal from an attacker who might have fraudently obtained the login/password from one of the employees.
 Bear in mind that enabling MFA in itself does not prevent a malicious attack on your Storage account and CosmosDB account. This is just the first step.
 
@@ -67,8 +67,8 @@ The workflow is as follows:
 
 Azure functions or Azure web apps should be configured to read confidential configuration settings from the key vault.
 
-## Naive way of passing configuration
-The Function configuration would have the raw value of the connection key.
+## Passing configuration without a KeyVault
+Setting configuration parameters in this way is perfectly all right for non-sensitive data items. But, when used for sensitive items like connection keys and strings, this leads to proliferation of sensitive data item.
 ```
 databasekey=mycosmosdbkey
 ```
@@ -92,6 +92,49 @@ No need to update the configuration of every Azure function.
 ![Key vault architecture](images/rotate-keys.png)
 
 ---
+
+# PowerShell script for key rotation
+The full script can be found in the file **RotateKeys.ps1**. 
+In the interest of brevity, I am only presenting a high level view of the key cmdlets used in this script
+```
+Start
+	|
+	|
+	|
+	Read CSV using Import-Csv
+	Columns = StorageAccountName,StorageAccountResourceGroup,KeyVaultSecretName
+	|
+	|
+	Iterate line by line 
+	|
+	|
+	Read existing secret held in KeyVaultSecretName using Get-AzKeyVaultSecret
+	|
+	|
+	Read storage account keys for the account StorageAccountName and StorageAccountResourceGroupName
+	using the cmdlet Get-AzStorageAccountKey
+	|
+	|
+	Compare the key held in Key Vault with the 2 storage account keys
+	(Pick the one for rotation. This is the key that is not in the Key vault, we do not want to disturb live connections)
+	|
+	|
+	Change the storage account key using the cmdlet New-AzStorageAccountKey
+	|
+	|
+	Continue to next line item in the CSV
+	|
+	|
+End
+```
+
+# PowerShell script to create the demo infrastructure
+The accompanying script **CreateInfra.ps1** will help in doing a quick demonstration of the main PowerShell script **RotateKeys.p1**
+This script will create the following resources:
+
+- New resource group
+- New storage account
+- New key vault
 
 
 # Azure PowerShell reference
