@@ -4,9 +4,9 @@ $ErrorActionPreference="Stop"
 
 $ResourceGroup="rg-demo-synapse-cosmos"
 $CosmosAccountName="mydemo001account-$Environment"
+$Location="uksouth"
 
-$rg=Get-AzResourceGroup -Name  $ResourceGroup
-
+New-AzResourceGroup -Name $ResourceGroup -Force -Location $Location | Out-Null
 #
 #Create a new Cosmos
 #
@@ -15,7 +15,7 @@ $CosmosResource=Get-AzResource  -ResourceGroupName $ResourceGroup -ResourceType 
 if ($null -eq $CosmosResource)
 {
     Write-Host "No cosmos resource found at the specified resource group:'$ResourceGroup' and account name:'$CosmosAccountName'"
-    New-AzCosmosDBAccount -ResourceGroupName $ResourceGroup -Location $rg.Location  -EnableAnalyticalStorage $true -Name $CosmosAccountName
+    New-AzCosmosDBAccount -ResourceGroupName $ResourceGroup -Location $Location  -EnableAnalyticalStorage $true -Name $CosmosAccountName
 }
 else 
 {
