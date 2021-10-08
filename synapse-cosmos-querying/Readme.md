@@ -1,8 +1,6 @@
+# About
+- PowerShell script to deploy a new instance of Azure Synapse Studio
+- Sample .SQL file to deploy a dummy view
+- 
 
 
-```
-    Not able to print the following
-    $databases=Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $access_token -Query "SELECT name FROM SYS.DATABASES" -Database "MASTER"
-    Write-Output $databases
-
-```
