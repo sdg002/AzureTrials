@@ -22,7 +22,7 @@ Consumer applications should avoid using the admin user name/password. Principle
 
 ## How to get a JWT access token?
 ```
-get-azaccesstoken
+Get-AzAccesstoken
 ```
 ## How to query Synapse Workspace from PowerShell using the Admin username and password?
 Refer the accompanying script `querydemo.ps1`
@@ -39,7 +39,7 @@ This is useful when deploying SQL views via CI/CD
 ```
 
 ## How to query Synapse Workspace using C#?
-You would use ADO.NET. Example:
+You would use ADO.NET. You would have to acquire a JWT token from Azure Active Directory. Example:
 Refer https://docs.microsoft.com/en-us/sql/connect/ado-net/sql/azure-active-directory-authentication?view=sql-server-ver15#setting-azure-active-directory-authentication
 
 

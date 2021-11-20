@@ -1,4 +1,7 @@
-# AzureTrials
+# Overview
+These are worked out example scripts
 
-# How to create a Virtual Network and VPN gateway
-https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-point-to-site-rm-ps
+# Deploy Synapse Workspace using ARM template
+[Link to Github folder](/synapse-workspace-armtemplate/)
+
+
