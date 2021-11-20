@@ -11,14 +11,25 @@ $FileSystemName="junkfilesystemwrkstn"
 $armFile=Join-Path -Path $PSScriptRoot -ChildPath ".\arm.json"
 $currentSubscriptionid=(Get-AzContext).Subscription.Id
 $sqlAdminUser="johndoe"
-$sqlPassWord="Pass@word123"
+$sqlPassWord=[System.Guid]::NewGuid().ToString()
+$WorkspaceName="armsynapse001fromwrkstn"
+<#
+Refer accompanying Readme.md about caveats about getting the id of the current user
+You do not need to hard code the ID of the current user.
+#>
 $currentUserId="a4e9c07e-6f7e-4c5c-a10c-a1cca1800774"
-#(Get-azContext).Account.id #Should use this
+<#
+You should not create a new role assignment ID by using a Guid or a random string , Azure will resist creation of role assignments with identical properties.
+https://github.com/Azure/azure-quickstart-templates/issues/4205
+#>
+$roleUniqueId="$StorageAccountName-roleid"
 
-New-AzResourceGroup -Location $Location -Name $ResourceGroup -Force
+Write-Host "The admin user:$sqlAdminUser and password:'$sqlPassWord' will be used for the Synapse instance"
+New-AzResourceGroup -Location $Location -Name $ResourceGroup -Force | Out-Null
+Write-Host "Created new resource group $ResourceGroup at location $Location"
 
 $armParameters=@{ 
-    "name"="armsynapse001fromwrkstn" ; 
+    "name"= $WorkspaceName ; 
     "location"=$Location ;
     "defaultDataLakeStorageAccountName"=$StorageAccountName ;
     "defaultDataLakeStorageFilesystemName"=$FileSystemName ;
@@ -33,7 +44,7 @@ $armParameters=@{
     "storageSubscriptionID"="$currentSubscriptionid" ;
     "storageResourceGroupName"="$ResourceGroup" ;
     "storageLocation"="$Location" ;
-    "storageRoleUniqueId"=[System.Guid]::NewGuid().ToString() ;
+    "storageRoleUniqueId"=$roleUniqueId ;
     "isNewStorageAccount"=$true ;
     "isNewFileSystemOnly"=$false ;
     "adlaResourceId"="" ;

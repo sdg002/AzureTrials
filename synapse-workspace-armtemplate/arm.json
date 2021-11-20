@@ -59,8 +59,7 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "storageRoleUniqueId": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
+            "type": "string"
         },
         "isNewStorageAccount": {
             "type": "bool",
