@@ -12,13 +12,14 @@ $armFile=Join-Path -Path $PSScriptRoot -ChildPath ".\arm.json"
 $currentSubscriptionid=(Get-AzContext).Subscription.Id
 $sqlAdminUser="johndoe"
 $sqlPassWord="Pass@word123"
-$currentUserId=(Get-azContext).Account.id
+$currentUserId="a4e9c07e-6f7e-4c5c-a10c-a1cca1800774"
+#(Get-azContext).Account.id #Should use this
 
 New-AzResourceGroup -Location $Location -Name $ResourceGroup -Force
 
 $armParameters=@{ 
     "name"="armsynapse001fromwrkstn" ; 
-    "location"=$ResourceGroup ;
+    "location"=$Location ;
     "defaultDataLakeStorageAccountName"=$StorageAccountName ;
     "defaultDataLakeStorageFilesystemName"=$FileSystemName ;
     "sqlAdministratorLogin"=$sqlAdminUser ;
@@ -27,12 +28,12 @@ $armParameters=@{
     "createManagedPrivateEndpoint"=$false ;
     "defaultAdlsGen2AccountResourceId"="/subscriptions/$currentSubscriptionid/resourceGroups/$ResourceGroup/providers/Microsoft.Storage/storageAccounts/$StorageAccountName" ;
     "allowAllConnections"=$true ;
-    "managedVirtualNetwork"=$true ;
+    "managedVirtualNetwork"="" ;
     "tagValues"=@{} ;
     "storageSubscriptionID"="$currentSubscriptionid" ;
     "storageResourceGroupName"="$ResourceGroup" ;
     "storageLocation"="$Location" ;
-    #"storageRoleUniqueId"="value2" ;
+    "storageRoleUniqueId"=[System.Guid]::NewGuid().ToString() ;
     "isNewStorageAccount"=$true ;
     "isNewFileSystemOnly"=$false ;
     "adlaResourceId"="" ;
@@ -50,5 +51,6 @@ $armParameters=@{
 }
 Test-AzResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $armFile -TemplateParameterObject $armParameters
 
-New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $armFile -TemplateParameterObject $armParameters -Name "deployment-name" -Verbose
+$deploymentName=("mysynapsedeployment-{0}" -f (Get-Date).Ticks)
+New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $armFile -TemplateParameterObject $armParameters -Name $deploymentName -Verbose
 Write-Host "Deployment complete"
