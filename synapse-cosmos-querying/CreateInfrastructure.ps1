@@ -51,6 +51,14 @@ function CreateADGroup ()
     New-AzADGroup -DisplayName $AdminADGroup -MailNickname $AdminADGroup -Description "Admin group for the Synapse resource '$SynapseWorkspaceName'"
     Write-Host "Created new AD group '$AdminADGroup'"
 }
+function AddCurrentUserToADGroup()
+{
+    Write-Host "Adding the current user to the AD group $AdminADGroup"
+    $sp=Get-AzADServicePrincipal -ApplicationId $ctx.Account.id
+    Write-Host ("Current service principal object id is {0}" -f $sp.Id)
+    Add-AzADGroupMember -TargetGroupDisplayName $AdminADGroup -MemberObjectId $sp.Id -Verbose -ErrorAction Continue
+    Write-Host "Added the user $($sp.Id) to the AD group $AdminADGroup"
+}
 function CreateSynapseStudio()
 {
     $existingSynapseInstance=Get-AzResource -ResourceGroupName $ResourceGroup -Name $SynapseWorkspaceName
@@ -107,6 +115,7 @@ function RelaxFireWallRules()
 }
 function CreateServerlessDatabase()
 {
+    Write-Host "Going to run SQL command to create a database"
     $access_token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroup -Name $SynapseWorkspaceName
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath ".\sql\CreateServerlessDatabase.sql"
@@ -119,6 +128,7 @@ ValidateEnvironmentVariables
 CreateResourceGroup
 CreateDataLakeStorageAccount
 CreateADGroup
+AddCurrentUserToADGroup
 CreateSynapseStudio
 SetSynapseAdmin
 RelaxFireWallRules
@@ -135,15 +145,15 @@ Done-Create Synapse
 Done-Create AD group
 Done-Relax firewall rules
 Done-Create new serverless datbase
-Create new credential using SQL file
+Create new credential using SQL file (NOT GETTING THE RIGHT PERMISSIONS, TRIED ADDING TO SYNAPSE ADMINISTRATOR)
 Create new view using SQL file
 Test new SQL file using Invoke-SqlCommand
 Try dropping all the views
 Add password to KeyVault
 Create database in in memory pool
 Generate new password
-Synapse admin permissions
-Improve on creating new firewall rule
+Synapse admin role permissions
+Done-Improve on creating new firewall rule
 #>
 
 
