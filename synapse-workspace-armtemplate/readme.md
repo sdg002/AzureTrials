@@ -66,3 +66,16 @@ This snippet may not give the right results when running on local workstation, d
 
 # How to update the Sql admin username and password ?
 See accompanying script `updateadminpassword.ps1`. 
+
+# Sample queries
+I found these useful. 
+## Getting a list of all custom views
+```
+Invoke-Sqlcmd -Database $db -ServerInstance $server -AccessToken $token -Query "SELECT id,name FROM sys.Objects where [type]='v'"
+```
+
+## Drop a specific View
+```
+Invoke-Sqlcmd -Database $db -ServerInstance $server -AccessToken $token -Query "DROP VIEW vwCurrentDate"
+```
+
