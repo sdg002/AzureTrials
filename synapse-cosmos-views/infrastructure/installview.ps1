@@ -22,26 +22,55 @@ function ExecuteSql([System.Object]$synapseworkspace,[string]$serverlessdatabase
     Invoke-Sqlcmd -ServerInstance $cnstring -Database $serverlessdatabase -Query $sql -AccessToken $token -Verbose
 
 }
+function GetSqlWithReplacedTags([string]$sqlfilename,[System.Collections.Hashtable]$tagvalues)
+{
+    $TemplateFile=Join-Path -Path  $PSScriptRoot -ChildPath "..\sqlviews\$sqlfilename"
+    $TemplateFileContents=[System.IO.File]::ReadAllText($TemplateFile)
+    $ModifiedTemplateContents=$TemplateFileContents
+    # $ModifiedTemplateContents=$ModifiedTemplateContents -replace "CREDENTIALNAME",$credentialname
+    # $ModifiedTemplateContents=$ModifiedTemplateContents -replace "COSMOSACCOUNTKEY",$ReadonlyKey
+    foreach ($key in $tagvalues.Keys) 
+    {
+        $tagValue=$tagvalues[$key]
+        $ModifiedTemplateContents=$ModifiedTemplateContents -replace $key,$tagValue
+    }
+    return $ModifiedTemplateContents
+}
 function CreateSynapseCredential([string]$credentialname,[string]$cosmosaccountname,[System.Object]$synapseworkspace,[string]$serverlessdatabase)
 {
     $CosmosResource=GetCosmosAccount -cosmosaccountname $cosmosaccountname
     $CosmosKeys=Get-AzCosmosDBAccountKey -ResourceGroupName $CosmosResource.ResourceGroupName -Name $CosmosResource.Name
     $ReadonlyKey=$CosmosKeys.SecondaryReadonlyMasterKey
-    $TemplateFile=Join-Path -Path  $PSScriptRoot -ChildPath "..\sqlviews\CredentialsTemplate.sql"
-    $TemplateFileContents=[System.IO.File]::ReadAllText($TemplateFile)
-    $ModifiedTemplateContents=$TemplateFileContents
-    $ModifiedTemplateContents=$ModifiedTemplateContents -replace "CREDENTIALNAME",$credentialname
-    $ModifiedTemplateContents=$ModifiedTemplateContents -replace "COSMOSACCOUNTKEY",$ReadonlyKey
+
+    $dict=@{}
+    $dict.Add("CREDENTIALNAME",$credentialname)
+    $dict.Add("COSMOSACCOUNTKEY",$ReadonlyKey)
+    $ModifiedTemplateContents =GetSqlWithReplacedTags -sqlfilename "CredentialsTemplate.sql" -tagvalues $dict
 
     ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $ModifiedTemplateContents
     Write-Host "Created credential $credentialname"
 }
 
+function CreateView([string]$viewfile,[string]$credentialname,[string]$cosmosaccountname,[System.Object]$synapseworkspace,[string]$serverlessdatabase,[string]$cosmosdatabase)
+{
+    $viewName=$viewfile.Split(".")[0]
+    $dict=@{}
+    $dict.Add("CREDENTIALNAMETAG",$credentialname)
+    $dict.Add("COSMOSACCOUNTNAMETAG",$cosmosaccountname)
+    $dict.Add("DATABASENAMETAG",$cosmosdatabase)
+    $dict.Add("VIEWNAMETAG",$viewName)
+    $ModifiedTemplateContents =GetSqlWithReplacedTags -sqlfilename "CustomersView.sql" -tagvalues $dict
+    ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $ModifiedTemplateContents
+    Write-Host "Created view $viewName from $viewfile"
+}
 
 $CosmosAccount="democosmosquery123"
+$CosmosDatabase="sampledatabase"
 $SynapseWorkspaceName="armsynapse001fromwrkstn"
 $SynapseWorkspaceObject=Get-AzSynapseWorkspace -Name $SynapseWorkspaceName
 $ServerlessDatabaseName="myserverlessdb"
 #$e.ConnectivityEndpoints.sqlOnDemand
 CreateSynapseCredential -credentialname "mycosmoscredential" -cosmosaccount $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
+CreateView -viewfile "CustomersView.sql" -credentialname "mycosmoscredential" -cosmosaccountname $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $CosmosDatabase
+
 

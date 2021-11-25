@@ -72,3 +72,23 @@ WITH (
 ) AS docs
 
 ```
+
+# Creating a custom SQL View
+```
+IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name] = 'vwCustomers') DROP VIEW vwCustomers
+GO
+
+CREATE VIEW vwCustomers 
+AS SELECT *
+FROM OPENROWSET( 
+       PROVIDER='CosmosDB',
+       CONNECTION='Account=democosmosquery123;Database=sampledatabase',
+       OBJECT='customers',
+       SERVER_CREDENTIAL='MyCosmosDbAccountCredential')
+WITH (  
+        ID	varchar(8000) '$.id',
+        FirstName   varchar(1000) '$.firstName'
+) AS docs
+GO
+
+```
