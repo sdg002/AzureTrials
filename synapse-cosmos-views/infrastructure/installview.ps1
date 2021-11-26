@@ -19,12 +19,12 @@ function ExecuteSql([System.Object]$synapseworkspace,[string]$serverlessdatabase
 {
     $token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
     $cnstring=$synapseworkspace.ConnectivityEndpoints.sqlOnDemand
-    Invoke-Sqlcmd -ServerInstance $cnstring -Database $serverlessdatabase -Query $sql -AccessToken $token -Verbose
-
+    $results=Invoke-Sqlcmd -ServerInstance $cnstring -Database $serverlessdatabase -Query $sql -AccessToken $token -Verbose
+    return $results
 }
 function GetSqlWithReplacedTags([string]$sqlfilename,[System.Collections.Hashtable]$tagvalues)
 {
-    $TemplateFile=Join-Path -Path  $PSScriptRoot -ChildPath "..\sqlviews\$sqlfilename"
+    $TemplateFile=Join-Path -Path  $PSScriptRoot -ChildPath "..\$sqlfilename"
     $TemplateFileContents=[System.IO.File]::ReadAllText($TemplateFile)
     $ModifiedTemplateContents=$TemplateFileContents
     # $ModifiedTemplateContents=$ModifiedTemplateContents -replace "CREDENTIALNAME",$credentialname
@@ -36,6 +36,18 @@ function GetSqlWithReplacedTags([string]$sqlfilename,[System.Collections.Hashtab
     }
     return $ModifiedTemplateContents
 }
+
+function GetSqlContentWithReplacedTags([string]$templatesqlcontents,[System.Collections.Hashtable]$tagvalues)
+{
+    $ModifiedTemplateContents=$templatesqlcontents
+    foreach ($key in $tagvalues.Keys) 
+    {
+        $tagValue=$tagvalues[$key]
+        $ModifiedTemplateContents=$ModifiedTemplateContents -replace $key,$tagValue
+    }
+    return $ModifiedTemplateContents
+}
+
 function CreateSynapseCredential([string]$credentialname,[string]$cosmosaccountname,[System.Object]$synapseworkspace,[string]$serverlessdatabase)
 {
     $CosmosResource=GetCosmosAccount -cosmosaccountname $cosmosaccountname
@@ -45,7 +57,12 @@ function CreateSynapseCredential([string]$credentialname,[string]$cosmosaccountn
     $dict=@{}
     $dict.Add("CREDENTIALNAME",$credentialname)
     $dict.Add("COSMOSACCOUNTKEY",$ReadonlyKey)
-    $ModifiedTemplateContents =GetSqlWithReplacedTags -sqlfilename "CredentialsTemplate.sql" -tagvalues $dict
+
+    $TemplateFile=Join-Path -Path  $PSScriptRoot -ChildPath "..\credential\CredentialsTemplate.sql"
+    $TemplateFileContents=[System.IO.File]::ReadAllText($TemplateFile)
+
+    #$ModifiedTemplateContents =GetSqlWithReplacedTags -sqlfilename "credential\CredentialsTemplate.sql" -tagvalues $dict
+    $ModifiedTemplateContents = GetSqlContentWithReplacedTags -templatesqlcontents $TemplateFileContents -tagvalues $dict
 
     ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $ModifiedTemplateContents
     Write-Host "Created credential $credentialname"
@@ -53,24 +70,61 @@ function CreateSynapseCredential([string]$credentialname,[string]$cosmosaccountn
 
 function CreateView([string]$viewfile,[string]$credentialname,[string]$cosmosaccountname,[System.Object]$synapseworkspace,[string]$serverlessdatabase,[string]$cosmosdatabase)
 {
-    $viewName=$viewfile.Split(".")[0]
     $dict=@{}
     $dict.Add("CREDENTIALNAMETAG",$credentialname)
     $dict.Add("COSMOSACCOUNTNAMETAG",$cosmosaccountname)
     $dict.Add("DATABASENAMETAG",$cosmosdatabase)
-    $dict.Add("VIEWNAMETAG",$viewName)
-    $ModifiedTemplateContents =GetSqlWithReplacedTags -sqlfilename "CustomersView.sql" -tagvalues $dict
+    $TemplateContents=[System.IO.File]::ReadAllText($viewfile)
+    $ModifiedTemplateContents =GetSqlContentWithReplacedTags -templatesqlcontents $TemplateContents -tagvalues $dict
+    #GetSqlWithReplacedTags -sqlfilename $viewfile -tagvalues $dict
     ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $ModifiedTemplateContents
-    Write-Host "Created view $viewName from $viewfile"
+    Write-Host "Created view  $viewfile"
+}
+
+function CreateAllViews()
+{
+    $ViewsFolder=Join-Path -Path  $PSScriptRoot -ChildPath "..\sqlviews\"
+    $allViewFiles=Get-ChildItem -Path $ViewsFolder -Filter "*.sql"
+    foreach ($viewFile in $allViewFiles) 
+    {
+        CreateView -viewfile $viewFile.FullName -credentialname "mycosmoscredential" -cosmosaccountname $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $CosmosDatabase    
+    }
+    
+}
+
+function  DropAllExistingViews([System.Object]$synapseworkspace,[string]$serverlessdatabase)
+{
+    $sqlToGetallViews="SELECT * FROM SYS.OBJECTS WHERE [type]='v'"
+    $sqlResults=ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $sqlToGetallViews
+    if ($null -eq $sqlResults)
+    {
+        Write-Host "No existing views found. Nothing to delete"
+        return
+    }
+    Write-Host ("Found {0} existing views" -f $sqlResults.Length)
+
+    foreach ($viewInfo in $sqlResults) 
+    {
+        $DropViewSql = ("DROP VIEW {0}"  -f $viewInfo.name )
+        ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql $DropViewSql
+        Write-Host ("Dropped view {0}" -f $viewInfo.name)
+    }
+}
+function RunSomeSampleQuery([System.Object]$synapseworkspace,[string]$serverlessdatabase)
+{
+    $results=ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql "SELECT * FROM vwAllCustomers"
+    $results
 }
 
 $CosmosAccount="democosmosquery123"
 $CosmosDatabase="sampledatabase"
 $SynapseWorkspaceName="armsynapse001fromwrkstn"
+Write-Host "Starting..."
 $SynapseWorkspaceObject=Get-AzSynapseWorkspace -Name $SynapseWorkspaceName
 $ServerlessDatabaseName="myserverlessdb"
 #$e.ConnectivityEndpoints.sqlOnDemand
+DropAllExistingViews -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
 CreateSynapseCredential -credentialname "mycosmoscredential" -cosmosaccount $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
-CreateView -viewfile "CustomersView.sql" -credentialname "mycosmoscredential" -cosmosaccountname $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $CosmosDatabase
-
+CreateAllViews
+RunSomeSampleQuery -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
 

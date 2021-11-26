@@ -1,13 +1,13 @@
-IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name] = 'VIEWNAMETAG') DROP VIEW VIEWNAMETAG
+IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name] = 'vwAllCustomers') DROP VIEW vwAllCustomers
 GO
 
-CREATE VIEW VIEWNAMETAG
+CREATE VIEW vwAllCustomers
 AS SELECT *
 FROM OPENROWSET( 
        PROVIDER='CosmosDB',
        CONNECTION='Account=COSMOSACCOUNTNAMETAG;Database=DATABASENAMETAG',
        OBJECT='customers',
-       SERVER_CREDENTIAL='CREDENTIALNAMETAG')
+       SERVER_CREDENTIAL='mycosmoscredential')
 WITH (  
         ID	varchar(8000) '$.id',
         FirstName   varchar(1000) '$.firstName'
