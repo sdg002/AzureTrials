@@ -2,10 +2,27 @@
 In this article we demonstrate the basics of the following:
 - How to deploy SQL views to an existing instance of **Azure Synapse Studio**.
 - This article assumes the presence of a **Azure Synapse Studio** instance (give link to ARM template deployment)
+- This article focusses more on the CI/CD aspects of the Sql View deployment
+
+# Prerequisites
+-to be done
+
+# Quick start
+- Deploy an instance of the Azure Synapse using the script available under the folder (TO BE DONE)
+- Deploy an instance of Cosmos using the script `createcosmos.ps1`
+- Execute the script `installviews.ps` to deploy the SQL views
+- Get inside this new Syanpse Workspace instance and manually create an instance of a serverless database by the name `myserverlessdb`
+
+![Generate ARM template using the Azure Portal](images/create-serverless-database.png)
+- Follow the steps under **How to test the Sql Views** to execute the SQL views and examine the results
+
+# How to test the Sql Views?
+to be done
 
 # MS links
 - [How to write a SQL query inside Synapse Worksapce](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-cosmos-db-analytical-store?tabs=openrowset-key)
 - PowerShell Cosmos reference (to be done)
+
 
 
 # Sample JSON

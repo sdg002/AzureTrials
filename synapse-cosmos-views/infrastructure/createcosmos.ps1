@@ -45,7 +45,8 @@ function CreateDatabase()
 }
 function CreateContainer([string]$containername) 
 {
-    $containerObject=Get-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase -Name $containername
+    #Execute this with -ErrorAction Continue to avoid halting due to exceptions when container does not exist
+    $containerObject=Get-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase -Name $containername -ErrorAction Continue
     if ($null -ne $containerObject)
     {
         Write-Host "The container '$containername' already exists"
@@ -53,10 +54,11 @@ function CreateContainer([string]$containername)
     else 
     {
         Write-Host ("Creating container '$containername'" )    
-        New-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase -Name $Global:CustomersMasterContainer -PartitionKeyPath "/id" -PartitionKeyKind Hash
+        New-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase -Name $Global:CustomersMasterContainer -PartitionKeyPath "/id" -PartitionKeyKind Hash -AnalyticalStorageTtl -1
     }
     Write-Host "Updating the throughput of the container '$containername' to $Global:Throughput"
-    Update-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase  -Name $containername -Throughput $Global:Throughput | Out-Null
+    Update-AzCosmosDBSqlContainer -ResourceGroupName $Global:CosmosResourceGroup -AccountName $Global:CosmosAccountName -DatabaseName $Global:CustomersManagementDatabase  -Name $containername -Throughput $Global:Throughput -AnalyticalStorageTtl -1 | Out-Null 
+    #You need to specify a value for the parameter -AnalyticalStorageTtl 
 }
 
 CreateResourceGroup

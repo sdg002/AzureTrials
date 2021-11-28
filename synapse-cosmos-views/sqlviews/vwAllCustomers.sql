@@ -6,7 +6,7 @@ AS SELECT *
 FROM OPENROWSET( 
        PROVIDER='CosmosDB',
        CONNECTION='Account=COSMOSACCOUNTNAMETAG;Database=DATABASENAMETAG',
-       OBJECT='customers',
+       OBJECT='customersmaster',
        SERVER_CREDENTIAL='mycosmoscredential')
 WITH (  
         ID	varchar(8000) '$.id',

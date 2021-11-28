@@ -1,3 +1,4 @@
+. $PSScriptRoot\common.ps1
 Set-StrictMode -Version "Latest"
 $ErrorActionPreference="Stop"
 Clear-Host
@@ -87,7 +88,7 @@ function CreateAllViews()
     $allViewFiles=Get-ChildItem -Path $ViewsFolder -Filter "*.sql"
     foreach ($viewFile in $allViewFiles) 
     {
-        CreateView -viewfile $viewFile.FullName -credentialname "mycosmoscredential" -cosmosaccountname $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $CosmosDatabase    
+        CreateView -viewfile $viewFile.FullName -credentialname "mycosmoscredential" -cosmosaccountname $Global:CosmosAccountName -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $Global:CustomersDatabase
     }
     
 }
@@ -116,15 +117,13 @@ function RunSomeSampleQuery([System.Object]$synapseworkspace,[string]$serverless
     $results
 }
 
-$CosmosAccount="democosmosquery123"
-$CosmosDatabase="sampledatabase"
 $SynapseWorkspaceName="armsynapse001fromwrkstn"
 Write-Host "Starting..."
 $SynapseWorkspaceObject=Get-AzSynapseWorkspace -Name $SynapseWorkspaceName
 $ServerlessDatabaseName="myserverlessdb"
 #$e.ConnectivityEndpoints.sqlOnDemand
 DropAllExistingViews -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
-CreateSynapseCredential -credentialname "mycosmoscredential" -cosmosaccount $CosmosAccount -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
+CreateSynapseCredential -credentialname "mycosmoscredential" -cosmosaccount $Global:CosmosAccountName -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
 CreateAllViews
 RunSomeSampleQuery -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName
 
