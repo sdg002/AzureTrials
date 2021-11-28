@@ -1,14 +1,28 @@
 # Overview
+In this article we demonstrate the basics of the following:
+- How to deploy SQL views to an existing instance of **Azure Synapse Studio**.
+- This article assumes the presence of a **Azure Synapse Studio** instance (give link to ARM template deployment)
 
 # MS links
-https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-cosmos-db-analytical-store?tabs=openrowset-key
+- [How to write a SQL query inside Synapse Worksapce](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-cosmos-db-analytical-store?tabs=openrowset-key)
+- PowerShell Cosmos reference (to be done)
 
 
 # Sample JSON
+
+## Sample 1
 ```
 {
     "firstName": "john",
     "id": "1001",
+}
+```
+
+## Sample 2
+```
+{
+    "firstName": "jane",
+    "id": "1002",
 }
 
 ```
@@ -92,3 +106,17 @@ WITH (
 GO
 
 ```
+# Script to create a sample Cosmos database
+The accompanying script `createcosmos.p1` will do the following:
+- Create a new Cosmos account by the name `mydemo001account`
+- Create a new Cosmos database in this account by the name `customers`
+- Create a new container `customersmaster` in the database `customers`
+
+# Next steps
+Write a Powershell script to 
+- provide a sample JSON file(s) , no need to 
+https://docs.microsoft.com/en-us/powershell/module/az.cosmosdb/new-azcosmosdbsqldatabase?view=azps-6.6.0
+https://docs.microsoft.com/en-us/powershell/module/az.cosmosdb/new-azcosmosdbsqlcontainer?view=azps-6.6.0
+
+
+
