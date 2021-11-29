@@ -1,19 +1,25 @@
 # Overview
 In this article we demonstrate the basics of the following:
 - How to deploy SQL views to an existing instance of **Azure Synapse Studio**.
-- This article assumes the presence of a **Azure Synapse Studio** instance (give link to ARM template deployment)
-- This article focusses more on the CI/CD aspects of the Sql View deployment
+- This article assumes the presence of a **Azure Synapse Studio** instance. Refer PowerShell scripts in the sibling folder [synapse-workspace-armtemplate](../synapse-workspace-armtemplate)
+- This article focusses more on the CI/CD aspects of the deploying SQL views to the serverlss instance of Azure Synapse Studio
 
 # Prerequisites
--to be done
+- A functioning Azure subscription with full rights
+- Windows 10, PowerShell Core
+- Visual Studio Code
 
 # Quick start
-- Deploy an instance of the Azure Synapse using the script available under the folder (TO BE DONE)
-- Deploy an instance of Cosmos using the script `createcosmos.ps1`
-- Execute the script `installviews.ps` to deploy the SQL views
-- Get inside this new Syanpse Workspace instance and manually create an instance of a serverless database by the name `myserverlessdb`
+- Deploy an instance of the Azure Synapse using the script available under the folder '**synapse-workspace-armtemplate**'
+- Get inside this new Synapse Workspace instance and manually create an instance of a serverless database by the name **myserverlessdb**
 
-![Generate ARM template using the Azure Portal](images/create-serverless-database.png)
+-![Deploy Synapse Workspace using ARM template](images/create-serverless-database.png)
+- Deploy an instance of Cosmos using the script `createcosmos.ps1`. A new Cosmos account will be created with Analytical Storage enabled.
+- The script will also create a new database and a container with the names **customers** and **customermaster** respectively
+- Load the Cosmos container with JSON documents from the `samplejson` folder
+- ![Create a new document in Cosmos](images/cosmos_add_new_customer.png)
+- Execute the script `installviews.ps` to deploy the SQL views
+
 - Follow the steps under **How to test the Sql Views** to execute the SQL views and examine the results
 
 # How to test the Sql Views?
@@ -23,26 +29,6 @@ to be done
 - [How to write a SQL query inside Synapse Worksapce](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-cosmos-db-analytical-store?tabs=openrowset-key)
 - PowerShell Cosmos reference (to be done)
 
-
-
-# Sample JSON
-
-## Sample 1
-```
-{
-    "firstName": "john",
-    "id": "1001",
-}
-```
-
-## Sample 2
-```
-{
-    "firstName": "jane",
-    "id": "1002",
-}
-
-```
 
 # Sample query 1
 

@@ -88,7 +88,7 @@ function CreateAllViews()
     $allViewFiles=Get-ChildItem -Path $ViewsFolder -Filter "*.sql"
     foreach ($viewFile in $allViewFiles) 
     {
-        CreateView -viewfile $viewFile.FullName -credentialname "mycosmoscredential" -cosmosaccountname $Global:CosmosAccountName -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $Global:CustomersDatabase
+        CreateView -viewfile $viewFile.FullName -credentialname "mycosmoscredential" -cosmosaccountname $Global:CosmosAccountName -synapseworkspace $SynapseWorkspaceObject -serverlessdatabase $ServerlessDatabaseName -cosmosdatabase $Global:CustomersManagementDatabase
     }
     
 }
@@ -113,6 +113,7 @@ function  DropAllExistingViews([System.Object]$synapseworkspace,[string]$serverl
 }
 function RunSomeSampleQuery([System.Object]$synapseworkspace,[string]$serverlessdatabase)
 {
+    Write-Host "Running a sample SQL query on the serverless database"
     $results=ExecuteSql -synapseworkspace $synapseworkspace -serverlessdatabase $serverlessdatabase -sql "SELECT * FROM vwAllCustomers"
     $results
 }
