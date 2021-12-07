@@ -10,28 +10,60 @@ In this article we demonstrate the basics of the following:
 - Windows 10, PowerShell Core. (Not tested on Mac OS , but as per MS, PowerShell core should work)
 - Visual Studio Code
 
+# Folder structure
+
+![Folder structure](images/folder_structure.png)
+
+# List of files and accompanying scripts
+
+## credential
+SQL file which will be used for creating custom SQL credential objects
+
+## sqlviews
+SQL file(s) which will be used for producing flattened data on the data held in Cosmos containers
+
+## infrastructure
+Contains the PowerShell scripts
+- **createcosmos.ps1** - Creates a new Cosmos account with analytical store enabled and a database with a single container `customersmaster`
+- **installview.ps1** - Opens the .SQL files, replaces tokens in the folder **credential** and **sqlviews**
+- **common.ps1** - Common variable declarations used by the scripts mentioned above
+
+## samplejson
+Toy JSON files should be manually added to Cosmos, so that the SQL views can produce some sensible results
+
 # Quick start
-- Deploy an instance of the Azure Synapse using the script available under the folder '**synapse-workspace-armtemplate**'
+- Deploy an instance of the Azure Synapse using the script available under the folder '**synapse-workspace-armtemplate**' at the very root of this repo.
 - Get inside this new Synapse Workspace instance and manually create an instance of a serverless database by the name **myserverlessdb**. The SQL views will be created in this serverless database.
 
 -![Deploy Synapse Workspace using ARM template](images/create-serverless-database.png)
-- Deploy an instance of Cosmos using the script `createcosmos.ps1`. A new Cosmos account will be created with Analytical Storage enabled.
+- Deploy an instance of Cosmos using the script **createcosmos.ps1**. A new Cosmos account will be created with Analytical Storage enabled.
 - The script will also create a new database and a container with the names **customers** and **customermaster** respectively
-- Use the Azure Portal to load the Cosmos container with JSON documents from the `samplejson` folder
+- Use the Azure Portal to load the Cosmos container with JSON documents from the **samplejson** folder
 - ![Create a new document in Cosmos](images/cosmos_add_new_customer.png)
 - Execute the script `installviews.ps` to deploy the SQL views
 - Follow the steps under **How to test the Sql Views** to execute the SQL views and examine the results
 
+
 # How to test the Sql Views?
-**to be done, show how to use Invoke-SqlCmd ,or just give a snippet that you have used inside the PowerShell**
+The PowerShell cmdlet `Invoke-SqlCmd` can be used for invoking the SQL views which were created using **installview.ps1**. Refer following snippet from the accompanying PowerShell script
+```
+function ExecuteSql([System.Object]$synapseworkspace,[string]$serverlessdatabase,[string]$sql)
+{
+    $token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
+    $cnstring=$synapseworkspace.ConnectivityEndpoints.sqlOnDemand
+    $results=Invoke-Sqlcmd -ServerInstance $cnstring -Database $serverlessdatabase -Query $sql -AccessToken $token -Verbose
+    return $results
+}
+```
 
 # MS links
 - [How to write a SQL query inside Synapse Worksapce](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-cosmos-db-analytical-store?tabs=openrowset-key)
 - PowerShell Cosmos reference **to be done**
 
 
-# Sample query 1
+# Sample queries on Cosmos analytical store
 
+## Simple query
 ```
 SELECT TOP 10 *
 FROM OPENROWSET( 
@@ -45,7 +77,7 @@ WITH (
 
 ```
 
-# Sample query 2 - with renamed columns
+## Simple query with renamed columns
 ```
 SELECT TOP 10 *
 FROM OPENROWSET( 
@@ -109,10 +141,5 @@ WITH (
 GO
 
 ```
-# Script to create a sample Cosmos database
-The accompanying script `createcosmos.p1` will do the following:
-- Create a new Cosmos account by the name `mydemo001account`
-- Create a new Cosmos database in this account by the name `customers`
-- Create a new container `customersmaster` in the database `customers`
 
 
