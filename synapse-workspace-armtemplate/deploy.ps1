@@ -3,11 +3,11 @@ Set-StrictMode -Version "latest"
 Clear-Host
 
 
-$ResourceGroup="rg-junk-synapsedeployment-using-arm-and-powershell"
-$ResourceGroupManaged="rg-junk-synapsedeployment-using-arm-and-powershell-managed"
+$ResourceGroup="rg-demo-synapsedeployment-using-arm-and-powershell"
+$ResourceGroupManaged="rg-demo-synapsedeployment-using-arm-and-powershell-managed"
 $Location="uksouth"
-$StorageAccountName="junksynapsefromwrkstn"
-$FileSystemName="junkfilesystemwrkstn"
+$StorageAccountName="demosynapsefromwrkstn"
+$FileSystemName="demofilesystemwrkstn"
 $armFile=Join-Path -Path $PSScriptRoot -ChildPath ".\arm.json"
 $currentSubscriptionid=(Get-AzContext).Subscription.Id
 $sqlAdminUser="johndoe"
