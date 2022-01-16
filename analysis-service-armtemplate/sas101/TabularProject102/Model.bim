@@ -1,0 +1,268 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1400,
+  "model": {
+    "culture": "en-GB",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "tcp:sau-mydemo-sql-server.database.windows.net,1433",
+            "database": "WideWorldImporters-Standard"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "OAuth2",
+          "kind": "SQL",
+          "path": "tcp:sau-mydemo-sql-server.database.windows.net,1433;WideWorldImporters-Standard",
+          "Expires": "Sun, 16 Jan 2022 14:04:39 GMT"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Application Cities",
+        "columns": [
+          {
+            "name": "CityID",
+            "dataType": "int64",
+            "sourceColumn": "CityID"
+          },
+          {
+            "name": "CityName",
+            "dataType": "string",
+            "sourceColumn": "CityName"
+          },
+          {
+            "name": "StateProvinceID",
+            "dataType": "int64",
+            "sourceColumn": "StateProvinceID"
+          },
+          {
+            "name": "Location",
+            "dataType": "string",
+            "sourceColumn": "Location"
+          },
+          {
+            "name": "LatestRecordedPopulation",
+            "dataType": "int64",
+            "sourceColumn": "LatestRecordedPopulation"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom"
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Application_Cities = Source{[Schema=\"Application\",Item=\"Cities\"]}[Data]",
+                "in",
+                "    Application_Cities"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Application StateProvinces",
+        "columns": [
+          {
+            "name": "StateProvinceID",
+            "dataType": "int64",
+            "sourceColumn": "StateProvinceID"
+          },
+          {
+            "name": "StateProvinceCode",
+            "dataType": "string",
+            "sourceColumn": "StateProvinceCode"
+          },
+          {
+            "name": "StateProvinceName",
+            "dataType": "string",
+            "sourceColumn": "StateProvinceName"
+          },
+          {
+            "name": "CountryID",
+            "dataType": "int64",
+            "sourceColumn": "CountryID"
+          },
+          {
+            "name": "SalesTerritory",
+            "dataType": "string",
+            "sourceColumn": "SalesTerritory"
+          },
+          {
+            "name": "LatestRecordedPopulation",
+            "dataType": "int64",
+            "sourceColumn": "LatestRecordedPopulation"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom"
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Application_StateProvinces = Source{[Schema=\"Application\",Item=\"StateProvinces\"]}[Data],",
+                "    #\"Removed Columns\" = Table.RemoveColumns(Application_StateProvinces,{\"Border\"})",
+                "in",
+                "    #\"Removed Columns\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Application Countries",
+        "columns": [
+          {
+            "name": "CountryID",
+            "dataType": "int64",
+            "sourceColumn": "CountryID"
+          },
+          {
+            "name": "CountryName",
+            "dataType": "string",
+            "sourceColumn": "CountryName"
+          },
+          {
+            "name": "FormalName",
+            "dataType": "string",
+            "sourceColumn": "FormalName"
+          },
+          {
+            "name": "IsoAlpha3Code",
+            "dataType": "string",
+            "sourceColumn": "IsoAlpha3Code"
+          },
+          {
+            "name": "IsoNumericCode",
+            "dataType": "int64",
+            "sourceColumn": "IsoNumericCode"
+          },
+          {
+            "name": "CountryType",
+            "dataType": "string",
+            "sourceColumn": "CountryType"
+          },
+          {
+            "name": "LatestRecordedPopulation",
+            "dataType": "int64",
+            "sourceColumn": "LatestRecordedPopulation"
+          },
+          {
+            "name": "Continent",
+            "dataType": "string",
+            "sourceColumn": "Continent"
+          },
+          {
+            "name": "Region",
+            "dataType": "string",
+            "sourceColumn": "Region"
+          },
+          {
+            "name": "Subregion",
+            "dataType": "string",
+            "sourceColumn": "Subregion"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom"
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Application_Countries = Source{[Schema=\"Application\",Item=\"Countries\"]}[Data],",
+                "    #\"Removed Columns\" = Table.RemoveColumns(Application_Countries,{\"Border\"})",
+                "in",
+                "    #\"Removed Columns\""
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "fe3bebf6-932f-4eda-b194-e493786b03b5",
+        "fromTable": "Application StateProvinces",
+        "fromColumn": "CountryID",
+        "toTable": "Application Countries",
+        "toColumn": "CountryID"
+      },
+      {
+        "name": "ca7df382-2e85-40ce-ba72-c6b5aeb16dc9",
+        "fromTable": "Application Cities",
+        "fromColumn": "StateProvinceID",
+        "toTable": "Application StateProvinces",
+        "toColumn": "StateProvinceID"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "500"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

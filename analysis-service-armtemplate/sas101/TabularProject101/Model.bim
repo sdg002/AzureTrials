@@ -1,0 +1,286 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1500,
+  "model": {
+    "culture": "en-GB",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "tcp:sau-mydemo-sql-server.database.windows.net,1433",
+            "database": "WideWorldImporters-Standard"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {},
+        "credential": {
+          "AuthenticationKind": "OAuth2",
+          "kind": "SQL",
+          "path": "tcp:sau-mydemo-sql-server.database.windows.net,1433;WideWorldImporters-Standard",
+          "Expires": "Sun, 16 Jan 2022 13:13:10 GMT"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Application Cities",
+        "columns": [
+          {
+            "name": "CityID",
+            "dataType": "int64",
+            "sourceColumn": "CityID"
+          },
+          {
+            "name": "CityName",
+            "dataType": "string",
+            "sourceColumn": "CityName"
+          },
+          {
+            "name": "StateProvinceID",
+            "dataType": "int64",
+            "sourceColumn": "StateProvinceID"
+          },
+          {
+            "name": "Location",
+            "dataType": "string",
+            "sourceColumn": "Location"
+          },
+          {
+            "name": "LatestRecordedPopulation",
+            "dataType": "int64",
+            "sourceColumn": "LatestRecordedPopulation"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom"
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Application_Cities = Source{[Schema=\"Application\",Item=\"Cities\"]}[Data]",
+                "in",
+                "    Application_Cities"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Purchasing PurchaseOrders",
+        "columns": [
+          {
+            "name": "PurchaseOrderID",
+            "dataType": "int64",
+            "sourceColumn": "PurchaseOrderID"
+          },
+          {
+            "name": "SupplierID",
+            "dataType": "int64",
+            "sourceColumn": "SupplierID"
+          },
+          {
+            "name": "OrderDate",
+            "dataType": "dateTime",
+            "sourceColumn": "OrderDate"
+          },
+          {
+            "name": "DeliveryMethodID",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryMethodID"
+          },
+          {
+            "name": "ContactPersonID",
+            "dataType": "int64",
+            "sourceColumn": "ContactPersonID"
+          },
+          {
+            "name": "ExpectedDeliveryDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ExpectedDeliveryDate"
+          },
+          {
+            "name": "SupplierReference",
+            "dataType": "string",
+            "sourceColumn": "SupplierReference"
+          },
+          {
+            "name": "IsOrderFinalized",
+            "dataType": "boolean",
+            "sourceColumn": "IsOrderFinalized"
+          },
+          {
+            "name": "Comments",
+            "dataType": "string",
+            "sourceColumn": "Comments"
+          },
+          {
+            "name": "InternalComments",
+            "dataType": "string",
+            "sourceColumn": "InternalComments"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "LastEditedWhen",
+            "dataType": "dateTime",
+            "sourceColumn": "LastEditedWhen"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Purchasing_PurchaseOrders = Source{[Schema=\"Purchasing\",Item=\"PurchaseOrders\"]}[Data]",
+                "in",
+                "    Purchasing_PurchaseOrders"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Purchasing SupplierTransactions",
+        "columns": [
+          {
+            "name": "SupplierTransactionID",
+            "dataType": "int64",
+            "sourceColumn": "SupplierTransactionID"
+          },
+          {
+            "name": "SupplierID",
+            "dataType": "int64",
+            "sourceColumn": "SupplierID"
+          },
+          {
+            "name": "TransactionTypeID",
+            "dataType": "int64",
+            "sourceColumn": "TransactionTypeID"
+          },
+          {
+            "name": "PurchaseOrderID",
+            "dataType": "int64",
+            "sourceColumn": "PurchaseOrderID"
+          },
+          {
+            "name": "PaymentMethodID",
+            "dataType": "int64",
+            "sourceColumn": "PaymentMethodID"
+          },
+          {
+            "name": "SupplierInvoiceNumber",
+            "dataType": "string",
+            "sourceColumn": "SupplierInvoiceNumber"
+          },
+          {
+            "name": "TransactionDate",
+            "dataType": "dateTime",
+            "sourceColumn": "TransactionDate"
+          },
+          {
+            "name": "AmountExcludingTax",
+            "dataType": "double",
+            "sourceColumn": "AmountExcludingTax"
+          },
+          {
+            "name": "TaxAmount",
+            "dataType": "double",
+            "sourceColumn": "TaxAmount"
+          },
+          {
+            "name": "TransactionAmount",
+            "dataType": "double",
+            "sourceColumn": "TransactionAmount"
+          },
+          {
+            "name": "OutstandingBalance",
+            "dataType": "double",
+            "sourceColumn": "OutstandingBalance"
+          },
+          {
+            "name": "FinalizationDate",
+            "dataType": "dateTime",
+            "sourceColumn": "FinalizationDate"
+          },
+          {
+            "name": "IsFinalized",
+            "dataType": "boolean",
+            "sourceColumn": "IsFinalized"
+          },
+          {
+            "name": "LastEditedBy",
+            "dataType": "int64",
+            "sourceColumn": "LastEditedBy"
+          },
+          {
+            "name": "LastEditedWhen",
+            "dataType": "dateTime",
+            "sourceColumn": "LastEditedWhen"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/tcp:sau-mydemo-sql-server database windows net,1433;WideWorldImporters-Stand\",",
+                "    Purchasing_SupplierTransactions = Source{[Schema=\"Purchasing\",Item=\"SupplierTransactions\"]}[Data]",
+                "in",
+                "    Purchasing_SupplierTransactions"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "0ab83732-4046-4d37-b63d-38487896e51a",
+        "fromTable": "Purchasing SupplierTransactions",
+        "fromColumn": "PurchaseOrderID",
+        "toTable": "Purchasing PurchaseOrders",
+        "toColumn": "PurchaseOrderID",
+        "isActive": false
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "600"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
