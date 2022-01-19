@@ -1,3 +1,6 @@
+# How to deploy SQL views to a serverless pool of Azure Synapse?
+---
+
 # Overview
 In this article we demonstrate the basics of the following:
 - How to deploy SQL views to an existing instance of **Azure Synapse Studio**.
