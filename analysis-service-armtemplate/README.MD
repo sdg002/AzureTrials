@@ -37,6 +37,9 @@ https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/restore-sample
 https://docs.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-install-configure?view=sql-server-ver15
 https://github.com/Microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0
 
+## How to script the creation of a Managed Sql server instance
+https://adamtheautomator.com/create-azure-sql-database/#Creating_the_Azure_SQL_Server
+https://docs.microsoft.com/en-us/powershell/module/az.sql/new-azsqlserver?view=azps-7.1.0#examples
 
 # Lessons
 You cannot restore .bak file into Azure database
@@ -53,3 +56,17 @@ https://stackoverflow.com/questions/66723032/azure-data-studio-why-is-restore-op
 - This will prompt you for the location of the .bacpac file. Specify the storage account and the container name.
 - Import will begin
 - Wait..
+
+# Sql server service models
+https://docs.microsoft.com/en-us/azure/azure-sql/database/service-tiers-dtu#single-database-dtu-and-storage-limits
+This is the single point of documentation for DTU pricing models
+
+# Querying Sql server
+## Querying with Azure login
+```
+Invoke-Sqlcmd -ServerInstance $s.FullyQualifiedDomainName -Database $SqlDatabase.DatabaseName -Query "Select * from sys.tables" -AccessToken $token
+```
+## Querying with username and password
+```
+Invoke-Sqlcmd -ServerInstance $s.FullyQualifiedDomainName -Database $SqlDatabase.DatabaseName -Query "Select * from sys.tables" -Password $SqlPassword -Username $SqlUsername
+```
