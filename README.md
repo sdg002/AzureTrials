@@ -17,3 +17,5 @@ Demonstrates how to install SQL views in an instance of **Azure Synapse Workspac
 
 Demonstrates a simple solution which can be useful in automating the rotation of multiple **Azure Storage Account** keys and simulatenously keeping the connection strings in Azure Key Vault uptodate
 
+# Cosmos Bulk Deletes using PowerShell
+[Link to Github folder](cosmos-bulk-delete/README.MD)
