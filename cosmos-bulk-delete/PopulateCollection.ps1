@@ -1,5 +1,3 @@
-Set-StrictMode -Version "latest"
-Clear-Host
 . $PSScriptRoot\common.ps1
 
 Write-Host "Getting Cosmos context"
