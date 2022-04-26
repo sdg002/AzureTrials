@@ -1,7 +1,7 @@
 . $PSScriptRoot\common.ps1
 
 $Ctx=Get-AzContext
-
+$FireWallRuleName="AllowAllAccess"
 
 
 
@@ -37,13 +37,32 @@ function ThrowErrorIfExitCode($message){
     Write-Error -Message $message
 }
 
+function RelaxFireWallRules()
+{
+    Write-Host "Relaxing firewall rules"
+    $existingRules=Get-AzSynapseFirewallRule -ResourceGroupName  $Global:SynapseResourceGroup -WorkspaceName $Global:SynapseWorkspaceName
+    foreach ($existingRule in $existingRules) {
+        $startIP=$existingRule.StartIpAddress
+        $endIP=$existingRule.EndIpAddress
+        if (($startIP -eq "0.0.0.0" ) -and ($endIP -eq "255.255.255.255"))
+        {
+            Write-Host "Found existing rule which allows all IP addresses. Not processing any further"
+            return
+        }
+    }
+    #The cmdlet  Get-AzSynapseFirewallRule does not emit the Name attribute, therefore we have to take the defensive approach of ErorAction=Continue because the rule may or may not exist
+    Remove-AzSynapseFirewallRule -ResourceGroupName $Global:SynapseResourceGroup -WorkspaceName $Global:SynapseWorkspaceName -Name $FireWallRuleName -ErrorAction Continue -Force
+    New-AzSynapseFirewallRule -ResourceGroupName $Global:SynapseResourceGroup -WorkspaceName $Global:SynapseWorkspaceName -Name $FireWallRuleName -StartIpAddress "0.0.0.0" -EndIpAddress "255.255.255.255"
+    Write-Host "Added relaxed firewall rules to allow script to work"
+}
+
 Write-Host  "Running in the context of $Ctx"
 CreateResourceGroup
 CreateStorageAccountForCsv
 DeploySynapse
+RelaxFireWallRules
 Write-Host "Complete"
-# you were here, deploy the synapse
-# Is there a CLI? If not use PowerShell
-# Get storage account path
+
+#you were here, should you write a separate script to upload CSV - which deploys and then uploads
 # Purge storage account
 # Upload CSV
