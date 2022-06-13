@@ -1,4 +1,4 @@
-USE MASTER
+
 IF EXISTS (SELECT * FROM SYS.KEY_ENCRYPTIONS ke WHERE ke.crypt_type = 'ESKM' )
 BEGIN
     PRINT 'There is already a master key'
@@ -11,4 +11,5 @@ ELSE
 BEGIN
     PRINT 'No master key found'
     CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Pass@word123'
+    PRINT 'Created master key found'
 END

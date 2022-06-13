@@ -112,3 +112,39 @@ WITH
     SECRET = 'sp=r&st=2022-04-26T21:31:27Z&se=2022-06-02T05:31:27Z&spr=https&sv=2020-08-04&sr=c&sig=nR9eVI0N5%2BZL5rL3NJGdreRKTpGrW3DN784zmJYKCz4%3D'
     
 ```
+
+# Getting the SQL query to work
+
+## Dropping the data source
+```sql
+IF EXISTS (SELECT * FROM sys.external_data_sources WHERE [name]='peoplesdemo')
+BEGIN
+    print 'Dropping data source peoplesdemo'
+    DROP EXTERNAL DATA SOURCE peoplesdemo
+END
+
+```
+
+## Creating the data source
+```sql
+create external data source peoplesdemo
+with ( 
+    -- location = 'https://csvstoragedemo001.blob.core.windows.net/' ,  --did not work
+    location = 'https://csvstoragedemo001.blob.core.windows.net/junk' ,
+    CREDENTIAL = PEOPLESCREDENTIAL 
+    --TYPE = BLOB_STORAGE
+    );
+
+```
+
+## Running the query
+```sql
+select *
+from openrowset(
+        bulk '/peoples.csv',
+        data_source = 'peoplesdemo',
+        format = 'csv',
+        parser_version ='2.0'
+    ) as rows
+
+```

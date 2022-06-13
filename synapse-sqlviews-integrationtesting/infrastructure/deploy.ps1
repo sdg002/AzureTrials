@@ -3,7 +3,7 @@
 $Ctx=Get-AzContext
 $FireWallRuleName="AllowAllAccess"
 $AccessToken = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
-
+$SeverlessDatabaseName="myserverlessdb"
 
 
 function CreateResourceGroup {
@@ -72,7 +72,7 @@ function CreateMasterKey(){
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/createmasterkey.sql"
     Write-Host "Going to execute SQL file '$pathToSql' to create new database"
-    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database "MASTER" -Verbose
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file executed. New database created"
 }
 
