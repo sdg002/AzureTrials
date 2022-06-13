@@ -56,12 +56,26 @@ function RelaxFireWallRules()
     Write-Host "Added relaxed firewall rules to allow script to work"
 }
 
+function CreateServerlessDatabase()
+{
+    Write-Host "Going to run SQL command to create a database"
+    $access_token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "new-serverless-database.sql"
+    Write-Host "Going to execute SQL file '$pathToSql' to create new database"
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $access_token -InputFile $pathToSql -Database "MASTER" -Verbose
+    Write-Host "SQL file executed. New database created"
+}
+
 Write-Host  "Running in the context of $Ctx"
 CreateResourceGroup
 CreateStorageAccountForCsv
 DeploySynapse
 RelaxFireWallRules
+CreateServerlessDatabase
 Write-Host "Complete"
+Write-Host Get-Date
+
 
 #you were here, should you write a separate script to upload CSV - which deploys and then uploads
 # Purge storage account
