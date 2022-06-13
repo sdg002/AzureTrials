@@ -17,10 +17,12 @@ How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool
 This looks good
 https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-serverless-sql-pool#first-time-setup
 
+## CREATE EXTERNAL DATASOURCE
+- [Full documentation](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated)
 
 ## Query Parquet files
-
 https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-parquet-files
+
 
 
 
@@ -66,9 +68,8 @@ from openrowset(
 
 ```
 
-# You were here!!
-
-## Check for the present of a master key
+# Check for the present of a master key
+The master key is created on the MASTER database. In production scenarios the symmetric key should be placed in the key vault if not found
 ```sql
 
 IF NOT EXISTS (SELECT * FROM SYS.KEY_ENCRYPTIONS ke WHERE ke.crypt_type = 'ESKM' )
@@ -78,6 +79,9 @@ BEGIN
 END
 
 ```
+
+# You were here!!
+
 
 ## Check for presence of external datasource
 ```sql

@@ -2,7 +2,7 @@
 
 $Ctx=Get-AzContext
 $FireWallRuleName="AllowAllAccess"
-
+$AccessToken = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
 
 
 
@@ -59,11 +59,20 @@ function RelaxFireWallRules()
 function CreateServerlessDatabase()
 {
     Write-Host "Going to run SQL command to create a database"
-    $access_token = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
+    
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "new-serverless-database.sql"
     Write-Host "Going to execute SQL file '$pathToSql' to create new database"
-    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $access_token -InputFile $pathToSql -Database "MASTER" -Verbose
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database "MASTER" -Verbose
+    Write-Host "SQL file executed. New database created"
+}
+
+function CreateMasterKey(){
+    Write-Host "Going to run SQL script to create master key"
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/createmasterkey.sql"
+    Write-Host "Going to execute SQL file '$pathToSql' to create new database"
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database "MASTER" -Verbose
     Write-Host "SQL file executed. New database created"
 }
 
@@ -73,6 +82,7 @@ CreateStorageAccountForCsv
 DeploySynapse
 RelaxFireWallRules
 CreateServerlessDatabase
+CreateMasterKey
 Write-Host "Complete"
 Write-Host Get-Date
 
