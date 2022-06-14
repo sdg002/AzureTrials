@@ -23,7 +23,11 @@ https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-serverless-s
 ## Query Parquet files
 https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-parquet-files
 
+## Generating a SAS token
+https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-generate-sas
 
+## Using managed identity to grant access to storage accounts
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/develop-storage-files-storage-access-control?tabs=managed-identity
 
 
 
@@ -148,3 +152,49 @@ from openrowset(
     ) as rows
 
 ```
+
+# Lessons learnt
+to be consolidated
+
+## Creating the credential
+```sql
+CREATE DATABASE SCOPED CREDENTIAL PEOPLESCREDENTIAL
+WITH IDENTITY = 'Managed Identity';
+```
+
+## Creating the external data source
+```sql
+create external data source peoplesdemo
+with ( 
+    location = 'https://csvstoragedemo001.blob.core.windows.net/junk', 
+    CREDENTIAL = PEOPLESCREDENTIAL 
+    )
+```
+
+## What is the error message when Synapse does not have permissions?
+
+```
+File '/peoples.csv' cannot be opened because it does not exist or it is used by another process.
+```
+
+
+## How to give Synapse permissions to the storage account?
+- Use the Synapse system assigned identity. No need to create one. Already there
+- Assign this to the Blob contributor role
+- Drop and re-create the credential
+
+
+
+## How to get the managed identity of an Azure Resource?
+
+```powershell
+#Get the resource
+$res=Get-AzResource -ResourceGroupName  $global:SynapseResourceGroup -Name $global:SynapseWorkspaceName
+$res.Identity.PrincipalId
+
+```
+
+# What was I doing?
+- Got the credential working
+- Got the data source working
+- Got the query to work

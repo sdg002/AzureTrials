@@ -81,10 +81,18 @@ function CreatePeopleCredential(){
     Write-Host "Going to run SQL script to create credential"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peoplecredential.sql"
-    Write-Host "Going to execute SQL file '$pathToSql' to create new database"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file 'sql/peoplecredential.sql' executed"
 }
+
+function CreatePeopleDataSource(){
+    Write-Host "Going to run SQL script to create people data source"
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peopledatasource.sql"
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
+    Write-Host "SQL file 'sql/peopledatasource.sql' executed"
+}
+
 function AssignSynapseToReaderRoleOfStorageAccount(){
     Write-Host "Getting storage account $global:StorageAccountForCsv"
     $stoAccount=Get-AzResource -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
@@ -100,7 +108,7 @@ function AssignSynapseToReaderRoleOfStorageAccount(){
     if ($null -ne $existingRoleAssignments)
     {
         Write-Host "Deleting all existing role assignments for the storage group"
-        az role assignment delete  --assignee $res.Identity.PrincipalId --scope $sto.ResourceId --only-show-errors 1> out-null
+        az role assignment delete  --assignee $res.Identity.PrincipalId --scope $sto.ResourceId --only-show-errors
         Write-Host "All existing role assignments for the storage group deleted"    
     }
     else {
@@ -122,6 +130,7 @@ RelaxFireWallRules
 CreateServerlessDatabase
 CreateMasterKey
 CreatePeopleCredential
+CreatePeopleDataSource
 AssignSynapseToReaderRoleOfStorageAccount
 Write-Host "Complete"
 Write-Host Get-Date
