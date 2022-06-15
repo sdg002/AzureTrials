@@ -8,7 +8,7 @@ END
 GO
 create external data source peoplesdemo
 with ( 
-    location = 'https://csvstoragedemo001.blob.core.windows.net/junk', 
+    location = '{{BLOBENDPOINT}}{{CONTAINERNAME}}', 
     CREDENTIAL = PEOPLESCREDENTIAL 
     )
 PRINT 'Created external datasource peoplesdemo'

@@ -13,3 +13,19 @@ $Global:SynapseWorkspaceName="testsynapse-$env:environment"
 $Global:SynapseAdminUser="synapseadmin"
 $Global:SynapseFileShare="testsynapsefileshare"
 $Global:StorageBlobContributorRole="Storage Blob Data Contributor"
+
+function ReplaceTextInFile([string]$sqlfilename,[System.Collections.Hashtable]$tagvalues)
+{
+    #
+    #Reads the specified file and replaces the tags specified in the Keys of the HashTable with the corresponding values
+    #The file is not modified. The replaced text is returned to the caller
+    #
+    $TemplateFileContents=[System.IO.File]::ReadAllText($sqlfilename)
+    $ModifiedTemplateContents=$TemplateFileContents
+    foreach ($key in $tagvalues.Keys) 
+    {
+        $tagValue=$tagvalues[$key]
+        $ModifiedTemplateContents=$ModifiedTemplateContents -replace $key,$tagValue
+    }
+    return $ModifiedTemplateContents
+}

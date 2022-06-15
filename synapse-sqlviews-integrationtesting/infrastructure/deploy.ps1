@@ -14,7 +14,7 @@ function CreateResourceGroup {
 
 function CreateStorageAccountForCsv{
     Write-Host "Creating storage account $Global:StorageAccountForCsv"
-    az storage account create --name $Global:StorageAccountForCsv --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id | Out-Null
+    az storage account create --name $Global:StorageAccountForCsv --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id  | Out-Null
     ThrowErrorIfExitCode -Message "Could not create storage account $Global:StorageAccountForCsv"
 }
 
@@ -24,6 +24,7 @@ function DeploySynapse{
     Write-Host "Creating storage account for Synapse $stoAccountForSynapse"
     & az storage account create --name $stoAccountForSynapse --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id | Out-Null
     ThrowErrorIfExitCode -Message "Could not create storage account $stoAccountForSynapse"
+
     Write-Host "Creating Synapse workspace"
     & az synapse workspace create --name $Global:SynapseWorkspaceName --location $Global:Location --storage-account $stoAccountForSynapse --sql-admin-login-user $Global:SynapseAdminUser --sql-admin-login-password $synapsePassWord --file-system $Global:SynapseFileShare --subscription $Ctx.Subscription.Id --resource-group $Global:SynapseResourceGroup
     ThrowErrorIfExitCode -Message "Could not create synapse workspace  $Global:SynapseWorkspaceName"
@@ -86,10 +87,19 @@ function CreatePeopleCredential(){
 }
 
 function CreatePeopleDataSource(){
+    $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
+
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peopledatasource.sql"
+    $dict=@{}
+    $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
+    $dict.Add("{{CONTAINERNAME}}","junk")
+
+    Write-Host "Replacing tags in file: $pathToSql"
+    $sqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToSql -tagvalues $dict
+
     Write-Host "Going to run SQL script to create people data source"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peopledatasource.sql"
-    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $sqlWithReplacements -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file 'sql/peopledatasource.sql' executed"
 }
 
@@ -108,7 +118,7 @@ function AssignSynapseToReaderRoleOfStorageAccount(){
     if ($null -ne $existingRoleAssignments)
     {
         Write-Host "Deleting all existing role assignments for the storage group"
-        az role assignment delete  --assignee $res.Identity.PrincipalId --scope $sto.ResourceId --only-show-errors
+        az role assignment delete  --assignee $synapseResource.Identity.PrincipalId --scope $stoAccount.ResourceId --only-show-errors --subscription  $Ctx.Subscription.Id
         Write-Host "All existing role assignments for the storage group deleted"    
     }
     else {
@@ -117,12 +127,13 @@ function AssignSynapseToReaderRoleOfStorageAccount(){
     ThrowErrorIfExitCode -message "Failed to delted existing role assignments"
 
     Write-Host "Adding Synapse to $Global:StorageBlobContributorRole role of Storage account"
-    & az role assignment create --assignee $synapseResource.Identity.PrincipalId --role "$Global:StorageBlobContributorRole" --scope $stoAccount.ResourceId
+    & az role assignment create --assignee $synapseResource.Identity.PrincipalId --role "$Global:StorageBlobContributorRole" --scope $stoAccount.ResourceId --subscription  $Ctx.Subscription.Id
     ThrowErrorIfExitCode -Message "Failed to the managed identity of assign synapase to IAM role of storage account"    
 }
 
 
-Write-Host  "Running in the context of $Ctx"
+Write-Host  "Running in the context of:"
+$Ctx
 CreateResourceGroup
 CreateStorageAccountForCsv
 DeploySynapse
