@@ -162,6 +162,15 @@ function CreateSqlObjectsForExternalTable($table,$containerName){
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $sqlWithReplacements -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file '$pathToSql' executed"    
+
+    Write-Host "Going to create table $table"
+    $dictForTable=@{}
+    $dictForTable.Add("{{DATASOURCENAME}}",$dataSourceName)
+    $sqlFileNameForTableCreation=("table-sql/{0}.sql" -f $table)
+    $pathToTableSql=Join-Path -Path $PSScriptRoot -ChildPath $sqlFileNameForTableCreation
+    $tableCreationSqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToTableSql -tagvalues $dictForTable
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $tableCreationSqlWithReplacements  -Database $SeverlessDatabaseName -Verbose
+    Write-Host "SQL file '$pathToTableSql' executed"    
 }
 
 Write-Host  "Running in the context of:"
@@ -176,7 +185,7 @@ CreateManagedIdentityCredential
 #CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
-CreateSqlObjectsForExternalTable -table "Peoples" -containerName "Junk"
+CreateSqlObjectsForExternalTable -table "Peoples" -containerName "junk"
 
 #TODO 10 Write a generic SQL that will handle DATASOURCE and EXTERNAL TABLE
 #TODO 20 Write a function that will handle a single table

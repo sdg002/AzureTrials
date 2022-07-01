@@ -296,10 +296,81 @@ CREATE EXTERNAL TABLE Peoples (
 - Got the query to work
 - Removed hard coding of storage account in data source
 - Create external table is working
-- Need to explore int
+- Need to explore int (THI WORKS)
+- YOU WERE WORKING ON CSV FILE FORMATS
+- CHALLENGE
+    - The Credential, Datasource and External table are all dependent. You cannot drop credential wihtout dropping Datasource and you cannot drop Datasource without dropping external table
+    - Handle Credential, Datasource and External table in 1 SQL file
+    - The single file should be parameterizable
+    - what should be the name of the file? PeopleTable.sql
+    - We already have the code for merging. See PeopleDataSource.sql
+    - What do you parameterize?
+    - BLOBENDPOINT
+    - CONTAINERNAME
+    - TABLENAME
+    - Use the TABLENAME to form the credentials and external datasource
+    - to keep the script simpler, try not to concatenate, use distinct tags for better readability
+    - There is an emerging need for a meta-data table. Prefix with 'system' to avoid conflicts
+    - The meta table should have a CSV with info about all other tables
+    - Read the meta data table using PowerShell during CI
+    - Read the meta data table using DataFrame via external table
+- Need to create external data source
 - Need to add CREATE TABLE to code
 - Need to add DROP TABLE to code
 - Need to add CREATE FILE FORMAT to code
 - You need to create storage account , create container and upload a sample CSV file
 - 
 - 
+
+# Structure of a generic table creation SQL
+
+```sql
+
+-- DROP THE EXTERNAL TABLE IF EXISTS
+-- DROP DATA SOURCE IF EXISTS
+-- DROP CREDENTIAL IF EXISTS
+
+-- CREATE CREDENTIAL
+-- CREATE DATA SOURCE
+-- CREATE TABLE
+
+
+--    DROP EXTERNAL TABLE
+IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name]='{{TABLENAME}}' AND [TYPE]='U')
+BEGIN
+    DROP EXTERNAL TABLE {{TABLENAME}}
+    PRINT 'Table {{TABLENAME}} was dropped'
+END
+GO
+
+--    DROP EXTERNAL DATA SOURCES
+IF EXISTS (SELECT * FROM sys.external_data_sources WHERE [name]='{{DATASOURCENAME}}')
+BEGIN
+    print 'Dropping data source {{DATASOURCENAME}}'
+    DROP EXTERNAL DATA SOURCE {{DATASOURCENAME}}
+    print 'Dropped data source {{DATASOURCENAME}}'
+END
+
+--    DROP CREDENTIAL - NO NEED TO DROP CREDENTIAL BECAUSE IT IS A MANAGED IDENTITY
+GO
+IF EXISTS (SELECT * FROM SYS.DATABASE_SCOPED_CREDENTIALS WHERE [name] = '{{CREDENTIALNAME}}') 
+BEGIN
+    DROP DATABASE SCOPED CREDENTIAL {{CREDENTIALNAME}}
+    PRINT 'Dropped the credential {{CREDENTIALNAME}}'
+END
+GO
+---------------------
+GO
+create external data source {{DATASOURCENAME}}
+with ( 
+    location = '{{BLOBENDPOINT}}{{CONTAINERNAME}}', 
+    CREDENTIAL = PEOPLESCREDENTIAL 
+    )
+PRINT 'Created external datasource peoplesdemo'
+
+-- CREATE THE EXTERNAL TABLE
+``` 
+
+# How do you alter a file format?
+I was unable to achieve. See link. It might be possible. The accompanying link from MSFT within this post is broken
+https://docs.microsoft.com/en-us/answers/questions/38287/alter-external-file-format-question.html
