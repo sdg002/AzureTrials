@@ -1,5 +1,6 @@
 . $PSScriptRoot\common.ps1
 
+Clear-Host
 $Ctx=Get-AzContext
 $FireWallRuleName="AllowAllAccess"
 $AccessToken = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
@@ -78,10 +79,10 @@ function CreateMasterKey(){
     Write-Host "SQL file executed. New database created"
 }
 
-function CreatePeopleCredential(){
+function CreateManagedIdentityCredential(){
     Write-Host "Going to run SQL script to create credential"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peoplecredential.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/managed-identity-credential.sql"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file 'sql/peoplecredential.sql' executed"
 }
@@ -143,6 +144,26 @@ function CreateFileFormat{
 
 }
 
+function CreateSqlObjectsForExternalTable($table,$containerName){
+    $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
+    $dataSourceName=("{0}dDataSource" -f $table)
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/generic-external-table.sql"
+    $dict=@{}
+    $dict.Add("{{TABLENAME}}",$table)
+    $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
+    $dict.Add("{{DATASOURCENAME}}",$dataSourceName)
+    $dict.Add("{{CONTAINERNAME}}",$containerName)
+    $dict.Add("{{CREDENTIALNAME}}","MYCREDENTIAL")
+
+    Write-Host "Replacing tags in file: $pathToSql"
+    $sqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToSql -tagvalues $dict
+
+    Write-Host "Going to run SQL script to create objects neccessary for external table $table"
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $sqlWithReplacements -Database $SeverlessDatabaseName -Verbose
+    Write-Host "SQL file '$pathToSql' executed"    
+}
+
 Write-Host  "Running in the context of:"
 $Ctx
 CreateResourceGroup
@@ -151,10 +172,11 @@ DeploySynapse
 RelaxFireWallRules
 CreateServerlessDatabase
 CreateMasterKey
-CreatePeopleCredential
+CreateManagedIdentityCredential
 #CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
+CreateSqlObjectsForExternalTable -table "Peoples" -containerName "Junk"
 
 #TODO 10 Write a generic SQL that will handle DATASOURCE and EXTERNAL TABLE
 #TODO 20 Write a function that will handle a single table
