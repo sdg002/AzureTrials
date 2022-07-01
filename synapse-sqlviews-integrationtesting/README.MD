@@ -20,6 +20,12 @@ https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-serverless-s
 ## CREATE EXTERNAL DATASOURCE
 - [Full documentation](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated)
 
+## CREATE EXTERNAL TABLE
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/create-use-external-tables#external-table-on-a-set-of-files
+
+## Query CSV file
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-single-csv-file
+
 ## Query Parquet files
 https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-parquet-files
 
@@ -153,6 +159,64 @@ from openrowset(
 
 ```
 
+## Creating the external file format
+Notice the importance of **FIRST_ROW**. This specifies that the first data row is from row number 2 (1 based)
+```sql
+IF EXISTS (SELECT * FROM sys.external_file_formats WHERE [name]='CSVFORMAT') 
+BEGIN
+    DROP EXTERNAL FILE FORMAT CSVFORMAT
+    PRINT 'external file format CSVFORMAT was dropped'
+END
+GO
+CREATE EXTERNAL FILE FORMAT CSVFORMAT WITH 
+    (  
+        FORMAT_TYPE = DELIMITEDTEXT,
+        FORMAT_OPTIONS 
+            (
+                FIRST_ROW=2,
+                FIELD_TERMINATOR=',',
+                STRING_DELIMITER='"'                
+            )
+    )
+PRINT 'external file format CSVFORMAT was created'
+
+```
+
+## Create the external table
+You need the **CSVFORMAT** to have been created using `CREATE EXTERNAL FILE FORMAT`
+
+```sql
+IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name]='Peoples' AND [TYPE]='U')
+BEGIN
+    DROP EXTERNAL TABLE Peoples
+    PRINT 'Table peoples was dropped'
+END
+GO
+CREATE EXTERNAL TABLE Peoples (
+     id int,
+     --id nvarchar(20),
+     firstname nvarchar(50),
+     lastname nvarchar(50),
+) WITH (
+         LOCATION = '/peoples.csv',
+         DATA_SOURCE = peoplesdemo,
+         FILE_FORMAT = CSVFORMAT
+);
+PRINT 'Table peoples was created'
+GO
+SELECT * FROM Peoples
+
+```
+## Getting table schema from INFORMATION_SCHEMA
+
+```sql
+SELECT * FROM 
+INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='Peoples'
+GO
+SELECT * FROM 
+INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='Peoples' AND COLUMN_NAME='ID'
+```
+
 # Lessons learnt
 to be consolidated
 
@@ -194,7 +258,48 @@ $res.Identity.PrincipalId
 
 ```
 
+## Creating a file format
+```sql
+
+GO
+CREATE EXTERNAL FILE FORMAT CSVFORMAT WITH 
+    (  
+        FORMAT_TYPE = DELIMITEDTEXT,
+        FORMAT_OPTIONS 
+            (
+                FIELD_TERMINATOR=',',
+                STRING_DELIMITER='"'                
+            )
+    )
+GO
+```
+## Create external table
+```sql
+DROP EXTERNAL TABLE Peoples
+GO
+CREATE EXTERNAL TABLE Peoples (
+     --int,
+     id nvarchar(20),
+     firstname nvarchar(50),
+     lastname nvarchar(50),
+) WITH (
+         LOCATION = '/peoples.csv',
+         DATA_SOURCE = peoplesdemo,
+         --FORMAT='csv'
+         FILE_FORMAT = CSVFORMAT
+);
+
+```
 # What was I doing?
 - Got the credential working
 - Got the data source working
 - Got the query to work
+- Removed hard coding of storage account in data source
+- Create external table is working
+- Need to explore int
+- Need to add CREATE TABLE to code
+- Need to add DROP TABLE to code
+- Need to add CREATE FILE FORMAT to code
+- You need to create storage account , create container and upload a sample CSV file
+- 
+- 

@@ -131,6 +131,17 @@ function AssignSynapseToReaderRoleOfStorageAccount(){
     ThrowErrorIfExitCode -Message "Failed to the managed identity of assign synapase to IAM role of storage account"    
 }
 
+function CreateFileFormat{
+    $file="sql/createfileformats.sql"
+    Write-Host "Going to run the SQL file {$file} "
+
+    #you were here, write the SQL
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath $file
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
+    Write-Host "SQL file '$file' executed"
+
+}
 
 Write-Host  "Running in the context of:"
 $Ctx
@@ -141,12 +152,16 @@ RelaxFireWallRules
 CreateServerlessDatabase
 CreateMasterKey
 CreatePeopleCredential
-CreatePeopleDataSource
+#CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
+CreateFileFormat
+
+#TODO 10 Write a generic SQL that will handle DATASOURCE and EXTERNAL TABLE
+#TODO 20 Write a function that will handle a single table
 Write-Host "Complete"
 Write-Host Get-Date
 
 
-#you were here, should you write a separate script to upload CSV - which deploys and then uploads
+#TODO 100 you were here, should you write a separate script to upload CSV - which deploys and then uploads
 # Purge storage account
 # Upload CSV
