@@ -32,13 +32,6 @@ function DeploySynapse{
 
 }
 
-function ThrowErrorIfExitCode($message){
-    if (0 -eq $LASTEXITCODE){
-        return
-    }
-    Write-Error -Message $message
-}
-
 function RelaxFireWallRules()
 {
     Write-Host "Relaxing firewall rules"
@@ -187,12 +180,37 @@ AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
 CreateSqlObjectsForExternalTable -table "Peoples" -containerName "junk"
 
-#TODO 10 Write a generic SQL that will handle DATASOURCE and EXTERNAL TABLE
-#TODO 20 Write a function that will handle a single table
 Write-Host "Complete"
 Write-Host Get-Date
 
 
 #TODO 100 you were here, should you write a separate script to upload CSV - which deploys and then uploads
+<#
+root
+    |
+    |
+    |
+    |---[SampleCSV]
+    |
+    |---metadata.csv
+    |
+    |--create-storate-containers.csv
+    |
+    |
+
+create-storate-containers.ps1
+-----------------------------
+    Read the CSV using import-csv
+    iterate through the items
+    Use AZ CLI to create a storage account container
+    https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create
+    Upload a file to the container
+    ??find the AZ syntax
+
+What should be the design of the metadata.csv
+---------------------------------------------
+    ID,TableName,FileName,ContainerName,SampleCsv
+
+#>
 # Purge storage account
 # Upload CSV

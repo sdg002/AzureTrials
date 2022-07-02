@@ -29,3 +29,10 @@ function ReplaceTextInFile([string]$sqlfilename,[System.Collections.Hashtable]$t
     }
     return $ModifiedTemplateContents
 }
+
+function ThrowErrorIfExitCode($message){
+    if (0 -eq $LASTEXITCODE){
+        return
+    }
+    Write-Error -Message $message
+}
