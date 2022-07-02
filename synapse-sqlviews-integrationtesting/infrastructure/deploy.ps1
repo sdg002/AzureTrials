@@ -139,7 +139,7 @@ function CreateFileFormat{
 
 function CreateSqlObjectsForExternalTable($table,$containerName){
     $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
-    $dataSourceName=("{0}dDataSource" -f $table)
+    $dataSourceName=("{0}DataSource" -f $table)
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/generic-external-table.sql"
     $dict=@{}
     $dict.Add("{{TABLENAME}}",$table)
@@ -166,6 +166,22 @@ function CreateSqlObjectsForExternalTable($table,$containerName){
     Write-Host "SQL file '$pathToTableSql' executed"    
 }
 
+function CreateAllCsvObjectsFromCSv($metadataFile){
+    $metadataFile=Join-Path -Path $PSScriptRoot -ChildPath $metadataFile
+    Write-Host "Reading metadata file $metadataFile"
+    $CsvRecords=Import-Csv -Path $metadataFile
+    Write-Host ("Found {0} records in the metadata file" -f  $CsvRecords.Count)
+    foreach($record in $CsvRecords){
+        Write-Host "---------------------"
+        Write-Host ("Container name: {0}" -f $record.ContainerName)
+        Write-Host ("Table name: {0}" -f $record.TableName)
+        CreateSqlObjectsForExternalTable -table $record.TableName -containerName $record.ContainerName
+        Write-Host "---------------------"
+    }    
+
+
+}
+
 Write-Host  "Running in the context of:"
 $Ctx
 CreateResourceGroup
@@ -178,7 +194,7 @@ CreateManagedIdentityCredential
 #CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
-CreateSqlObjectsForExternalTable -table "Peoples" -containerName "junk"
+CreateAllCsvObjectsFromCSv -metadataFile "storagemetadata.csv"
 
 Write-Host "Complete"
 Write-Host Get-Date

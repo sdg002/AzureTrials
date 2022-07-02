@@ -1,4 +1,4 @@
-CREATE EXTERNAL TABLE Peoples (
+CREATE EXTERNAL TABLE People (
      id int,
      firstname nvarchar(50),
      lastname nvarchar(50),
@@ -8,4 +8,4 @@ CREATE EXTERNAL TABLE Peoples (
          FILE_FORMAT = CSVFORMAT
 );
 GO
-PRINT 'Created table Peoples'
+PRINT 'Created table People'
