@@ -4,6 +4,12 @@ Clear-Host
 $Ctx=Get-AzContext
 $CsvRecords=$null
 
+function CreateStorageAccountForCsv{
+    Write-Host "Creating storage account $Global:StorageAccountForCsv"
+    az storage account create --name $Global:StorageAccountForCsv --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id  | Out-Null
+    ThrowErrorIfExitCode -Message "Could not create storage account $Global:StorageAccountForCsv"
+}
+
 function ReadCsv(){
     $metadataFile=Join-Path -Path $PSScriptRoot -ChildPath "storagemetadata.csv"    
     Write-Host "Reading metadata file $metadataFile"
@@ -34,6 +40,8 @@ function UploadFiles(){
     }
 }
 
+CreateResourceGroup
+CreateStorageAccountForCsv
 ReadCsv
 CreateStorageContainer
 UploadFiles

@@ -7,17 +7,6 @@ $AccessToken = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Tok
 $SeverlessDatabaseName="myserverlessdb"
 
 
-function CreateResourceGroup {
-    Write-Host "Creating resource group $Global:SynapseResourceGroup"
-    az group create --name $Global:SynapseResourceGroup --location  $Global:Location --subscription  $Ctx.Subscription.Id  | Out-Null
-    ThrowErrorIfExitCode -Message "Could not create resource group $Global:SynapseResourceGroup"
-}
-
-function CreateStorageAccountForCsv{
-    Write-Host "Creating storage account $Global:StorageAccountForCsv"
-    az storage account create --name $Global:StorageAccountForCsv --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id  | Out-Null
-    ThrowErrorIfExitCode -Message "Could not create storage account $Global:StorageAccountForCsv"
-}
 
 function DeploySynapse{
     $stoAccountForSynapse="synasepstorage{0}" -f $env:environment
@@ -185,7 +174,6 @@ function CreateAllCsvObjectsFromCSv($metadataFile){
 Write-Host  "Running in the context of:"
 $Ctx
 CreateResourceGroup
-CreateStorageAccountForCsv
 DeploySynapse
 RelaxFireWallRules
 CreateServerlessDatabase
@@ -199,34 +187,3 @@ CreateAllCsvObjectsFromCSv -metadataFile "storagemetadata.csv"
 Write-Host "Complete"
 Write-Host Get-Date
 
-
-#TODO 100 you were here, should you write a separate script to upload CSV - which deploys and then uploads
-<#
-root
-    |
-    |
-    |
-    |---[SampleCSV]
-    |
-    |---metadata.csv
-    |
-    |--create-storate-containers.csv
-    |
-    |
-
-create-storate-containers.ps1
------------------------------
-    Read the CSV using import-csv
-    iterate through the items
-    Use AZ CLI to create a storage account container
-    https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create
-    Upload a file to the container
-    ??find the AZ syntax
-
-What should be the design of the metadata.csv
----------------------------------------------
-    ID,TableName,FileName,ContainerName,SampleCsv
-
-#>
-# Purge storage account
-# Upload CSV

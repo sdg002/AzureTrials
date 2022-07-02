@@ -36,3 +36,9 @@ function ThrowErrorIfExitCode($message){
     }
     Write-Error -Message $message
 }
+
+function CreateResourceGroup {
+    Write-Host "Creating resource group $Global:SynapseResourceGroup"
+    az group create --name $Global:SynapseResourceGroup --location  $Global:Location --subscription  $Ctx.Subscription.Id  | Out-Null
+    ThrowErrorIfExitCode -Message "Could not create resource group $Global:SynapseResourceGroup"
+}
