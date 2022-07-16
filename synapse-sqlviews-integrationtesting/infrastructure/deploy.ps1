@@ -133,6 +133,29 @@ function CreateStorageAccount {
     Write-Host "Created Azure storage account container $container"
 }
 
+function DropExternalTable {
+    param (
+        [string]$table
+    )
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $dropTableSql="IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name]='$table' AND [TYPE]='U') DROP EXTERNAL TABLE $table"
+    Write-Host "Dropping external table $table"
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $dropTableSql -Database $SeverlessDatabaseName -Verbose
+    Write-Host "Dropped external table $table"
+    
+}
+
+function DropExternalDataSource {
+    param (
+        [string]$datasource
+    )
+    $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
+    $dropDataSourceSql="IF EXISTS (SELECT * FROM sys.external_data_sources WHERE [name]='$datasource') DROP EXTERNAL DATA SOURCE $datasource"
+    Write-Host "Dropping external data source $datasource"
+    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $dropDataSourceSql -Database $SeverlessDatabaseName -Verbose    
+    Write-Host "Dropped external data source $datasource"
+}
+
 function CreateExternalTable {
     param (
         [string]$filename
@@ -161,13 +184,23 @@ RelaxFireWallRules
 CreateServerlessDatabase
 CreateMasterKey
 CreateManagedIdentityCredential
-#CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
 
 CreateStorageAccount -container "people"
 CreateStorageAccount -container "address"
+
+#
+#People objects
+#
+DropExternalTable -table "People"
+DropExternalDataSource -datasource "PEOPLEDATASOURCE"
 CreateExternalTable -filename "People.sql"
+#
+#Address objects
+#
+DropExternalTable -table "Address"
+DropExternalDataSource -datasource "ADDRESSDATASOURCE"
 CreateExternalTable -filename "Address.sql"
 
 Write-Host "Complete"
