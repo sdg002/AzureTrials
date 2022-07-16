@@ -45,7 +45,7 @@ function CreateServerlessDatabase()
     Write-Host "Going to run SQL command to create a database"
     
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "new-serverless-database.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql\new-serverless-database.sql"
     Write-Host "Going to execute SQL file '$pathToSql' to create new database"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database "MASTER" -Verbose
     Write-Host "SQL file executed. New database created"
