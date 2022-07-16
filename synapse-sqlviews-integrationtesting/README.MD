@@ -1,5 +1,12 @@
 # Overview
+
 How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool
+[talk about synapse, talk about serverless pool, stress on CSV, ]
+
+[we need a block diagram to show what the solution looks like]
+
+# What is out of scope?
+[set the expectations]
 
 # Talking Points
 - Lack of SSDT support
