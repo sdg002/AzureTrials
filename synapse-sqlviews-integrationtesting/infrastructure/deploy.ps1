@@ -126,48 +126,30 @@ function CreateFileFormat{
 
 }
 
-function CreateSqlObjectsForExternalTable($table,$containerName){
-    $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
-    $dataSourceName=("{0}DataSource" -f $table)
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/generic-external-table.sql"
-    $dict=@{}
-    $dict.Add("{{TABLENAME}}",$table)
-    $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
-    $dict.Add("{{DATASOURCENAME}}",$dataSourceName)
-    $dict.Add("{{CONTAINERNAME}}",$containerName)
-    $dict.Add("{{CREDENTIALNAME}}","MYCREDENTIAL")
+function CreateStorageAccount {
+    param ([string]$container)
+    Write-Host "Creating Azure storage account container $container"
+    & az storage container create --name $container --account-name $Global:StorageAccountForCsv    
+    Write-Host "Created Azure storage account container $container"
+}
 
+function CreateExternalTable {
+    param (
+        [string]$filename
+    )
+    Write-Host "Creating external table from file: $filename"
+    $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
+    $dict=@{}
+    $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
+
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "table-sql/$filename"
     Write-Host "Replacing tags in file: $pathToSql"
     $sqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToSql -tagvalues $dict
 
-    Write-Host "Going to run SQL script to create objects neccessary for external table $table"
+    Write-Host "Going to run SQL script to create objects neccessary for external table $filename"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $sqlWithReplacements -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file '$pathToSql' executed"    
-
-    Write-Host "Going to create table $table"
-    $dictForTable=@{}
-    $dictForTable.Add("{{DATASOURCENAME}}",$dataSourceName)
-    $sqlFileNameForTableCreation=("table-sql/{0}.sql" -f $table)
-    $pathToTableSql=Join-Path -Path $PSScriptRoot -ChildPath $sqlFileNameForTableCreation
-    $tableCreationSqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToTableSql -tagvalues $dictForTable
-    Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -Query $tableCreationSqlWithReplacements  -Database $SeverlessDatabaseName -Verbose
-    Write-Host "SQL file '$pathToTableSql' executed"    
-}
-
-function CreateAllCsvObjectsFromCSv($metadataFile){
-    $metadataFile=Join-Path -Path $PSScriptRoot -ChildPath $metadataFile
-    Write-Host "Reading metadata file $metadataFile"
-    $CsvRecords=Import-Csv -Path $metadataFile
-    Write-Host ("Found {0} records in the metadata file" -f  $CsvRecords.Count)
-    foreach($record in $CsvRecords){
-        Write-Host "---------------------"
-        Write-Host ("Container name: {0}" -f $record.ContainerName)
-        Write-Host ("Table name: {0}" -f $record.TableName)
-        CreateSqlObjectsForExternalTable -table $record.TableName -containerName $record.ContainerName
-        Write-Host "---------------------"
-    }    
-
 
 }
 
@@ -182,7 +164,11 @@ CreateManagedIdentityCredential
 #CreatePeopleDataSource TODO Data source gets intergrated 
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
-CreateAllCsvObjectsFromCSv -metadataFile "storagemetadata.csv"
+
+CreateStorageAccount -container "people"
+CreateStorageAccount -container "address"
+CreateExternalTable -filename "People.sql"
+CreateExternalTable -filename "Address.sql"
 
 Write-Host "Complete"
 Write-Host Get-Date
