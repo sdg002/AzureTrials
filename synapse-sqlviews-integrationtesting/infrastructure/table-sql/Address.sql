@@ -40,7 +40,7 @@ CREATE EXTERNAL TABLE Address (
      postcode nvarchar(50),
      [country] nvarchar(50)
 ) WITH (
-         LOCATION = '/addresses.csv',
+         LOCATION = '/address.csv',
          DATA_SOURCE = ADDRESSDATASOURCE,
          FILE_FORMAT = CSVFORMAT
 );

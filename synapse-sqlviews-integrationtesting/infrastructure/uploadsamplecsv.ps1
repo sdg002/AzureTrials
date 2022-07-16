@@ -11,8 +11,8 @@ function UploadFile {
     Write-Host ("Going to upload file {0} to the container {1}" -f $csvFile,$container)
     & az storage blob upload --container-name $container  --account-name $Global:StorageAccountForCsv --file $csvFile --overwrite true
     Write-Host "Uploaded file $filename to the container: $container"
-
+    ThrowErrorIfExitCode -message "Failed to upload '$filename' to the container: '$container'"
 }
 
-UploadFile -container "address" -filename "samplecsv/addresses.csv"
+UploadFile -container "address" -filename "samplecsv/address.csv"
 UploadFile -container "people" -filename "samplecsv/people.csv"
