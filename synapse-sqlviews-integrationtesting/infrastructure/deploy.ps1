@@ -5,12 +5,12 @@ $Ctx=Get-AzContext
 $FireWallRuleName="AllowAllAccess"
 $AccessToken = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
 $SeverlessDatabaseName="myserverlessdb"
+$synapsePassWord="Pass@word123"
 
 
 
 function DeploySynapse{
     $stoAccountForSynapse="synasepstorage{0}" -f $env:environment
-    $synapsePassWord="Pass@word123"
     Write-Host "Creating storage account for Synapse $stoAccountForSynapse"
     & az storage account create --name $stoAccountForSynapse --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id | Out-Null
     ThrowErrorIfExitCode -Message "Could not create storage account $stoAccountForSynapse"

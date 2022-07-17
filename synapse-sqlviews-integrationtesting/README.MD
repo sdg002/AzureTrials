@@ -1,18 +1,151 @@
+# Azure Synapse Serverless- A better approach to GIT integration and Pull Request reviews using Azure Devops
+---
+
+![article-overview](docs/images/article-overview.png)
+
 # Overview
+**Azure Synapse** is Microsoft's data analytics solution on the cloud that significantly accelerates the time to virtualize and analyze myriad data sources. 
+Synapse SQL offers both serverless and dedicated resource models. The serverless model makes it easy for companies to enter the big data space with relatively small monetary comittment. The dedicated pool model allows the company to scale up massively.
 
-How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool
-[talk about synapse, talk about serverless pool, stress on CSV, ]
+![what-is-synapse.png](docs/images/what-is-synapse.png)
 
+In this article we describe an approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
+This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation. 
+
+
+# How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
+
+[[show a picutre of 3 environments and Synapse in each of them, show arrows from dev to uat to prod]]
+
+# Does Synapse offer out of box GIT integration ?
+Yes
+[[Show a screen capture of GIT check box]]
+
+[[show a scrren capture of Script editor prompting for GIT branch
+]]
+
+---
+
+# How does the OOB GIT integration work?
+[[to be done, a block diagram helps]]
+
+---
+
+# What are the challenges with out of box GIT integration?
+1. [[The Synapse query editor in the browser becomes your IDE]]
+1. [[Restricted to Synapse artifacts only. E.g. Powershell/CLI scripts have to be dealt with via separate CI/CD]]
+1. Very hard or impossible to subsitute external locations in SQL constructs like `CREATE EXTERNAL DATASOURCR`. E.g. The URL of a storage account gets hard wired. You want to dynamically change this from DEV to PROD. 
+1. Poor readability of the SQL that gets generated and saved into GIT. This makes it very hard to do an effective Pull Request review
+1. The automated GIT integration makes it impossible to intercept and run some integration tests. E.g. I want to be sure that my `CREATE EXTERNAL TABLE`  is producing columns with the right column data types. Talk about COSMOS views...
+
+
+[[See if you can grab screen capture from Reddi about people complaining about lack of PR]]
+
+[[find the Old MS screen capture]]
+
+---
+# Why not use SSDT to integrate the SQL scripts with GIT ?
+[[Lack of SSDT support]]
+
+---
+
+# What does the proposed solution look like?
 [we need a block diagram to show what the solution looks like]
 
-# What is out of scope?
-[set the expectations]
+## Pull request work flow
+[[src code tree]] --> [[Developer creates a feature branch]] --> [Pull request is raised] -> [Run CI/CD and deploy using PowerShell/CLI to DEV] --> [[PR approved]] --> [[ Merge with master ]] --> [[Run CI/CD]] --> [[Deploy using PowerShell/CLI to UAT]]
 
-# Talking Points
-- Lack of SSDT support
-- Python because of data scientists
+::: mermaid
+graph LR;
+    A(src code tree)-->B(Developer creates a feature branch);
+    B-->C(cool);
+    C-->D(Pull request is raised);
+    D-->E(Run CI/CD and deploy using PowerShell/CLI to DEV)
+
+:::
 
 
+
+
+## Source structure
+[[show the detailed source tree , similar to what you did for Azure Python ]]
+
+
+# Hypothetical business scenario
+Neccessary to have a specific business scenario so that we do not digress on our journey to produce the right solution
+
+[[show a block diagram of a Azure storage account, with multiple containers, with CSV from different sources]]
+- A data ingestion framework built on Synapse pipelines
+- CSV files coming in from varous external parties. 
+- Each type of CSV has a dedicated storage account
+- Lots of CSV files coming in from different sources
+- CSV file --> picked up by pipline --> dumped into specific storage account based on file name pattern
+- Stick to CSV for this discussion. Can be extended to parquet
+- The company has data scientists and Power BI report writers who want to query on these files using SQL and make sense of the market
+---
+
+# What is in scope and out of scope of this article?
+- [[No data transformation pipelines]]
+- [[restricting to CSV, although solution can be extended to PARQUET and JSON]]
+- We are using serverless pool. The solution can be extended to SQL server pool.
+- PySpark is out of scope. 
+- 
+---
+
+# Prerequisites neccessary to follow this article and run the sample code?
+[[set the expectations]]
+- Access to Azure subscription
+- Visual Studio code
+- PowerShell Core
+- Running the accompanying code might incur minor Azure charges
+
+# How to create an instance of Azure Synapse?
+[[give a code snippet]]
+[[create the resource group]]
+
+# How to create the Storage account and containers ?
+[[produce a code snippet]]
+
+# How to create a Synapse serverless pool?
+[[produce a code snippet]]
+
+# How to ensure that Syanpse can access the CSV files in the storage account?
+[[produce a code snippet]]
+
+# how to create a SQL External table?
+Solve this in a step by step manner
+
+## Step 1 Create the file format
+[[to be done]]
+
+## Step 2 Create the credential to access the blob store
+[[produce a code snippet]]
+
+## Step 4 Create the external data source
+[[produce a code snippet]]
+
+## Step 5 Create the external table
+[[produce a code snippet]]
+
+## Can we test and verify the scripts locally before automating via Azure Devops?
+[[absolutely , show the Power shell steps, az loing, etx.]]
+
+---
+
+
+# How to use Azure Devops to roll out the CI/CD of this solution?
+[[show Azure Devops with DEV,UAT and PROD stages]]
+[[show a block diagram of CI --> then CD]]
+
+
+
+[[you will need a build.yml file]]
+[[you will need a Release pipeline]]
+[[you will need to run the integration tests ]]
+
+----
+----
+----
 
 # References
 
@@ -21,6 +154,12 @@ How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool
 - Single file https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-single-csv-file
 - Multiple file https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-folders-multiple-csv-files
 
+- Support for different storage types https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated
+- Use external tables with Synapse SQL https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/develop-tables-external-tables?tabs=hadoop
+
+- Github with sample SQL from Jovan Popovich https://github.com/Azure-Samples/Synapse/blob/main/SQL/Samples/LdwSample/SampleDB.sql
+- 
+- 
 This looks good
 https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-serverless-sql-pool#first-time-setup
 
@@ -381,3 +520,21 @@ PRINT 'Created external datasource peoplesdemo'
 # How do you alter a file format?
 I was unable to achieve. See link. It might be possible. The accompanying link from MSFT within this post is broken
 https://docs.microsoft.com/en-us/answers/questions/38287/alter-external-file-format-question.html
+
+# What was I thinking on July 16, 5 pm
+ - Simplify the Table creation SQL by reducing the number of boiler plate SQL statements
+ - Have a common PS file SqlHelper.ps1
+ - Function `DropExternalTable -table blah`
+ - Function `DropExternalDataSource -datasource blah`
+
+
+```PowerShell
+
+$sql="IF EXISTS (SELECT * FROM sys.external_data_sources WHERE [name]='PeopleDatasource') DROP EXTERNAL DATA SOURCE PeopleDatasource"
+$sql="IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name]='People' AND [TYPE]='U') DROP EXTERNAL TABLE People"
+```
+
+# References
+Creating external data source in synapse and the supported data types
+- https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated
+- 
