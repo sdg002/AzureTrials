@@ -10,8 +10,49 @@ Synapse SQL offers both serverless and dedicated resource models. The serverless
 ![what-is-synapse.png](docs/images/what-is-synapse.png)
 
 In this article we describe an approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
-This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation. 
+This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation.  By the end of this article we want to have a solution where we can confidently move Synapse artifacts from **DEV** to **UAT** and to **PROD**.
 
+```mermaid
+graph LR
+    Browser[Synapse scripts in the browser] -->DEV --> UAT --> PROD
+
+```
+
+---
+# Hypothetical business scenario
+Neccessary to have a specific business scenario so that we do not digress on our journey to produce the right solution. 
+
+[[show a block diagram of a Azure storage account, with multiple containers, with CSV from different sources]]
+- A data ingestion framework built on Synapse pipelines
+- CSV files coming in from varous external parties. 
+- Each type of CSV has a dedicated storage account
+- Lots of CSV files coming in from different sources
+- CSV file --> picked up by pipline --> dumped into specific storage account based on file name pattern
+- Stick to CSV for this discussion. Can be extended to parquet
+- The company has data scientists and Power BI report writers who want to query on these files using SQL and make sense of the market
+---
+
+
+# you were here
+
+---
+# What does the development experience with Synapse experience look like?
+
+1. Create a Synapse instance (Show picture or AZ command)
+1. Create a SQL Database in the Serverless pool (Show SQL Statement)
+1. Create a storage account and create containers (assuming that each container maps to an external table) (show pic of containers)
+1. Upload skeletal CSV/PARQUET files in the storage containers
+1. Create external data source(s)
+1. Creat external tables which reference the external data source(s)
+1. (optionally create views)
+1. Write Spark code using Notebooks (optional)
+1. Enable GIT integration
+1. Data scientists will consume the external tables and views via client applications like Power BI/SSMS/Python data frames
+
+
+**this section must come after you have discussed the business scenario**
+
+---
 
 # How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
 
@@ -70,18 +111,6 @@ graph LR;
 ## Source structure
 [[show the detailed source tree , similar to what you did for Azure Python ]]
 
-
-# Hypothetical business scenario
-Neccessary to have a specific business scenario so that we do not digress on our journey to produce the right solution
-
-[[show a block diagram of a Azure storage account, with multiple containers, with CSV from different sources]]
-- A data ingestion framework built on Synapse pipelines
-- CSV files coming in from varous external parties. 
-- Each type of CSV has a dedicated storage account
-- Lots of CSV files coming in from different sources
-- CSV file --> picked up by pipline --> dumped into specific storage account based on file name pattern
-- Stick to CSV for this discussion. Can be extended to parquet
-- The company has data scientists and Power BI report writers who want to query on these files using SQL and make sense of the market
 ---
 
 # What is in scope and out of scope of this article?
@@ -143,6 +172,8 @@ Solve this in a step by step manner
 [[you will need a Release pipeline]]
 [[you will need to run the integration tests ]]
 
+# References
+- [what is Azure Synapse?](https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is)
 ----
 ----
 ----
