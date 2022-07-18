@@ -20,16 +20,20 @@ graph LR
 
 ---
 # Hypothetical business scenario
-Neccessary to have a specific business scenario so that we do not digress on our journey to produce the right solution. 
+Before we go too far down the road, it is neccessary to pin down business scenario so that we are clear about the problem for which we want a solution.  Consider a company (call it **Contoso**) which collects CSV files from several external systems and vendors. These are reports of stock prices, cargo movement, commodity prices, freight prices,etc. from all over the world. Contoso has analysts which want to analyze this vast trove of data and product reports which can translate to meaningful actions.
 
-[[show a block diagram of a Azure storage account, with multiple containers, with CSV from different sources]]
-- A data ingestion framework built on Synapse pipelines
-- CSV files coming in from varous external parties. 
-- Each type of CSV has a dedicated storage account
-- Lots of CSV files coming in from different sources
-- CSV file --> picked up by pipline --> dumped into specific storage account based on file name pattern
-- Stick to CSV for this discussion. Can be extended to parquet
-- The company has data scientists and Power BI report writers who want to query on these files using SQL and make sense of the market
+![Power-Contoso-Overview.png](docs/images/Power-Contoso-Overview.png)
+
+
+- Lots of CSV files coming in from varous external parties and sources. 
+- A data ingestion framework built on Synapse pipelines. Data is pulled in via web scraping, ftp, http, email scraping
+- Each type of CSV has a dedicated container in one central stroage account
+- CSV file --> picked up by pipline --> some clearn up/ETL --> dumped into specific storage account based on file name pattern
+- We are going to restrict ourselves to CSV for this discussion. Can be extended to parquet
+- The company has data scientists and Power BI report writers who want to query on these files using SQL and make sense of market movements
+
+![Power-Csv-to-external-tables](docs/images/Power-Csv-to-external-tables.png)
+
 ---
 
 
