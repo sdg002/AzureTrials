@@ -20,7 +20,7 @@ graph LR
 
 ---
 # Hypothetical business scenario
-Before we go too far down the road, it is neccessary to pin down business scenario so that we are clear about the problem for which we want a solution.  Consider a company (call it **Contoso**) which collects CSV files from several external systems and vendors. These are reports of stock prices, cargo movement, commodity prices, freight prices,etc. from all over the world. Contoso has analysts which want to analyze this vast trove of data and product reports which can translate to meaningful actions.
+Before we go too far down the road, it is neccessary to pin down business scenario so that we are clear about the problem for which we want a solution.  Consider a company (call it **Contoso**) which receives data feeds in the form of CSV files from several external systems and vendors. These are reports of stock prices, cargo movement data, commodity prices, freight prices,etc. from all over the world. Contoso has analysts which want to analyze this vast trove of data and product reports which can translate to meaningful actions.
 
 ![Power-Contoso-Overview.png](docs/images/Power-Contoso-Overview.png)
 
@@ -36,20 +36,19 @@ Before we go too far down the road, it is neccessary to pin down business scenar
 
 ---
 
-
-# you were here
-
----
 # What does the development experience with Synapse experience look like?
 
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-synapse.png)
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-storage-account-and-container.png)
+
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-credential.png)
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-external-datasource.png)
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-external-table.png)
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-ssms.png)
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-pandas.png)
 
 
-
-1. Create a Synapse instance (Show picture or AZ command)
+<!-- ~~1. Create a Synapse instance (Show picture or AZ command)~~
 1. Create a SQL Database in the Serverless pool (Show SQL Statement)
 1. Create a storage account and create containers (assuming that each container maps to an external table) (show pic of containers)
 1. Upload skeletal CSV/PARQUET files in the storage containers
@@ -58,10 +57,13 @@ Before we go too far down the road, it is neccessary to pin down business scenar
 1. (optionally create views)
 1. Write Spark code using Notebooks (optional)
 1. Enable GIT integration
-1. Data scientists will consume the external tables and views via client applications like Power BI/SSMS/Python data frames
+1. Data scientists will consume the external tables and views via client applications like Power BI/SSMS/Python data frames -->
 
 
-**this section must come after you have discussed the business scenario**
+
+---
+
+# you were here
 
 ---
 
