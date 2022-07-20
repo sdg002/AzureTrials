@@ -126,6 +126,12 @@ function CreateFileFormat{
 
 }
 
+function CreateStorageAccountForCsv{
+    Write-Host "Creating storage account $Global:StorageAccountForCsv"
+    az storage account create --name $Global:StorageAccountForCsv --resource-group $Global:SynapseResourceGroup --location $Global:Location --sku "Standard_LRS" --subscription $Ctx.Subscription.Id  | Out-Null
+    ThrowErrorIfExitCode -Message "Could not create storage account $Global:StorageAccountForCsv"
+}
+
 function CreateStorageAccount {
     param ([string]$container)
     Write-Host "Creating Azure storage account container $container"
@@ -162,6 +168,7 @@ function CreateExternalTable {
     )
     Write-Host "Creating external table from file: $filename"
     $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
+    Write-Host ("The storage account endpoint will be used {0}" -f $stoAccount.PrimaryEndpoints.Blob)
     $dict=@{}
     $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
 
@@ -184,6 +191,7 @@ RelaxFireWallRules
 CreateServerlessDatabase
 CreateMasterKey
 CreateManagedIdentityCredential
+CreateStorageAccountForCsv
 AssignSynapseToReaderRoleOfStorageAccount
 CreateFileFormat
 

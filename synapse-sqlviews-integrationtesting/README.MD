@@ -42,6 +42,13 @@ Before we go too far down the road, it is neccessary to pin down business scenar
 ---
 # What does the development experience with Synapse experience look like?
 
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-synapse.png)
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-storage-account-and-container.png)
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-external-datasource.png)
+![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-external-table.png)
+
+
+
 1. Create a Synapse instance (Show picture or AZ command)
 1. Create a SQL Database in the Serverless pool (Show SQL Statement)
 1. Create a storage account and create containers (assuming that each container maps to an external table) (show pic of containers)
