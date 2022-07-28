@@ -63,9 +63,48 @@ Before we go too far down the road, it is neccessary to pin down business scenar
 
 ---
 
-# you were here
+# Should we source control the SQL objects?
+Lets ask ourselves this question  - 
+## What happens if we don't have any sort of control on the SQL?
+
+- This would imply, ad hoc `CREATE EXTERNAL TABLE` and `CREATE VIEW` statements on a database which is usually termed as an UAT (replica of the production)
+- Developer A creates his/her own table(s) and Developer B creaters hers
+- Lack of GIT leads to absence of any pull request reviews
+- There is no change tracking. Developer C could add/remove columns or make inadvertent changes to the table/view schema which breaks a downstream application or machine learning model
+- I would like you to Refer this [interesting and very old discussion on StackOverflow](https://stackoverflow.com/questions/115369/do-you-use-source-control-for-your-database-items) which extolls the virtues of source control on the database.
+
+
+
+## What was SQL Development once upon a time?
+- There was no source control
+- There was one person/DBA who managed all the SQL
+- All changes went through this DBA
+- Sql Server Management Studio did have a form of source control integration once upon a time. But, you still coded on a live database and the experience was far removed from what you would get as a regular progammer
+
+## Welcome SSDT
+Microsoft introduced [SQL Server Data Tools](https://docs.microsoft.com/en-us/sql/ssdt/sql-server-data-tools?view=sql-server-ver16) as an extension on Visual Studio 2008. This was a game changer. Developers could edit SQL objects form the comforts of Visual Studio, without needing a live SQL Server. Each SQL object was saved to its own file on the disk. SSDT took the responsibility for "compiling" the SQL, checking for syntax and invalid object references (a view referncing an non-existent table)
+
+## Further references on SSDT
+Here is a [wonderful article from MSSQLTips](https://www.mssqltips.com/sqlservertip/6603/visual-studio-git-sql-database-project/) which dives into the workflow around SSDT
+
+![ssdt-solution-explorer](docs/images/ssdt-solution-explorer.png)
+
+![ssdt-menu-options](docs/images/ssdt-menu-options.png)
+
+
+
+About SSDT
+https://www.mssqltips.com/sqlservertip/6603/visual-studio-git-sql-database-project/
+
+- Explain the problem
+- What was life like without source control
+- Talk about the neccessity for good schema
+- How does MSSQL solve the problem using SSDT?
+
+
 
 ---
+# you were here
 
 # How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
 
