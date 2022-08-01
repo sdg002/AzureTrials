@@ -10,7 +10,7 @@ Synapse SQL offers both serverless and dedicated resource models. The serverless
 ![what-is-synapse.png](docs/images/what-is-synapse.png)
 
 In this article we describe an approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
-This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation.  By the end of this article we want to have a solution where we can confidently move Synapse artifacts from **DEV** to **UAT** and to **PROD**.
+This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation.  By the end of this article we want to have a solution where we can confidently move Synapse serverless artifacts from **DEV** to **UAT** and to **PROD**.
 
 ```mermaid
 graph LR
@@ -36,7 +36,7 @@ Before we go too far down the road, it is neccessary to pin down business scenar
 
 ---
 
-# What does the development experience with Synapse experience look like?
+# What does the development experience with Synapse serverless experience look like?
 
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-synapse.png)
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-storage-account-and-container.png)
@@ -93,33 +93,37 @@ Here is a [wonderful article from MSSQLTips](https://www.mssqltips.com/sqlserver
 
 
 
-About SSDT
-https://www.mssqltips.com/sqlservertip/6603/visual-studio-git-sql-database-project/
-
-- Explain the problem
-- What was life like without source control
-- Talk about the neccessity for good schema
-- How does MSSQL solve the problem using SSDT?
-
+## Does SSDT support Synapse Serverless?
+Unfortunately, at the time of writing this article SSDT has not yet extended it's support to Synapse serverless
 
 
 ---
-# you were here
-
-# How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
-
-[[show a picutre of 3 environments and Synapse in each of them, show arrows from dev to uat to prod]]
 
 # Does Synapse offer out of box GIT integration ?
-Yes
-[[Show a screen capture of GIT check box]]
+## Yes!
 
-[[show a scrren capture of Script editor prompting for GIT branch
-]]
+It does indeed support GIT integration. Synapse encourages developers to do their development within the browser based **Synapse Studio** interface. The developer/analyst is expected to write scripts using  **Sql Scripts** and **Notebooks**. 
+
+## How do you configure GIT integration?
+
+![Power-Synapse-Scripts-NoteBooks-Pipeline-Launch.png](docs/images/Power-Synapse-Scripts-NoteBooks-Pipeline-Launch.png)
+
+![Power-Synapse-git-integration.png](docs/images/Power-Synapse-git-integration.png)
+
+![Power-Synapse-git-integration-github.png](docs/images/Power-Synapse-git-integration-github.png)
+
+## Configuring the branches
+
+![Power-Synapse-git-integration-branch-types.png](docs/images/Power-Synapse-git-integration-branch-types.png)
+
+## Script editor
+![Power-Synapse-git-integration-script-editor](docs/images/Power-Synapse-git-integration-script-editor.png)
 
 ---
 
 # How does the OOB GIT integration work?
+# you were here
+
 [[to be done, a block diagram helps]]
 
 ---
@@ -137,6 +141,9 @@ Yes
 [[find the Old MS screen capture]]
 
 ---
+# How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
+---
+
 # Why not use SSDT to integrate the SQL scripts with GIT ?
 [[Lack of SSDT support]]
 
