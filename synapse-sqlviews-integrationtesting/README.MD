@@ -102,6 +102,8 @@ Unfortunately, at the time of writing this article SSDT has not yet extended it'
 # Does Synapse offer out of box GIT integration ?
 ## Yes!
 
+Refer Microsoft's documentation [here](https://docs.microsoft.com/en-us/azure/synapse-analytics/cicd/source-control)
+
 It does indeed support GIT integration. Synapse encourages developers to do their development within the browser based **Synapse Studio** interface. The developer/analyst is expected to write scripts using  **Sql Scripts** and **Notebooks**. 
 
 ## How do you configure GIT integration?
@@ -122,14 +124,23 @@ It does indeed support GIT integration. Synapse encourages developers to do thei
 ---
 
 # How does the OOB GIT integration work?
-Let us begin with writing a simple SQL query in the Azure Synapse editing environment and explore the developer journey.
+Let us begin with writing a simple **SQL** query in the **Azure Synapse** editing environment and explore the developer journey.
 
 ## Create a new SQL file
 Write the sample SQL and click the Publish button
 ![Power-Synapse-journey-new-sql-file](docs/images/Power-Synapse-journey-new-sql-file.png)
 
 ```sql
-to be done
+select *
+from openrowset(
+        bulk '/people.csv',
+        data_source = 'peopledatasource',
+        format = 'csv',
+        parser_version ='2.0',
+        FIRSTROW=1,
+        HEADER_ROW =TRUE
+    )  as ROWS
+
 ```
 
 ## Examine the new file in Github
@@ -146,17 +157,20 @@ to be done
 ---
 
 # What are the challenges with out of box GIT integration?
-# you were here
-1. [[The Synapse query editor in the browser becomes your IDE]]
-1. [[Restricted to Synapse artifacts only. E.g. Powershell/CLI scripts have to be dealt with via separate CI/CD]]
+1. The Synapse query editor in the browser becomes your Integrated Development Environment (IDE)
+1. Poorer developer experience (e.g. intellisense) when compared with other tools like **SQL Management Studio** and **Azure Data Studio**.
+1. Poor readability of the SQL that gets generated and saved into GIT. This makes it very hard or nearly impossible to do an effective Pull Request review
+1. The automated GIT integration (unlike run of the mill push based GIT integration) makes it hard or nearly impossible to intercept and run some integration tests before deployment to **master** branch. E.g. I want to be sure that my `CREATE EXTERNAL TABLE`  is producing columns with the right column data types.
 1. Very hard or impossible to subsitute external locations in SQL constructs like `CREATE EXTERNAL DATASOURCR`. E.g. The URL of a storage account gets hard wired. You want to dynamically change this from DEV to PROD. 
-1. Poor readability of the SQL that gets generated and saved into GIT. This makes it very hard to do an effective Pull Request review
-1. The automated GIT integration makes it impossible to intercept and run some integration tests. E.g. I want to be sure that my `CREATE EXTERNAL TABLE`  is producing columns with the right column data types. Talk about COSMOS views...
+
+<!-- 1. [[Restricted to Synapse artifacts only. E.g. Powershell/CLI scripts have to be dealt with via separate CI/CD]] -->
+
+https://docs.microsoft.com/en-us/azure/synapse-analytics/cicd/continuous-integration-delivery
 
 
-[[See if you can grab screen capture from Reddi about people complaining about lack of PR]]
+# you were here
 
-[[find the Old MS screen capture]]
+
 
 ---
 # How to maintain a CI/CD structure around SQL Views in a Synapse Serverless Pool (Think - looks out of place)
