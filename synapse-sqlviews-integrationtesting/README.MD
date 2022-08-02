@@ -122,13 +122,31 @@ It does indeed support GIT integration. Synapse encourages developers to do thei
 ---
 
 # How does the OOB GIT integration work?
-# you were here
+Let us begin with writing a simple SQL query in the Azure Synapse editing environment and explore the developer journey.
 
-[[to be done, a block diagram helps]]
+## Create a new SQL file
+Write the sample SQL and click the Publish button
+![Power-Synapse-journey-new-sql-file](docs/images/Power-Synapse-journey-new-sql-file.png)
+
+```sql
+to be done
+```
+
+## Examine the new file in Github
+![Power-Synapse-journey-examine-file-in-github](docs/images/Power-Synapse-journey-examine-file-in-github.png)
+
+## Raise a Pull Request from Synapse
+
+![Power-Synapse-journey-raise-pull-request](docs/images/Power-Synapse-journey-raise-pull-request.png)
+
+## Examine the Pull Request!
+![Power-Synapse-journey-examine-pull-request-in-github](docs/images/Power-Synapse-journey-examine-pull-request-in-github.png)
+
 
 ---
 
 # What are the challenges with out of box GIT integration?
+# you were here
 1. [[The Synapse query editor in the browser becomes your IDE]]
 1. [[Restricted to Synapse artifacts only. E.g. Powershell/CLI scripts have to be dealt with via separate CI/CD]]
 1. Very hard or impossible to subsitute external locations in SQL constructs like `CREATE EXTERNAL DATASOURCR`. E.g. The URL of a storage account gets hard wired. You want to dynamically change this from DEV to PROD. 
