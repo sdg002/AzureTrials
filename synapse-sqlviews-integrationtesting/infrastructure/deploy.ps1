@@ -66,7 +66,7 @@ function CreateManagedIdentityCredential(){
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
     $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/managed-identity-credential.sql"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
-    Write-Host "SQL file 'sql/peoplecredential.sql' executed"
+    Write-Host "SQL file 'sql/managed-identity-credential.sql' executed"
 }
 
 function CreatePeopleDataSource(){
