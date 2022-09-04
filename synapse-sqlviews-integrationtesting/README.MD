@@ -175,7 +175,7 @@ from openrowset(
 ---
 
 # What are the challenges with out of box GIT integration?
-1. The Synapse query editor in the browser becomes your Integrated Development Environment (IDE)
+1. The Synapse query editor in the browser becomes your **Integrated Development Environment** (IDE)
 1. Poorer developer experience (e.g. intellisense) when compared with other tools like **SQL Management Studio** and **Azure Data Studio**.
 1. Poor readability of the SQL that gets generated and saved into GIT. This makes it very hard or nearly impossible to do an effective Pull Request review
 1. The automated GIT integration (unlike run of the mill push based GIT integration) makes it hard or nearly impossible to intercept and run some integration tests before deployment to **master** branch. E.g. I want to be sure that my `CREATE EXTERNAL TABLE`  is producing columns with the right column data types.

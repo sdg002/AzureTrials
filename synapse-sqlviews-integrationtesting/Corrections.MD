@@ -25,12 +25,6 @@ The diagram does not make complete sense. We need to explain via this diagram th
 # Examine the file in Github
 show a picture of the file content rendition in Github
 
-# What are the challenges with out of box GIT integration?
-- Embold the "Integrated dev environment"
-- 
-- 
-# Rename 'generic-external-tablesql' or just drop it
-- We are not using this any more. We are issuing a SQL command using `Invoke-SqlCmd`
-- Something more sensible. Example - external-datasource-template.sql
+
 
 ---
