@@ -1,9 +1,13 @@
 SELECT name from SYS.DATABASES
 IF NOT EXISTS (SELECT * FROM SYS.DATABASES WHERE [name]='myserverlessdb')
 BEGIN
-    print 'db was not found'
+    print 'database myserverlessdb was not found, going to create'
     CREATE DATABASE myserverlessdb
     PRINT 'new database created'
+END
+ELSE
+BEGIN
+    print 'database myserverlessdb already exists, not going to create'
 END
 
 /*

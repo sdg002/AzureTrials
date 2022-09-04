@@ -34,19 +34,3 @@ show a picture of the file content rendition in Github
 - Something more sensible. Example - external-datasource-template.sql
 
 ---
-# Re-structure the folder as per PowerPoint
-```
-----
-    |
-    |
-    ---infra
-    |
-    |
-    ---common-sql
-    |
-    |
-    ---table-sql
-    |
-    |
-
-```

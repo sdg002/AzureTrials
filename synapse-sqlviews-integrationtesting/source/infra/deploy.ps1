@@ -45,7 +45,7 @@ function CreateServerlessDatabase()
     Write-Host "Going to run SQL command to create a database"
     
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql\new-serverless-database.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "..\common-sql\new-serverless-database.sql"
     Write-Host "Going to execute SQL file '$pathToSql' to create new database"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database "MASTER" -Verbose
     Write-Host "SQL file executed. New database created"
@@ -55,7 +55,7 @@ function CreateMasterKey(){
     #This is a 1 time step for every SQL Server - you need this for creating a credential - but do we need it if we are using managed identity
     Write-Host "Going to run SQL script to create master key"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/createmasterkey.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "../common-sql/createmasterkey.sql"
     Write-Host "Going to execute SQL file '$pathToSql' to create new database"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file executed. New database created"
@@ -64,7 +64,7 @@ function CreateMasterKey(){
 function CreateManagedIdentityCredential(){
     Write-Host "Going to run SQL script to create credential"
     $workspace=Get-AzSynapseWorkspace -ResourceGroupName $Global:SynapseResourceGroup -Name $Global:SynapseWorkspaceName
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/managed-identity-credential.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "../common-sql/managed-identity-credential.sql"
     Invoke-Sqlcmd -ServerInstance $workspace.ConnectivityEndpoints.sqlOnDemand  -AccessToken $AccessToken -InputFile $pathToSql -Database $SeverlessDatabaseName -Verbose
     Write-Host "SQL file 'sql/managed-identity-credential.sql' executed"
 }
@@ -72,7 +72,7 @@ function CreateManagedIdentityCredential(){
 function CreatePeopleDataSource(){
     $stoAccount=Get-AzStorageAccount -ResourceGroupName $global:SynapseResourceGroup -name $global:StorageAccountForCsv
 
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "sql/peopledatasource.sql"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "../common-sql/peopledatasource.sql"
     $dict=@{}
     $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
     $dict.Add("{{CONTAINERNAME}}","junk")
@@ -115,7 +115,7 @@ function AssignSynapseToReaderRoleOfStorageAccount(){
 }
 
 function CreateFileFormat{
-    $file="sql/createfileformats.sql"
+    $file="../common-sql/createfileformats.sql"
     Write-Host "Going to run the SQL file {$file} "
 
     #you were here, write the SQL
@@ -172,7 +172,7 @@ function CreateExternalTable {
     $dict=@{}
     $dict.Add("{{BLOBENDPOINT}}",$stoAccount.PrimaryEndpoints.Blob)
 
-    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "table-sql/$filename"
+    $pathToSql=Join-Path -Path $PSScriptRoot -ChildPath "../table-sql/$filename"
     Write-Host "Replacing tags in file: $pathToSql"
     $sqlWithReplacements=ReplaceTextInFile -sqlfilename $pathToSql -tagvalues $dict
 
