@@ -11,6 +11,26 @@ namespace IntegrationTests
     public class PeopleTableTests
     {
         [TestMethod]
+        public async Task Test_For_Column_Data_Type()
+        {
+            //Arrange
+            var azureHelper = new AzureHelper();
+            string dbAccessToken = await azureHelper.GetDatabaseAccessToken(); //fill this
+            string serverlessEndPoint = await azureHelper.GetServerlessEndPoint();
+
+            //Act
+            DataSet ds = await DbHelper.QueryDataSet(serverlessEndPoint, dbAccessToken, "SELECT ID,FIRSTNAME,LASTNAME FROM PEOPLE ORDER BY ID");
+
+            //Assert
+
+            var peopleTable = ds.Tables[0];
+
+            Assert.AreEqual(typeof(int), peopleTable.Columns["ID"].DataType);
+            Assert.AreEqual(typeof(string), peopleTable.Columns["FIRSTNAME"].DataType);
+            Assert.AreEqual(typeof(string), peopleTable.Columns["LASTNAME"].DataType);
+        }
+
+        [TestMethod]
         public async Task Test_For_Count_Of_Rows()
         {
             //Arrange
@@ -23,6 +43,22 @@ namespace IntegrationTests
 
             //Assert
             Assert.AreEqual(4, ds.Tables[0].Rows.Count);
+
+            var peopleTable = ds.Tables[0];
+        }
+
+        [TestMethod]
+        public async Task Test_For_Values_Of_ID_Column()
+        {
+            //Arrange
+            var azureHelper = new AzureHelper();
+            string dbAccessToken = await azureHelper.GetDatabaseAccessToken(); //fill this
+            string serverlessEndPoint = await azureHelper.GetServerlessEndPoint();
+
+            //Act
+            DataSet ds = await DbHelper.QueryDataSet(serverlessEndPoint, dbAccessToken, "SELECT * FROM PEOPLE ORDER BY ID");
+
+            //Assert
 
             var peopleTable = ds.Tables[0];
 
