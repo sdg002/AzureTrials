@@ -432,3 +432,131 @@ Creating external data source in synapse and the supported data types
 
 # How to write integration tests
 needs thinking
+
+
+# Querying Synapse properties via REST
+
+## Where can I find some documentation?
+
+This link has the REST API definition
+https://docs.microsoft.com/en-us/rest/api/synapse/workspaces/get?tabs=HTTP#definitions
+
+Look for 'connectivityEndPoints' to get the SQL on-demand connection string.
+
+## How to get the Azure token into the Clipboard?
+```powershell
+(Get-AzAccessToken).Token | Set-Clipboard
+```
+
+## How to make a REST API call to Azure ?
+Medium article
+https://mauridb.medium.com/calling-azure-rest-api-via-curl-eb10a06127
+
+## Setting the Authorization
+You need to use the **Bearer token** option in POSTMAN
+
+## Getting the list of available subscriptions
+https://docs.microsoft.com/en-us/rest/api/resources/subscriptions/list?tabs=HTTP
+
+## How to query for the Synapse Workspace details?
+
+### REST end point
+```
+GET https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}?api-version=2021-06-01
+```
+
+### Getting the Access token
+```csharp
+        private async Task<string> GetAzureAccessToken()
+        {
+            var creds = new DefaultAzureCredential();
+            var scopes = new string[] { "https://management.core.windows.net/" };
+            var tenantId = "e66fc46b-2666-4ea3-984d-bb30c06f2c75"; //The tenant id is important
+            var ctx = new Azure.Core.TokenRequestContext(scopes: scopes, tenantId: tenantId);
+
+            var token = await creds.GetTokenAsync(ctx);
+            return token.Token;
+        }
+
+```
+
+## NUGET package for C#
+https://docs.microsoft.com/en-us/dotnet/api/overview/azure/analytics.synapse.artifacts-readme-pre?source=recommendations
+
+## Which package?
+dotnet add package Azure.Analytics.Synapse.Artifacts --prerelease
+
+## Azure class reference for Synapse related stuff
+https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.synapse?view=azure-dotnet-preview
+
+## Challenges with the Azure Synapse classes
+I am unable to find much help on the classes
+
+
+## How to get the current Subscription?
+https://docs.microsoft.com/en-us/dotnet/api/overview/azure/resourcemanager-readme-pre?source=recommendations
+
+You need to use Azure Resource Manager classes
+
+## Getting the tenantId from Azure CLI
+When you run the command `az account show` you get the `tenantId` besides other parameters.
+
+Example:
+```json
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
+  "id": "635a2074-cc31-43ac-bebe-2bcd67e1abfe",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Pay-As-You-Go-demo",
+  "state": "Enabled",
+  "tenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
+  "user": {
+    "name": "saurabh_dasgupta@hotmail.com",
+    "type": "user"
+  }
+}
+```
+
+```powershell
+$j=(az account show)
+$o=$j | ConvertFrom-Json
+$o.tenantId
+```
+
+# How to get the instrumentation key of an Application Insights resource
+```powershell
+$j=az monitor app-insights component show --app demo-appisnights001 --resource-group rg-demo-automation-account
+$o=$j | ConvertFrom-Json
+$o.instrumentationKey
+```
+
+# How to get current subscription using CLI?
+
+```powershell
+az account show
+```
+```json
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
+  "id": "635a2074-cc31-43ac-bebe-2bcd67e1abfe",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Pay-As-You-Go-demo",
+  "state": "Enabled",
+  "tenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
+  "user": {
+    "name": "saurabh_dasgupta@hotmail.com",
+    "type": "user"
+  }
+}
+```
+
+# How to set current subscription using CLI?
+```powershell
+az account set --subscription "Pay-As-You-Go-demo"
+```
+
+
