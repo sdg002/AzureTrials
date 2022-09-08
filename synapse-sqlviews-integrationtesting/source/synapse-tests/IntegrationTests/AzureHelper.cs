@@ -10,6 +10,8 @@ namespace IntegrationTests
 {
     public class AzureHelper
     {
+        private const string SynapseServerLessEndPointVariableName = "demosynapseserverlessendpoint";
+
         internal async Task<string> GetDatabaseAccessToken()
         {
             var dbScope = "https://database.windows.net";
@@ -17,6 +19,7 @@ namespace IntegrationTests
             var creds = new AzureCliCredential();
             var armClient = new ArmClient(creds); //Pass defaultSubscriptionId via environment
             var defSub = await armClient.GetDefaultSubscriptionAsync();
+            Trace.WriteLine($"Got default subscription {defSub.Data.DisplayName}");
 
             var scopes = new string[] { dbScope };
             var tenantId = defSub.Data.TenantId.ToString();
@@ -30,7 +33,8 @@ namespace IntegrationTests
 
         internal Task<string> GetServerlessEndPoint()
         {
-            string server = "testsynapse-dev-ondemand.sql.azuresynapse.net";
+            string server = System.Environment.GetEnvironmentVariable(SynapseServerLessEndPointVariableName, EnvironmentVariableTarget.User);
+            Trace.WriteLine($"The serverless end point is {server}");
             return Task.FromResult(server);
         }
     }
