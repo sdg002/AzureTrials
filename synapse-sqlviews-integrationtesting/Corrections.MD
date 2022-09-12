@@ -8,16 +8,5 @@ The diagram does not make complete sense. We need to explain via this diagram th
 - The text should emphaszie "use AZ CLI"
 - Run queries via SSMS => would be nice to have an actual query
 
-- 
-## What was SQL Development once upon a time?
-- Move this up
-- Reword to "the idea of Source control for SQL" was very nascent. There were no clear patterns
-- 
-- 
-
-# Examine the file in Github
-show a picture of the file content rendition in Github
-
-
 
 ---

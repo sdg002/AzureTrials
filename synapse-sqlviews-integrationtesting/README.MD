@@ -100,10 +100,10 @@ Lets ask ourselves this question  -
 
 
 ## What was SQL Development once upon a time?
-- There was no source control
-- There was one person/DBA who managed all the SQL
+- The idea of Source control for SQL was very nascent. There were no clear patterns
+- There was usually one person in every team, who was designated as the DBA and the responsibility fell upon his/her shoulders to keep an eye on what went in
 - All changes went through this DBA
-- Sql Server Management Studio did have a form of source control integration once upon a time. But, you still coded on a live database and the experience was far removed from what you would get as a regular progammer
+- Sql Server Management Studio did have a form of source control integration once upon a time. But, you still coded on a live database and the experience was far removed from what you would get as a programmer who was accustomed to **Visual Studio.NET**
 
 ## Welcome SSDT
 Microsoft introduced [SQL Server Data Tools](https://docs.microsoft.com/en-us/sql/ssdt/sql-server-data-tools?view=sql-server-ver16) as an extension on Visual Studio 2008. This was a game changer. Developers could edit SQL objects form the comforts of Visual Studio, without needing a live SQL Server. Each SQL object was saved to its own file on the disk. SSDT took the responsibility for "compiling" the SQL, checking for syntax and invalid object references (a view referncing an non-existent table)
