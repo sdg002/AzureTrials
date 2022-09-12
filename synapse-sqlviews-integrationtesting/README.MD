@@ -20,7 +20,13 @@ graph LR
 
 ---
 # Hypothetical business scenario
-Before we go too far down the road, it is neccessary to pin down business scenario so that we are clear about the problem for which we want a solution.  Consider a company (call it **Contoso**) which receives data feeds in the form of CSV files from several external systems and vendors. These are reports of stock prices, cargo movement data, commodity prices, freight prices,etc. from all over the world. Contoso has analysts which want to analyze this vast trove of data and product reports which can translate to meaningful actions.
+Before we go too far down the road, it is neccessary to pin down business scenario so that we are clear about the problem for which we want a solution.  Consider a company (call it **Contoso**) which receives data feeds in the form of CSV files from several external systems and vendors. These are reports such as:
+- stock prices
+- cargo movement data
+- commodity prices
+- freight prices
+
+and gathered from sources and parties scatterred all over the world. Contoso has analysts which want to analyze this vast trove of data and product reports which can translate to meaningful actions.
 
 ![Power-Contoso-Overview.png](docs/images/Power-Contoso-Overview.png)
 
