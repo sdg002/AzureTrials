@@ -252,8 +252,21 @@ Why do we need integration tests? We are not writing any code. Neverthless, We a
 - You may have to change the name of the Synapse Workspace if there is a collision. (Variables at the top of the file)
 
 # Running the integration tests
-- to be done
-- 
+
+## Setting the environment variable
+The C# code expects the name of teh Serverless endpoint to be available in the environment variable. The accompanying script `root/source/infra/setvariables.ps1` fetches this value from Azure and sets the environment variable. This is a one time exection only.
+
+## Running the tests from command line
+The following command will list all the discovered tests:
+```dotnetcli
+dotnet test IntegrationTests\IntegrationTests.csproj  --list-tests
+```
+
+The following command will run the tests:
+```dotnetcli
+dotnet test IntegrationTests\IntegrationTests.csproj
+```
+
 ---
 
 # References
