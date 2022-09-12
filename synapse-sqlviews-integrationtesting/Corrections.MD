@@ -25,6 +25,6 @@ The diagram does not make complete sense. We need to explain via this diagram th
 # Examine the file in Github
 show a picture of the file content rendition in Github
 
-
+# Write about Integration tests in the Developer Workflow diagram
 
 ---

@@ -34,6 +34,10 @@ namespace IntegrationTests
         internal Task<string> GetServerlessEndPoint()
         {
             string server = System.Environment.GetEnvironmentVariable(SynapseServerLessEndPointVariableName, EnvironmentVariableTarget.User);
+            if (string.IsNullOrWhiteSpace(server))
+            {
+                throw new InvalidOperationException($"The environment variable {SynapseServerLessEndPointVariableName} has not been set. Please run the PowerShell script first");
+            }
             Trace.WriteLine($"The serverless end point is {server}");
             return Task.FromResult(server);
         }

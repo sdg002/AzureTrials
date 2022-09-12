@@ -209,9 +209,24 @@ Use the Azure Synapse Workspace for developing the SQL for the `CREATE EXTERNAL 
 
 ![Power-proposed-solution-folder-structure](docs/images/Power-proposed-solution-dev-workflow.png)
 
-## Developer workflow (TO BE DONE)
+# Integration tests
+Why do we need integration tests? We are not writing any code. Neverthless, We are producing SQL tables which have columns and these will be consumed by some downstream code. We want to be confident that the SQL tables we produce via Synapse meet the schema expectations of the consumer code . Hence the neccessity to write some tests to safeguard us from inadvertent changes and give our end users confidence.
 
-Show AZURE DEVOPS picture
+## What are we testing?
+- Does the SQL table return the right count of results?
+- Does the SQL table have the correct number of columns and the column types are as expected?
+
+
+## How are we testing this?
+- **MS Test** project in **Visual Studio**
+- The tests are written in C# 
+- Get an access token from Azure and query the Synapse serverless end point using **SqlConnection** object
+
+## Writing integration tests in Visual Studio MS Test
+
+![integration-test.png](docs/images/integration-test.png)
+
+
 ---
 # Accompanying code (TO BE DONE)
 
