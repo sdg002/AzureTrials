@@ -228,14 +228,34 @@ Why do we need integration tests? We are not writing any code. Neverthless, We a
 
 
 ---
-# Accompanying code (TO BE DONE)
+# Accompanying code 
 
-- Link to GIT
-- Some notes on getting started with the code
-- Setting Azure CLI
-- Setting up Azure PowerShell
-- Any changes to be made to get the script to work
+## Link to GIT
+
+[Link to GIT repo](https://github.com/sdg002/AzureTrials/tree/main/synapse-itegration-tests)
+
+## Tools needed to run the code
+- Visual Studio Code for running the PowerShell scripts for deployment
+- Visual Stuio 2019 for runing the Integration tests
+ 
+## Working with Azure
+- You need an Azure Subscription where you have the rights to create resources
+- You will need **PowerShell Core** and **Azure CLI** tools installed locally for the deployment script to work
+- You will need to do a `az login` to work with **Azure CLI** to work with Azure PowerShell from your workstation
+- You will need to do a `Connect-AzAccount` to work with Azure PowerShell from your workstation
+- You will need to do a `Set-AzContext -Subscription YOUR_DESIRED_SUBSCRIPTTION_NAME` if you have more than 1 active subscriptions
+
+# Getting started with the code
+- Clone the repo using your favourite GIT tool
+- Launch a PowerShell Core console
+- Navigate to the folder `synapse-itegration-tests` and run the file `deploy.ps`
+- You may have to change the name of the Synapse Workspace if there is a collision. (Variables at the top of the file)
+
+# Running the integration tests
+- to be done
+- 
 ---
+
 # References
 
 ## What is Azure Synapse?
