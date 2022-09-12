@@ -42,9 +42,11 @@ namespace IntegrationTests
             DataSet ds = await DbHelper.QueryDataSet(serverlessEndPoint, dbAccessToken, "SELECT * FROM PEOPLE ORDER BY ID");
 
             //Assert
-            Assert.AreEqual(4, ds.Tables[0].Rows.Count);
+            Assert.AreEqual(1, ds.Tables.Count);
 
             var peopleTable = ds.Tables[0];
+            Assert.AreEqual(4, peopleTable.Rows.Count);
+
         }
 
         [TestMethod]

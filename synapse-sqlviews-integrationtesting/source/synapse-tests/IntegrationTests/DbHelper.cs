@@ -25,7 +25,6 @@ namespace IntegrationTests
                     var adapter = new SqlDataAdapter(cmd);
                     var ds = new DataSet();
                     adapter.Fill(ds);
-                    //return Task.FromResult(ds);
                     return ds;
                 }
             }
