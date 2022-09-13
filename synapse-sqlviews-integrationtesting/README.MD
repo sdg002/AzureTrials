@@ -10,7 +10,7 @@ Synapse SQL offers both serverless and dedicated resource models. The **serverle
 ![what-is-synapse.png](docs/images/what-is-synapse.png)
 
 In this article we describe a **CI/CD** approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
-This approach was borne out of the neccessity to not only GIT integrate all the **PowerShell** and **SQL** scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation and providing a "sandbox area" where developers can test their queries.  By the end of this article we want to have a solution where we can confidently move Synapse serverless artifacts from **DEV** to **UAT** and to **PROD**. 
+This approach was borne out of the neccessity to not only GIT integrate all the **PowerShell** and **SQL** scripts that constitute the IAC (infrastructure as code) but also have separate **DEV/UAT/PROD** environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation and providing a "sandbox area" where developers can test their queries.  By the end of this article we want to have a solution where we can confidently move Synapse serverless artifacts from **DEV** to **UAT** and to **PROD**. 
 
 ```mermaid
 graph LR
@@ -43,8 +43,8 @@ and gathered from sources and parties scatterred all over the world. Contoso has
 ---
 
 # What is not in the scope of this article?
-- We are not discussing Synapse data transformation pipelines
-- We are restricting to files with CSV format, although solution can be extended to PARQUET and JSON
+- We are not discussing Synapse data **transformation pipelines**. It is assumed that the external files have already been validated and tidied up before being placed in their respective Azure Storage blob container.
+- The accompanying code is restricts itself to **CSV** format, although solution can be extended to **PARQUET** and **JSON** formats
 - We are addressing the CI/CD issues specifically with **serverless** pool. Even though this solution can be extended to **SQL  pool**, SSDT would be more advisable in such situations.
 - We are not discussing PySpark or created Spark tables using the Spark pool
  
@@ -215,6 +215,8 @@ Use the Azure Synapse Workspace for developing the SQL for the `CREATE EXTERNAL 
 
 # Integration tests
 Why do we need integration tests? We are not writing any code. Neverthless, We are producing SQL tables which have columns and these will be consumed by some downstream code. We want to be confident that the SQL tables we produce via Synapse meet the schema expectations of the consumer code . Hence the neccessity to write some tests to safeguard us from inadvertent changes and give our end users confidence.
+
+![visual-studio-integration-tests.png](docs/images/visual-studio-integration-tests.png)
 
 ## What are we testing?
 - Does the SQL table return the right count of results?
