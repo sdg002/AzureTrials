@@ -238,7 +238,7 @@ Why do we need integration tests? We are not writing any code. Neverthless, We a
 
 ## Link to GIT
 
-[Link to GIT repo](https://github.com/sdg002/AzureTrials/tree/main/synapse-itegration-tests)
+[Link to GIT repo](https://github.com/sdg002/AzureTrials/blob/main/synapse-sqlviews-integrationtesting)
 
 ## Tools needed to run the code
 - Visual Studio Code for running the PowerShell scripts for deployment
