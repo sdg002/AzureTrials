@@ -1,58 +1,6 @@
 # What is this stuff?
 This was the old content brought out of the README.MD
 
-# How to create an instance of Azure Synapse?
-[[give a code snippet]]
-[[create the resource group]]
-
-# How to create the Storage account and containers ?
-[[produce a code snippet]]
-
-# How to create a Synapse serverless pool?
-[[produce a code snippet]]
-
-# How to ensure that Syanpse can access the CSV files in the storage account?
-[[produce a code snippet]]
-
-# how to create a SQL External table?
-Solve this in a step by step manner
-
-## Step 1 Create the file format
-[[to be done]]
-
-## Step 2 Create the credential to access the blob store
-[[produce a code snippet]]
-
-## Step 4 Create the external data source
-[[produce a code snippet]]
-
-## Step 5 Create the external table
-[[produce a code snippet]]
-
-## Can we test and verify the scripts locally before automating via Azure Devops?
-[[absolutely , show the Power shell steps, az loing, etx.]]
-
----
-
-
-# How to use Azure Devops to roll out the CI/CD of this solution?
-[[show Azure Devops with DEV,UAT and PROD stages]]
-[[show a block diagram of CI --> then CD]]
-
-
-
-[[you will need a build.yml file]]
-[[you will need a Release pipeline]]
-[[you will need to run the integration tests ]]
-
-# References
-
-----
-----
-----
-
-# References
-
 
 - Support for different storage types https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated
 
@@ -71,10 +19,6 @@ https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/query-single-csv-fi
 https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-generate-sas
 
 
-
-
-YOU GOT STUFF WORKING
-CREAETED A SAS TOKEN
 
 ```sql
 
@@ -326,37 +270,6 @@ CREATE EXTERNAL TABLE Peoples (
 );
 
 ```
-# What was I doing?
-- Got the credential working
-- Got the data source working
-- Got the query to work
-- Removed hard coding of storage account in data source
-- Create external table is working
-- Need to explore int (THI WORKS)
-- YOU WERE WORKING ON CSV FILE FORMATS
-- CHALLENGE
-    - The Credential, Datasource and External table are all dependent. You cannot drop credential wihtout dropping Datasource and you cannot drop Datasource without dropping external table
-    - Handle Credential, Datasource and External table in 1 SQL file
-    - The single file should be parameterizable
-    - what should be the name of the file? PeopleTable.sql
-    - We already have the code for merging. See PeopleDataSource.sql
-    - What do you parameterize?
-    - BLOBENDPOINT
-    - CONTAINERNAME
-    - TABLENAME
-    - Use the TABLENAME to form the credentials and external datasource
-    - to keep the script simpler, try not to concatenate, use distinct tags for better readability
-    - There is an emerging need for a meta-data table. Prefix with 'system' to avoid conflicts
-    - The meta table should have a CSV with info about all other tables
-    - Read the meta data table using PowerShell during CI
-    - Read the meta data table using DataFrame via external table
-- Need to create external data source
-- Need to add CREATE TABLE to code
-- Need to add DROP TABLE to code
-- Need to add CREATE FILE FORMAT to code
-- You need to create storage account , create container and upload a sample CSV file
-- 
-- 
 
 # Structure of a generic table creation SQL
 
@@ -411,11 +324,6 @@ PRINT 'Created external datasource peoplesdemo'
 I was unable to achieve. See link. It might be possible. The accompanying link from MSFT within this post is broken
 https://docs.microsoft.com/en-us/answers/questions/38287/alter-external-file-format-question.html
 
-# What was I thinking on July 16, 5 pm
- - Simplify the Table creation SQL by reducing the number of boiler plate SQL statements
- - Have a common PS file SqlHelper.ps1
- - Function `DropExternalTable -table blah`
- - Function `DropExternalDataSource -datasource blah`
 
 
 ```PowerShell
@@ -428,10 +336,6 @@ $sql="IF EXISTS (SELECT * FROM SYS.OBJECTS WHERE [name]='People' AND [TYPE]='U')
 Creating external data source in synapse and the supported data types
 - https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver16&tabs=dedicated
 - 
-
-
-# How to write integration tests
-needs thinking
 
 
 # Querying Synapse properties via REST
@@ -465,20 +369,6 @@ https://docs.microsoft.com/en-us/rest/api/resources/subscriptions/list?tabs=HTTP
 GET https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}?api-version=2021-06-01
 ```
 
-### Getting the Access token
-```csharp
-        private async Task<string> GetAzureAccessToken()
-        {
-            var creds = new DefaultAzureCredential();
-            var scopes = new string[] { "https://management.core.windows.net/" };
-            var tenantId = "e66fc46b-2666-4ea3-984d-bb30c06f2c75"; //The tenant id is important
-            var ctx = new Azure.Core.TokenRequestContext(scopes: scopes, tenantId: tenantId);
-
-            var token = await creds.GetTokenAsync(ctx);
-            return token.Token;
-        }
-
-```
 
 ## NUGET package for C#
 https://docs.microsoft.com/en-us/dotnet/api/overview/azure/analytics.synapse.artifacts-readme-pre?source=recommendations
@@ -489,8 +379,6 @@ dotnet add package Azure.Analytics.Synapse.Artifacts --prerelease
 ## Azure class reference for Synapse related stuff
 https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.synapse?view=azure-dotnet-preview
 
-## Challenges with the Azure Synapse classes
-I am unable to find much help on the classes
 
 
 ## How to get the current Subscription?
@@ -498,26 +386,6 @@ https://docs.microsoft.com/en-us/dotnet/api/overview/azure/resourcemanager-readm
 
 You need to use Azure Resource Manager classes
 
-## Getting the tenantId from Azure CLI
-When you run the command `az account show` you get the `tenantId` besides other parameters.
-
-Example:
-```json
-{
-  "environmentName": "AzureCloud",
-  "homeTenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
-  "id": "635a2074-cc31-43ac-bebe-2bcd67e1abfe",
-  "isDefault": true,
-  "managedByTenants": [],
-  "name": "Pay-As-You-Go-demo",
-  "state": "Enabled",
-  "tenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
-  "user": {
-    "name": "saurabh_dasgupta@hotmail.com",
-    "type": "user"
-  }
-}
-```
 
 ```powershell
 $j=(az account show)
@@ -532,27 +400,6 @@ $o=$j | ConvertFrom-Json
 $o.instrumentationKey
 ```
 
-# How to get current subscription using CLI?
-
-```powershell
-az account show
-```
-```json
-{
-  "environmentName": "AzureCloud",
-  "homeTenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
-  "id": "635a2074-cc31-43ac-bebe-2bcd67e1abfe",
-  "isDefault": true,
-  "managedByTenants": [],
-  "name": "Pay-As-You-Go-demo",
-  "state": "Enabled",
-  "tenantId": "e66fc46b-2666-4ea3-984d-bb30c06f2c75",
-  "user": {
-    "name": "saurabh_dasgupta@hotmail.com",
-    "type": "user"
-  }
-}
-```
 
 # How to set current subscription using CLI?
 ```powershell
