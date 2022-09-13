@@ -4,13 +4,13 @@
 ![article-overview](docs/images/article-overview.png)
 
 # Overview
-**Azure Synapse** is Microsoft's data analytics solution on the cloud that significantly accelerates the time to virtualize and analyze myriad data sources. 
-Synapse SQL offers both serverless and dedicated resource models. The serverless model makes it easy for companies to enter the big data space with relatively small monetary comittment. The dedicated pool model allows the company to scale up massively.
+**Azure Synapse** is Microsoft's data analytics solution on the cloud that significantly accelerates the time to virtualize and analyze myriad data formats (csv, json, parquet). 
+Synapse SQL offers both serverless and dedicated resource models. The **serverless pool** offering makes it easy for companies to enter the big data space with relatively small monetary comittment. The **dedicated pool** model allows the company to scale up massively.
 
 ![what-is-synapse.png](docs/images/what-is-synapse.png)
 
-In this article we describe an approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
-This approach was borne out of the neccessity to not only GIT integrate all the PowerShell and SQL scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation.  By the end of this article we want to have a solution where we can confidently move Synapse serverless artifacts from **DEV** to **UAT** and to **PROD**.
+In this article we describe a **CI/CD** approach to script the deployment of **Azure Synapse Serverless** and all the neccessary SQL artifacts.
+This approach was borne out of the neccessity to not only GIT integrate all the **PowerShell** and **SQL** scripts that constitute the IAC (infrastructure as code) but also have separate DEV/UAT/PROD environments. Each environment has its own Synapse serverless instance and its own storage accounts, thereby producing complete isolation and providing a "sandbox area" where developers can test their queries.  By the end of this article we want to have a solution where we can confidently move Synapse serverless artifacts from **DEV** to **UAT** and to **PROD**. 
 
 ```mermaid
 graph LR
@@ -60,7 +60,7 @@ and gathered from sources and parties scatterred all over the world. Contoso has
 ---
 
 
-# What does the development experience with Synapse serverless experience look like?
+# What does the out of box development experience with Synapse serverless experience look like?
 
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-synapse.png)
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-create-storage-account-and-container.png)
@@ -72,35 +72,31 @@ and gathered from sources and parties scatterred all over the world. Contoso has
 ![Power-dev-flow-create-synapse](docs/images/Power-dev-flow-pandas.png)
 
 
-<!-- ~~1. Create a Synapse instance (Show picture or AZ command)~~
-1. Create a SQL Database in the Serverless pool (Show SQL Statement)
-1. Create a storage account and create containers (assuming that each container maps to an external table) (show pic of containers)
-1. Upload skeletal CSV/PARQUET files in the storage containers
-1. Create external data source(s)
-1. Creat external tables which reference the external data source(s)
-1. (optionally create views)
-1. Write Spark code using Notebooks (optional)
-1. Enable GIT integration
-1. Data scientists will consume the external tables and views via client applications like Power BI/SSMS/Python data frames -->
-
-
 
 ---
 
 # Should we source control the SQL objects?
+The workflow that we just described ends up producing quite a few SQL objects
+- External file format definition
+- Master key
+- Managed identity credentials
+- Severless database
+- External data source (1 per every data source00)
+- Table (1 per every data source)
+- Views (optional)
+
 Lets ask ourselves this question  - 
 ## What happens if we don't have any sort of control on the SQL?
 
 - This would imply, ad hoc `CREATE EXTERNAL TABLE` and `CREATE VIEW` statements on a database which is usually termed as an UAT (replica of the production)
-- Developer A creates his/her own table(s) and Developer B creaters hers
-- Lack of GIT leads to absence of any pull request reviews
-- There is no change tracking. Developer C could add/remove columns or make inadvertent changes to the table/view schema which breaks a downstream application or machine learning model
+- Developer **A** creates his/her own table(s) and Developer **B** creates hers
+- Lack of **GIT** integration leads to absence of any pull request reviews
+- There is no change tracking. Developer **C** could add/remove columns or make inadvertent changes to the table/view schema which breaks a downstream application or machine learning model
 - I would like you to Refer this [interesting and very old discussion on StackOverflow](https://stackoverflow.com/questions/115369/do-you-use-source-control-for-your-database-items) which extolls the virtues of source control on the database.
 
 
-
 ## What was SQL Development once upon a time?
-- The idea of Source control for SQL was very nascent. There were no clear patterns
+- The idea of Source control for SQL was very nascent. There were no clear patterns (even though there was a need)
 - There was usually one person in every team, who was designated as the DBA and the responsibility fell upon his/her shoulders to keep an eye on what went in
 - All changes went through this DBA
 - Sql Server Management Studio did have a form of source control integration once upon a time. But, you still coded on a live database and the experience was far removed from what you would get as a programmer who was accustomed to **Visual Studio.NET**
