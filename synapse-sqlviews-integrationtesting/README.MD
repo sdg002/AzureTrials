@@ -89,9 +89,9 @@ Lets ask ourselves this question  -
 ## What happens if we don't have any sort of control on the SQL?
 
 - This would imply, ad hoc `CREATE EXTERNAL TABLE` and `CREATE VIEW` statements on a database which is usually termed as an UAT (replica of the production)
-- Developer **A** creates his/her own table(s) and Developer **B** creates hers
+- **Developer A** creates his/her own table(s) and **Developer B** creates hers
 - Lack of **GIT** integration leads to absence of any pull request reviews
-- There is no change tracking. Developer **C** could add/remove columns or make inadvertent changes to the table/view schema which breaks a downstream application or machine learning model
+- There is no change tracking. **Developer C** could add/remove columns or make inadvertent changes to the table/view schema which breaks a downstream application or machine learning model
 - I would like you to Refer this [interesting and very old discussion on StackOverflow](https://stackoverflow.com/questions/115369/do-you-use-source-control-for-your-database-items) which extolls the virtues of source control on the database.
 
 
@@ -188,15 +188,17 @@ from openrowset(
 https://docs.microsoft.com/en-us/azure/synapse-analytics/cicd/continuous-integration-delivery
 
 
-
 ---
+# Can we think of a solution which is an improvement over the short comings of the out of box GIT?
+Yes. We will attempt to progressively find a solution in the rest of this article.
+
 # What does the proposed solution look like?
 
 ## Key principes
 - Refrain from using the out of box GIT integration of Azure Synapse Studio
-- Keep SQL objects in .SQL files and place these files under GIT control
-- Use the Synapse Studio's browser based editor during development but bring back the changes into the .SQL files
-- Write CI/CD scripts using PowerShell which deploy the .SQL files to the serverless instance using **SQLCMD.EXE** or 
+- Keep SQL objects in physical .SQL files and place these files under GIT control
+- Use the **Synapse Studio**'s browser based editor during development but bring back the changes into the .SQL files
+- Write **CI/CD** scripts using PowerShell which deploy the .SQL files to the serverless instance using **SQLCMD.EXE** or **Invoke-SqlCmd** cmdlet
 
 ## Folder structure
 
@@ -221,7 +223,7 @@ Why do we need integration tests? We are not writing any code. Neverthless, We a
 
 ## How are we testing this?
 - **MS Test** project in **Visual Studio**
-- The tests are written in C# 
+- The tests are written in C# and .NET Core
 - Get an access token from Azure and query the Synapse serverless end point using **SqlConnection** object
 
 ## Writing integration tests in Visual Studio MS Test
