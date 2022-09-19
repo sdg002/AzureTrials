@@ -8,7 +8,7 @@ if ([string]::IsNullOrWhiteSpace($environment)){
 
 $Global:ResourceGroup="rg-demo-python-docker-$environment"
 $Global:Location="uksouth"
-
+$Global:ApplicationInsights="python-docker-appinsights-$environment"
 
 
 function ThrowErrorIfExitCode($message){
