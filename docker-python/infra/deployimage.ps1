@@ -34,10 +34,6 @@ CreateContainerRegistry
 <#
 you were here
 
-Step 1
-------
-Create a container registry
-    & az acr create --resource-group $Global:ResourceGroup --name $ContainerRegistry --sku Basic --admin-enabled true
 
 Step 2
 ------
