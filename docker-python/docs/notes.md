@@ -75,3 +75,12 @@ This assumes you are in the folder which has a `Dockerfile` already
 ```powershell
 docker build .\ -t pythondemo
 ```
+
+
+# Referenecs
+## How to PIP UNINSTALL all?
+
+```powershell
+pip freeze > junklist.txt
+pip uninstall -r junklist.txt --quiet
+```

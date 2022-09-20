@@ -9,6 +9,7 @@ if ([string]::IsNullOrWhiteSpace($environment)){
 $Global:ResourceGroup="rg-demo-python-docker-$environment"
 $Global:Location="uksouth"
 $Global:ApplicationInsights="python-docker-appinsights-$environment"
+$Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
 
 
 function ThrowErrorIfExitCode($message){
