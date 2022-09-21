@@ -76,6 +76,11 @@ This assumes you are in the folder which has a `Dockerfile` already
 docker build .\ -t pythondemo
 ```
 
+## Run a docker image
+
+```powershell
+docker run --rm --env name1=value1 --env name2=value2 saupythonhello
+```
 
 # Referenecs
 ## How to PIP UNINSTALL all?
@@ -84,3 +89,7 @@ docker build .\ -t pythondemo
 pip freeze > junklist.txt
 pip uninstall -r junklist.txt --quiet
 ```
+
+## Upload a local docker image
+Good article by some Sahil Mallik
+https://winsmarts.com/push-a-docker-image-into-the-azure-container-registry-using-azure-cli-c71bf2f3c3a

@@ -28,3 +28,7 @@ Write-Host "Deleting image with remote tag $LocalImageWithRemoteTag"
 & docker rmi $LocalImageWithRemoteTag
 ThrowErrorIfExitCode -Message "Delete of local image failed"
 Write-Host "Delete complete"
+
+Write-Host "Listing all the images in the container registry $ContainerRegistry"
+& az acr repository list --name  $ContainerRegistry --resource-group $Global:ResourceGroup
+ThrowErrorIfExitCode -Message "Listing failed"
