@@ -25,20 +25,47 @@ function CreateContainerRegistry{
     Write-Host "ContainerRegistry $ContainerRegistry created"
 }
 
+function AssignIdentityToAcr{
+    Write-Host "Fetching identity of the Azure Container registry $ContainerRegistry"
+    $identityJson=& az acr identity show --name $ContainerRegistry
+    if ($identityJson)
+    {
+        Write-Host "Found an existing identity. The identity of the ACR is: "
+        Write-Host $identityJson  
+        $identity=$identityJson | ConvertFrom-Json
+
+        if ($identity.type -ne "systemAssigned")
+        {
+            Write-Error -Message "The specified Azure Container Registry already has a non-system identity. This should be manually removed . We want system only"
+        }
+        Write-Host ("It appears that there is already a system assigned identity, type={0}. So not taking any further action" -f $identity.type)
+    }
+    else {
+        Write-Host "Assigning system identity to ACR $ContainerRegistry"
+        & az acr identity assign --name  $ContainerRegistry --identities "[system]" --resource-group $ResourceGroup
+        ThrowErrorIfExitCode -Message "Could not assign System identity to  $ContainerRegistry"            
+    }
+}
+
 CreateResourceGroup
 CreateApplicationInsights
 $instruKey=GetInstrumentationKey
 Write-Host ("Instrumenttion key = {0}" -f $instruKey)
+CreateManagedIdentity
 CreateContainerRegistry
+AssignIdentityToAcr
+
 
 <#
 you were here
 
 
+
+
 Step 2
 ------
 
-Write a separate script which will upload an image to the acr
+Write a script that will create a new container group
     Name this script as UploadDockerImage.ps1
     You will need to follow https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create
     You need to specify the registry server and password

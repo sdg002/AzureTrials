@@ -1,6 +1,15 @@
 . $PSScriptRoot\common.ps1
 
 
+<#
+This script will:
+    Build the image
+    Depoy the image to Azure Container registry
+    Create a container group
+
+To be done
+    Get url of container registry
+#>
 Write-Host "Going to upload image to the registry $ContainerRegistry"
 
 #& docker push saupycontainerregistry001dev.azurecr.io/saupythonhello:latest
@@ -32,3 +41,4 @@ Write-Host "Delete complete"
 Write-Host "Listing all the images in the container registry $ContainerRegistry"
 & az acr repository list --name  $ContainerRegistry --resource-group $Global:ResourceGroup
 ThrowErrorIfExitCode -Message "Listing failed"
+

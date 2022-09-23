@@ -93,3 +93,12 @@ pip uninstall -r junklist.txt --quiet
 ## Upload a local docker image
 Good article by some Sahil Mallik
 https://winsmarts.com/push-a-docker-image-into-the-azure-container-registry-using-azure-cli-c71bf2f3c3a
+
+## Creating a managed identity
+```powershell
+function CreateManagedIdentity{
+    & az identity create --name $Global:AcrIdentity --resource-group $Global:ResourceGroup
+    ThrowErrorIfExitCode -message "Could not create managed identity $Global:AcrIdentity"
+}
+
+```
