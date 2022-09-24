@@ -50,18 +50,27 @@ $jsonCredentialObject=$jsonCredential | ConvertFrom-Json
 
 $acrLogin=$jsonCredentialObject.username
 $acrPassword=$jsonCredentialObject.passwords[0].value
-& az container create --resource-group $ResourceGroup --name $Global:ContainerGroup --image $LocalImageWithRemoteTag  --registry-username $acrLogin  --registry-password $acrPassword --restart-policy Never
+& az container create --resource-group $ResourceGroup --name $Global:ContainerGroup --image $LocalImageWithRemoteTag  --registry-username $acrLogin  --registry-password $acrPassword `
+ --restart-policy Never `
+ --environment-variables mykey1=myvalue1 `
+ --environment-variables mykey2=myvalue2 `
+
 ThrowErrorIfExitCode -Message "Could not created Container group"
-
-Write-Host "Starting container group"
-& az container start --name $ContainerGroup --resource-group $ResourceGroup
-
 
 <#
 
-Combine the create image .bat
-you were here, specify some environment variables
---environment-variables key1=value1
+Problems when trying to start
+------------------------------
+Write-Host "Starting container group"
+& az container start --name $ContainerGroup --resource-group $ResourceGroup
+
+(ContainerGroupTransitioning) The container group 'saucontainergroup-dev' is still transitioning, please retry later.
+Code: ContainerGroupTransitioning
+Message: The container group 'saucontainergroup-dev' is still transitioning, please retry later.
+
+Lesson
+------
+The container is already starting 
 
 #>
 
