@@ -113,3 +113,13 @@ You can set this at the time of creating using the `--restart-policy` argument
 ```powershell
 az container start --name $ContainerGroup  --resource-group $ResourceGroup  --no-wait
 ```
+
+## Create a Log analytics workspace
+```powershell
+az monitor log-analytics workspace create -g MyResourceGroup -n MyWorkspace
+```
+
+## Create an application insights resource
+```powershell
+az monitor app-insights component create --app demoApp --location westus2 --kind web -g demoRg --application-type web --retention-time 120 --workspace some-log-analytics-workspace
+```

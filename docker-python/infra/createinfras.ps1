@@ -7,9 +7,16 @@ function CreateResourceGroup {
     ThrowErrorIfExitCode -Message "Could not create resource group $Global:ResourceGroup"
 }
 
+function CreateLogAnalyticsWorkspace{
+    Write-Host "Creating log analytics workspace $Global:LogAnalyticsWorkspace"
+    & az monitor log-analytics workspace create --resource-group $Global:ResourceGroup --workspace-name $Global:LogAnalyticsWorkspace 
+    ThrowErrorIfExitCode -message "Error while attempting to create log analytics workspace $Global:LogAnalyticsWorkspace"
+    Write-Host "Created log analytics workspace $Global:LogAnalyticsWorkspace"
+}
+
 function CreateApplicationInsights{
     Write-Host "Going to create application insights $Global:ApplicationInsights"
-    & az monitor app-insights component create --location $Global:Location --resource-group $Global:ResourceGroup --app $Global:ApplicationInsights
+    & az monitor app-insights component create --location $Global:Location --resource-group $Global:ResourceGroup --app $Global:ApplicationInsights --workspace $Global:LogAnalyticsWorkspace
     ThrowErrorIfExitCode -Message "Could not create application insights $Global:ApplicationInsights"
 }
 function GetInstrumentationKey(){
@@ -48,6 +55,7 @@ function AssignIdentityToAcr{
 }
 
 CreateResourceGroup
+CreateLogAnalyticsWorkspace
 CreateApplicationInsights
 $instruKey=GetInstrumentationKey
 Write-Host ("Instrumenttion key = {0}" -f $instruKey)

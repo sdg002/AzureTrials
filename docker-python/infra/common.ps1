@@ -8,6 +8,7 @@ if ([string]::IsNullOrWhiteSpace($environment)){
 
 $Global:ResourceGroup="rg-demo-python-docker-$environment"
 $Global:Location="uksouth"
+$Global:LogAnalyticsWorkspace="pythondocker-log-workspace-$environment"
 $Global:ApplicationInsights="python-docker-appinsights-$environment"
 $Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
 $Global:ContainerGroup=("saucontainergroup-{0}" -f  $env:environment)
