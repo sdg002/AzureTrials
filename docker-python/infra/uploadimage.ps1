@@ -54,7 +54,7 @@ $acrPassword=$jsonCredentialObject.passwords[0].value
  --restart-policy Never `
  --environment-variables mykey1=myvalue1 `
  --environment-variables mykey2=myvalue2 `
-
+ --log-analytics-workspace $Global:LogAnalyticsWorkspace
 ThrowErrorIfExitCode -Message "Could not created Container group"
 
 <#
