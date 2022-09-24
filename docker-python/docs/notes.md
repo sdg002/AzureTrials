@@ -102,3 +102,14 @@ function CreateManagedIdentity{
 }
 
 ```
+
+## Why does the Container keep running?
+This is because of the default restart policy which is `Always`
+https://learn.microsoft.com/en-us/azure/container-instances/container-instances-troubleshooting
+You can set this at the time of creating using the `--restart-policy` argument
+
+## How to start the Container ?
+
+```powershell
+az container start --name $ContainerGroup  --resource-group $ResourceGroup  --no-wait
+```

@@ -20,3 +20,9 @@ function ThrowErrorIfExitCode($message){
     Write-Error -Message $message
 }
 
+
+function GetAzureContainerRegisryLoginUrl(){
+    $acrJson=& az acr show --name $ContainerRegistry --resource-group $ResourceGroup
+    $acrJsonObject=$acrJson | ConvertFrom-Json
+    return $acrJsonObject.loginServer
+}
