@@ -7,6 +7,20 @@ I am trying to experiement with creation of **virtual network** and placing a Vi
 ## Create a virtual network using Azure CLI
 https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-cli#create-virtual-machines
 
+## Getting a list of VM images
+```
+az vm image list --architecture x64 --location uksouth > .\out\images.json
+```
+
+## Getting all SKUs of a VM
+
+```
+az vm list-skus --location uksouth > .\out\vm-skus.json
+```
+
+---
+
+
 
 # Fixing PowerShell and VS Code
 - I had PWSH installed as a local admin(C:/Program files/PowerShell/)
