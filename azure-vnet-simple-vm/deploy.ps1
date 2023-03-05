@@ -1,3 +1,11 @@
 . $PSScriptRoot\common.ps1
 
-Write-Host "Test 001"
+
+
+function CreateResourceGroup{
+    & az group create --name $Global:ResourceGroup --location $Global:Location --tags $Global:Tags
+    ThrowErrorIfExitCode -message "Error while creating resource group $Global:ResourceGroup"    
+}
+
+Write-Host "Demo script for testing with Virtual Machines and VNET"
+CreateResourceGroup
