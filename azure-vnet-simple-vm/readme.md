@@ -12,11 +12,17 @@ https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-cli#create-
 az vm image list --architecture x64 --location uksouth > .\out\images.json
 ```
 
+## Getting all supported sizes
+```
+az vm list-sizes --location $Global:Location  > .\out\vm-sizes.json
+```
+
 ## Getting all SKUs of a VM
 
 ```
 az vm list-skus --location uksouth > .\out\vm-skus.json
 ```
+
 
 ---
 
