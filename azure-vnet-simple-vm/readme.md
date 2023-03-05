@@ -23,6 +23,9 @@ az vm list-sizes --location $Global:Location  > .\out\vm-sizes.json
 az vm list-skus --location uksouth > .\out\vm-skus.json
 ```
 
+## Difference between stop and deallocate
+https://learn.microsoft.com/en-us/answers/questions/574969/whats-the-difference-between-deallocated-and-stopp
+
 
 ---
 
@@ -44,3 +47,23 @@ az vm list-skus --location uksouth > .\out\vm-skus.json
 
 
 ![vscode-powershell-extension-launch-settings.png](docs/images/vscode-powershell-extension-launch-settings.png)
+
+
+# Where was I ?
+- Guidance on VM and VNET
+- https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-powershell
+
+You 
+- Created the vm
+- this has a public ip
+- this is on the virtual network
+- wrote a script to stop-de-allocate the vm
+
+Next steps
+- Create a storage account
+- Add it to the vnet
+- Disable public access
+- Try connecting to this storage account from outside
+- Try connecting to this storage account from inside
+- 
+- 
