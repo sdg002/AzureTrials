@@ -26,6 +26,12 @@ az vm list-skus --location uksouth > .\out\vm-skus.json
 ## Difference between stop and deallocate
 https://learn.microsoft.com/en-us/answers/questions/574969/whats-the-difference-between-deallocated-and-stopp
 
+## Disallowing public access to a storage account
+
+See the `--public-network-access Disabled` argument in the `az storage account create` command line
+
+https://learn.microsoft.com/en-us/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create
+
 
 ---
 
@@ -65,5 +71,5 @@ Next steps
 - Disable public access
 - Try connecting to this storage account from outside
 - Try connecting to this storage account from inside
-- 
+- Find out how to grant access to the storage account from Azure IP addresses
 - 
