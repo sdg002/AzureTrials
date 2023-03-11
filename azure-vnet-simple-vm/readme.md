@@ -67,15 +67,13 @@ You
 
 Next steps
 - Create a storage account (done)
-- Add to vnet
-- You are able to select a VNET
-- Disable public access (You want to Enabled from selected virtual networks and IP addresses)
-- Create a storage container
+- ~~Add to vnet~~
+- ~~You are able to select a VNET~~
+- ~~Disable public access (You want to Enabled from selected virtual networks and IP addresses)~~
+- ~~Create a storage container~~
 - Create with AD access only
-- Add it to the vnet
-- Disable public access
-- Try connecting to this storage account from outside
-- Try connecting to this storage account from inside
+- ~~Try connecting to this storage account from outside~~
+- ~~Try connecting to this storage account from inside~~
 - Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
 - Install Azure CLI on the VM
 - Write some script that uploads/downloads data to a storage container
@@ -84,6 +82,24 @@ Next steps
 - 
 
 # Testing the access to Azure Storage
+
+## Objective
+We want to verify that the Network restrictions are indeed working. We will use the accompanying script `test-storage-account.ps1` . 
+
+## Setting the acount key on PowerShell Console
+ - Before executing this script you will need to head over to Azure Portal and grab the Storage Account key
+ - Launch a new Powershell Core console
+ - Navigate to the folder where this repo has been cloned
+ 
+![portal-grab-storage-account-key.png
+](docs/images/portal-grab-storage-account-key.png)
+
+![pwsh-setting-storage-key-env-variable.png
+](docs/images/pwsh-setting-storage-key-env-variable.png)
+
+## Running the test script
+![pwsh-running-test-storage-account.png
+](docs/images/pwsh-running-test-storage-account.png)
 
 ## With network restrictions in place
 
