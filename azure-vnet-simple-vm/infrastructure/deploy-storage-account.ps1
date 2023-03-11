@@ -5,10 +5,7 @@ function CreateStorageAccount{
     Write-Host "Begin - creating storage account $Global:StoAccount"
     & az storage account create --name $Global:StoAccount --resource-group $Global:ResourceGroup `
         --access-tier "Cool" --allow-blob-public-access "false" `
-        --allow-blob-public-access "false" --https-only "true" `
-        --location $Global:Location --sku "Standard_LRS" `
-        --bypass AzureServices `
-        --default-action "Deny" `
+        --https-only "true" --location $Global:Location --sku "Standard_LRS" `
         --tags $Global:Tags
     ThrowErrorIfExitCode -message "Error while creating storage account $Global:StoAccount"    
     Write-Host "End - creating storage account $Global:StoAccount"
@@ -29,8 +26,24 @@ function AddNetworkRule{
     --resource-group $Global:ResourceGroup --account-name $Global:StoAccount `
     --vnet-name $Global:Vnet --subnet "default"
     
-    ThrowErrorIfExitCode -message "Error while adding network rule to $Global:StoAccount"        
+    ThrowErrorIfExitCode -message "Error while adding network rule to $Global:StoAccount"
     Write-Host "End - Adding network rule to $Global:StoAccount"
 }
+
+
+function PreventPublicAccess{
+    Write-Host "Begin - disabling public access for the storage account $Global:StoAccount"    
+    & az storage account update --name $Global:StoAccount --resource-group $Global:ResourceGroup `
+        --allow-blob-public-access "false" `
+        --bypass AzureServices `
+        --default-action "Deny" `
+        --verbose
+
+    ThrowErrorIfExitCode -message "Error while enabling public access $Global:StoAccount"
+    Write-Host "End - disabling public access for the storage account $Global:StoAccount"    
+}
+
+
 CreateStorageAccount
 AddNetworkRule
+PreventPublicAccess
