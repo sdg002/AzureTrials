@@ -15,7 +15,7 @@ function CreatePublicIpAddress{
 }
 
 function DeployVirtualMachine($name){
-    Write-Host "Begin.VM deployment begin"
+    Write-Host "Begin.VM deployment"
     ThrowErrorIfExitCode -message "Error while creating VM $name"
     & az vm create --resource-group $Global:ResourceGroup --image $Global:VirtualMachineImage `
     --admin-username $Global:VirtualMachineAdminUser `
@@ -26,8 +26,16 @@ function DeployVirtualMachine($name){
     --name $name
 
     ThrowErrorIfExitCode -message "Could not create virtual machine $name"
-    Write-Host "End.VM deployment begin"
+    Write-Host "End.VM deployment"
+}
+function CreateAutoSutdown{
+    Write-Host "Begin.VM auto-shutdown rule begin"
+    & az vm auto-shutdown --resource-group $Global:ResourceGroup --name $Global:VirtualMachineName1 `
+        --time $Global:VirtualMachineShutdownTime --email $Global:VirtualMachineShutdownEmail
+    ThrowErrorIfExitCode -message "Could not create auto shutdown rule for virtual machine $Global:VirtualMachineName1"
+    Write-Host "End.VM auto-shutdown rule begin"   
 }
 
 CreatePublicIpAddress
 DeployVirtualMachine -name $Global:VirtualMachineName1
+CreateAutoSutdown
