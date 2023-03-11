@@ -13,3 +13,5 @@ CreateResourceGroup
 
 & $PSScriptRoot\deploy-vnet.ps1
 & $PSScriptRoot\deploy-vm.ps1
+& $PSScriptRoot\deploy-storage-account.ps1
+

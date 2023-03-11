@@ -80,3 +80,16 @@ Next steps
 - Install Azure CLI on the VM
 - Write some script that uploads/downloads data to a storage container
 - 
+- 
+- 
+
+# Testing the access to Azure Storage
+
+## With network restrictions in place
+
+![az-storage-container-list-blocked.png
+](docs/images/az-storage-container-list-blocked.png)
+
+## Without any network restrictions
+![az-storage-container-list-enabled-all-access.png
+](docs/images/az-storage-container-list-enabled-all-access.png)
