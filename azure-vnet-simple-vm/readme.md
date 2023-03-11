@@ -59,25 +59,31 @@ https://learn.microsoft.com/en-us/cli/azure/storage/account?view=azure-cli-lates
 - Guidance on VM and VNET
 - https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-powershell
 
-You 
-- Created the vm
-- this has a public ip
-- this is on the virtual network
-- wrote a script to stop-de-allocate the vm
-
-Next steps
-- Test the access of the storage account from the VM (use the test scritp)
-- ~~Create a storage account (done)~~
-- ~~Add to vnet~~
-- ~~You are able to select a VNET~~
-- ~~Disable public access (You want to Enabled from selected virtual networks and IP addresses)~~
-- ~~Create a storage container~~
-- Create with AD access only
-- ~~Try connecting to this storage account from outside~~
-- ~~Try connecting to this storage account from inside~~
-- Ask question on Reddit - How to access storage account Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
-- ~~Install Azure CLI on the VM~~
+## What was done
+- Create a storage account (done)
+- Add to vnet
+- You are able to select a VNET
+- Disable public access (You want to Enabled from selected virtual networks and IP addresses)
+- Create a storage container
+- Try connecting to this storage account from outside
+- Try connecting to this storage account from inside
+- Install Azure CLI on the VM
 - Write some script that uploads/downloads data to a storage container
+- Test the access of the storage account from the VM (use the test scritp)
+
+## Next steps
+- Create with AD access only
+- Ask question on Reddit - How to access storage account Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
+- Write some Python code which can access the storage container
+- Test locally as docker image
+- Add a Container instance
+- Deploy Container to Azure
+- Fetch logs
+- Add to vnet
+- Test with and without VNET
+
+
+---
 
 
 # Testing the access to Azure Storage
