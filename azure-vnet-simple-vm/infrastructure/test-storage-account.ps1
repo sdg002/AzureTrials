@@ -1,10 +1,12 @@
 . $PSScriptRoot\common.ps1
 
 <#
-Set the following environment variables:
+You will need to set the following environment variables:
 AZURE_STORAGE_KEY
-AZURE_STORAGE_ACCOUNT
 #>
 $env:AZURE_STORAGE_ACCOUNT=$Global:StoAccount
-$env:AZURE_STORAGE_KEY=""
+Write-Host  "Have you copied the Storage Account Key to clipboard ? Press a key when ready"
+[Console]::ReadKey($true)
+$env:AZURE_STORAGE_KEY=(Get-Clipboard)
+Write-Host "Querying storage account"
 & az storage container list

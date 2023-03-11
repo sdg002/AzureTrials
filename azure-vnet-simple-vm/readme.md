@@ -66,7 +66,8 @@ You
 - wrote a script to stop-de-allocate the vm
 
 Next steps
-- Create a storage account (done)
+- Test the access of the storage account from the VM (use the test scritp)
+- ~~Create a storage account (done)~~
 - ~~Add to vnet~~
 - ~~You are able to select a VNET~~
 - ~~Disable public access (You want to Enabled from selected virtual networks and IP addresses)~~
@@ -74,12 +75,10 @@ Next steps
 - Create with AD access only
 - ~~Try connecting to this storage account from outside~~
 - ~~Try connecting to this storage account from inside~~
-- Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
-- Install Azure CLI on the VM
+- Ask question on Reddit - How to access storage account Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
+- ~~Install Azure CLI on the VM~~
 - Write some script that uploads/downloads data to a storage container
-- 
-- 
-- 
+
 
 # Testing the access to Azure Storage
 
@@ -87,10 +86,14 @@ Next steps
 We want to verify that the Network restrictions are indeed working. We will use the accompanying script `test-storage-account.ps1` . 
 
 ## Setting the acount key on PowerShell Console
- - Before executing this script you will need to head over to Azure Portal and grab the Storage Account key
- - Launch a new Powershell Core console
- - Navigate to the folder where this repo has been cloned
+ 1. Before executing this script you will need to head over to Azure Portal and grab the Storage Account key
+ 1. Launch a new Powershell Core console
+ 1. Navigate to the folder where this repo has been cloned
+ 1. Launch a PowerShell Console and type the following command
  
+```powershell
+$env:AZURE_STORAGE_kEY=Get-Clipboard
+```
 ![portal-grab-storage-account-key.png
 ](docs/images/portal-grab-storage-account-key.png)
 
@@ -102,10 +105,12 @@ We want to verify that the Network restrictions are indeed working. We will use 
 ](docs/images/pwsh-running-test-storage-account.png)
 
 ## With network restrictions in place
-
 ![az-storage-container-list-blocked.png
 ](docs/images/az-storage-container-list-blocked.png)
 
 ## Without any network restrictions
+If you allow Public access and run again
+
 ![az-storage-container-list-enabled-all-access.png
 ](docs/images/az-storage-container-list-enabled-all-access.png)
+
