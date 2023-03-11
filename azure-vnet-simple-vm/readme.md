@@ -120,3 +120,19 @@ If you allow Public access and run again
 ![az-storage-container-list-enabled-all-access.png
 ](docs/images/az-storage-container-list-enabled-all-access.png)
 
+
+
+---
+
+# Lessons learnt
+
+## Azure CLI will not let you access a storage account with network rules in place
+I was under the assumption that **Azure CLI** will let me do everything that **Azure Portal** lets me do. When Public network access is blocked, Azure Portal still allows me to see the Blobs. But the Azure CLI does not permit this.
+https://github.com/Azure/azure-cli/issues/18415
+
+## What are the work arounds ?
+1. Enable Public Access, wait for 60 seconds and do all operations.
+1. Use a hosted Devops agent which is on the same vnet
+1. 
+
+
