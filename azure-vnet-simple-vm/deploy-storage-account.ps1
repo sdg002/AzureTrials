@@ -7,11 +7,14 @@ function CreateStorageAccount{
         --access-tier "Cool" --allow-blob-public-access "false" `
         --allow-blob-public-access "false" --https-only "true" `
         --location $Global:Location --sku "Standard_LRS" `
+        --bypass AzureServices `
+        --default-action "Deny" `
         --tags $Global:Tags
     ThrowErrorIfExitCode -message "Error while creating storage account $Global:StoAccount"    
     Write-Host "End - creating storage account $Global:StoAccount"
 
     <#
+        --public-network-access "Disabled" 
         --public-network-access Disabled `
         --vnet-name $Global:Vnet --subnet "default" --default-action "Allow"
 
@@ -19,4 +22,15 @@ Validation of network acls failure: SubnetsHaveNoServiceEndpointsConfigured:Subn
 these subnets.."    
     #>
 }
+
+function AddNetworkRule{
+    Write-Host "Begin - Adding network rule to $Global:StoAccount"
+    & az storage account network-rule add `
+    --resource-group $Global:ResourceGroup --account-name $Global:StoAccount `
+    --vnet-name $Global:Vnet --subnet "default"
+    
+    ThrowErrorIfExitCode -message "Error while adding network rule to $Global:StoAccount"        
+    Write-Host "End - Adding network rule to $Global:StoAccount"
+}
 CreateStorageAccount
+AddNetworkRule

@@ -66,10 +66,17 @@ You
 - wrote a script to stop-de-allocate the vm
 
 Next steps
-- Create a storage account
+- Create a storage account (done)
+- Add to vnet
+- You are able to select a VNET
+- Disable public access (You want to Enabled from selected virtual networks and IP addresses)
+- Create a storage container
+- Create with AD access only
 - Add it to the vnet
 - Disable public access
 - Try connecting to this storage account from outside
 - Try connecting to this storage account from inside
-- Find out how to grant access to the storage account from Azure IP addresses
+- Find out how to grant access to the storage account from Azure IP addresses (Probably there is nothing at all)
+- Install Azure CLI on the VM
+- Write some script that uploads/downloads data to a storage container
 - 
