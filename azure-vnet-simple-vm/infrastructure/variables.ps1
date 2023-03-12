@@ -14,3 +14,4 @@ $Global:VirtualMachineAdminPassword="Pass@word123"
 $Global:PublicIp1="myPublicIP1"
 $Global:VirtualMachineShutdownTime="23:00"
 $Global:VirtualMachineShutdownEmail="saurabh_dasgupta@hotmail.com"
+$Global:ContainerRegistry=("saupycontainerregistry001")
