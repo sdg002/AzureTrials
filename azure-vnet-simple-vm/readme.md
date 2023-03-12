@@ -135,4 +135,18 @@ https://github.com/Azure/azure-cli/issues/18415
 1. Use a hosted Devops agent which is on the same vnet
 1. 
 
+---
 
+# Installing Docker extensions in VS Code
+Installing the Docker extension in VS Code will simplify Docker management. 
+
+## Which Docker extension to install ?
+![docker-which-extension.png](docs/images/docker-which-extension.png)
+
+## How to run Docker build on a Dockler ?
+![docker-build.png](docs/images/docker-build.png)
+
+## How to run a Docker image ?
+![docker-run-image.png](docs/images/docker-run-image.png)
+
+---
