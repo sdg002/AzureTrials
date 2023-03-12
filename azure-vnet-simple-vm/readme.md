@@ -151,7 +151,23 @@ We can see that the the Azure container instance was able to access the storage 
 ![container-logs-ipaddress-before-vnet.png](docs/images/container-logs-ipaddress-before-vnet.png)
 
 ## After VNET
+
 TO BE DONE
+
+---
+
+# Secret environment variable
+
+## How it appears on the logs (annotate the variable in the picture) ?
+
+![container-logs-secret-environment-variable.png](docs/images/container-logs-secret-environment-variable.png)
+
+
+## How it appears on Container properties of the Azure portal ?
+
+![container-properties-secret-environment-variable.png](docs/images/container-properties-secret-environment-variable.png)
+
+
 
 ---
 
