@@ -32,6 +32,11 @@ See the `--public-network-access Disabled` argument in the `az storage account c
 
 https://learn.microsoft.com/en-us/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create
 
+## Azure Blob client examples for Python
+https://learn.microsoft.com/en-us/python/api/overview/azure/storage-blob-readme?view=azure-python#examples
+
+## Setting secret environment variables
+https://learn.microsoft.com/en-us/azure/container-instances/container-instances-environment-variables
 
 ---
 
@@ -121,6 +126,21 @@ If you allow Public access and run again
 ](docs/images/az-storage-container-list-enabled-all-access.png)
 
 
+---
+
+# Testing the access from Container instance
+
+
+
+## When container is not on the VNET
+
+### Public access on storage account is turned off
+We can see that the the Azure container instance failed to access the storage account
+![container-logs-auth-failed.png](docs/images/container-logs-auth-failed.png)
+
+### Public access on storage account is turned on
+We can see that the the Azure container instance was able to access the storage account
+![container-logs-auth-succeeded-not-on-vnet.png](docs/images/container-logs-auth-succeeded-not-on-vnet.png)
 
 ---
 

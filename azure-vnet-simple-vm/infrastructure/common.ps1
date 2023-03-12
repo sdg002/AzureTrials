@@ -28,3 +28,8 @@ function GetAcrPassword{
     Write-Host "Got the ACR password: $password"
     return $password
 }
+
+function GetStorageAccountKey{    
+    $keys = & az storage account keys list --account-name $Global:StoAccount --resource-group $Global:ResourceGroup | ConvertFrom-Json -AsHashtable
+    return $keys[0]["value"]
+}
