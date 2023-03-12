@@ -1,0 +1,5 @@
+
+
+class EnvironmentVariables:
+    STORAGE_ACCOUNT_KEY: str = "STORAGE_ACCOUNT_KEY"
+    STORAGE_ACCOUNT_NAME: str = "STORAGE_ACCOUNT_NAME"

@@ -3,8 +3,9 @@ import logging
 import datetime
 import time
 import numpy as np
+from access_blob import list_blob_containers
 
-def do_some_work(iterations:int =100):
+def do_some_work(iterations:int =5):
     print("Inside function so_some_work")
     for index in range(iterations):
         logging.info(f"Iteration={index}")
@@ -18,5 +19,5 @@ def do_some_work(iterations:int =100):
 
 if __name__ =="__main__":
     add_console_logger()
-    do_some_work()
-
+    do_some_work(iterations=2)
+    list_blob_containers()
