@@ -38,6 +38,32 @@ https://learn.microsoft.com/en-us/python/api/overview/azure/storage-blob-readme?
 ## Setting secret environment variables
 https://learn.microsoft.com/en-us/azure/container-instances/container-instances-environment-variables
 
+## Azure Container groups and VNET
+https://learn.microsoft.com/en-us/azure/container-instances/container-instances-vnet
+
+## What is subnet delegation ?
+https://learn.microsoft.com/en-us/azure/virtual-network/subnet-delegation-overview
+
+
+## Add or remove subnet delegation ?
+https://learn.microsoft.com/en-us/azure/virtual-network/manage-subnet-delegation?tabs=manage-subnet-delegation-portal
+
+To place a Container group in an existing subnet, the subnet should be empty of all other resources
+```
+or use an existing subnet emptied of all other resources and configuration
+```
+
+## Challenges with subnet delegation and Java container instances
+https://github.com/Azure/azure-libraries-for-java/issues/741
+(is this relevant?)
+
+
+## Vnet and subnet address ranges - you cannot overlap addresses !
+Read this example:
+https://learn.microsoft.com/en-us/answers/questions/50693/how-to-define-address-range-(cidr)-for-azure-subne
+
+You have an overall IP range for the vnet. Each of the subnets must have an IP range which does not overlap with any of the subnets
+
 ---
 
 
@@ -152,7 +178,8 @@ We can see that the the Azure container instance was able to access the storage 
 
 ## After VNET
 
-TO BE DONE
+![container-logs-auth-succeeded-after-vnet.png](docs/images/container-logs-auth-succeeded-after-vnet.png)
+
 
 ---
 

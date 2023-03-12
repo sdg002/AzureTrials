@@ -16,7 +16,6 @@ function CreatePublicIpAddress{
 
 function DeployVirtualMachine($name){
     Write-Host "Begin.VM deployment"
-    ThrowErrorIfExitCode -message "Error while creating VM $name"
     & az vm create --resource-group $Global:ResourceGroup --image $Global:VirtualMachineImage `
     --admin-username $Global:VirtualMachineAdminUser `
     --admin-password $Global:VirtualMachineAdminPassword `
