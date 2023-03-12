@@ -144,6 +144,17 @@ We can see that the the Azure container instance was able to access the storage 
 
 ---
 
+# IP address before and after VNET
+
+## Before VNET
+
+![container-logs-ipaddress-before-vnet.png](docs/images/container-logs-ipaddress-before-vnet.png)
+
+## After VNET
+TO BE DONE
+
+---
+
 # Lessons learnt
 
 ## Azure CLI will not let you access a storage account with network rules in place
