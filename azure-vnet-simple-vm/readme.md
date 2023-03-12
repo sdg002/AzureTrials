@@ -150,3 +150,49 @@ Installing the Docker extension in VS Code will simplify Docker management.
 ![docker-run-image.png](docs/images/docker-run-image.png)
 
 ---
+
+# Docker and Azure Devops
+## MS documentation page
+https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/containers/acr-template?view=azure-devops
+
+## Sample YAML
+
+```YAML
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+```
+
+## MS Link on Docker Devops Tasks
+### Docker Build and Push (any Docker command)
+This needs a service connection
+https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/docker-v2?view=azure-pipelines&tabs=classic
+
+### Docker CLI installation
+https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/docker-installer-v0?view=azure-pipelines
+
+```yml
+# Docker CLI installer v0
+# Install Docker CLI on agent machine.
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce' # string. Required. Docker Version. Default: 17.09.0-ce.
+    #releaseType: 'stable' # 'stable' | 'edge' | 'test' | 'nightly'. Release type. Default: stable.
+```
+
+
+---

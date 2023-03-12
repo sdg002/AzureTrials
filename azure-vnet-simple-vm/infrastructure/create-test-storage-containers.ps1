@@ -1,5 +1,9 @@
 . $PSScriptRoot\common.ps1
 
+<#
+This script will open up public access so that CLI can create the neccessary containers.
+This script WILL NOT disable the public access. Remember to run deploy-storage-account.ps1 to disable public access
+#>
 function AllowPublicAccess{
     Write-Host "Begin - enabling public access for the storage account $Global:StoAccount"    
     & az storage account update --name $Global:StoAccount --resource-group $Global:ResourceGroup `
