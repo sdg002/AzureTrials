@@ -5,6 +5,7 @@ from azure.storage.blob import BlobServiceClient
 from env_variables import EnvironmentVariables
 
 def list_blob_containers():
+    logging.info("---------------------------------------")
     logging.info("Going to access some blobs")
     try:
         logging.info(f"Going to get environment variable {EnvironmentVariables.STORAGE_ACCOUNT_NAME} and {EnvironmentVariables.STORAGE_ACCOUNT_KEY}")
