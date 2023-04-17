@@ -16,3 +16,16 @@ You will need to specify the
 az network vnet subnet create --resource-group $resourceGroup --name $subnet --vnet-name $vNet --address-prefix $subnetAddressPrefix --service-endpoints Microsoft.SQL
 
 ```
+
+you were above - create the service end point via CLI
+https://learn.microsoft.com/en-us/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create
+
+## Test 1
+ - drop the rule on Storage account
+ - run the script
+
+## Test 2
+- drop all storage rules
+- drop container
+- drop subnet
+- re-create

@@ -21,13 +21,19 @@ these subnets.."
 }
 
 function AddNetworkRule{
-    Write-Host "Begin - Adding network rule to $Global:StoAccount"
+    Write-Host "Begin - Adding network rule to $Global:StoAccount, Subnet=default"
     & az storage account network-rule add `
     --resource-group $Global:ResourceGroup --account-name $Global:StoAccount `
-    --vnet-name $Global:Vnet --subnet "default"
-    
+    --vnet-name $Global:Vnet --subnet "default"    
     ThrowErrorIfExitCode -message "Error while adding network rule to $Global:StoAccount"
-    Write-Host "End - Adding network rule to $Global:StoAccount"
+    Write-Host "End - Adding network rule to $Global:StoAccount, Subnet=default"
+
+    Write-Host "Begin - Adding network rule to $Global:StoAccount, Subnet=$Global:SubnetContainers"
+    & az storage account network-rule add `
+    --resource-group $Global:ResourceGroup --account-name $Global:StoAccount `
+    --vnet-name $Global:Vnet --subnet $Global:SubnetContainers   
+    ThrowErrorIfExitCode -message "Error while adding network rule to $Global:StoAccount"
+    Write-Host "End - Adding network rule to $Global:StoAccount, Subnet=$Global:SubnetContainers"
 }
 
 

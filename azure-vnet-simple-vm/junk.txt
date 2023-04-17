@@ -1,0 +1,38 @@
+{
+  "addressPrefix": "10.0.0.0/24",
+  "addressPrefixes": null,
+  "applicationGatewayIpConfigurations": null,
+  "delegations": [],
+  "etag": "W/\"c4d15d76-f6a0-4d01-b84c-b67047af865f\"",
+  "id": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-vm-vnet-experiment/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/default",
+  "ipAllocations": null,
+  "ipConfigurationProfiles": null,
+  "ipConfigurations": [
+    {
+      "etag": null,
+      "id": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-vm-vnet-experiment/providers/Microsoft.Network/networkInterfaces/myvm001VMNic/ipConfigurations/ipconfigmyvm001",
+      "name": null,
+      "privateIpAddress": null,
+      "privateIpAllocationMethod": null,
+      "provisioningState": null,
+      "publicIpAddress": null,
+      "resourceGroup": "rg-demo-vm-vnet-experiment",
+      "subnet": null
+    }
+  ],
+  "name": "default",
+  "natGateway": null,
+  "networkSecurityGroup": null,
+  "privateEndpointNetworkPolicies": "Disabled",
+  "privateEndpoints": null,
+  "privateLinkServiceNetworkPolicies": "Enabled",
+  "provisioningState": "Succeeded",
+  "purpose": null,
+  "resourceGroup": "rg-demo-vm-vnet-experiment",
+  "resourceNavigationLinks": null,
+  "routeTable": null,
+  "serviceAssociationLinks": null,
+  "serviceEndpointPolicies": null,
+  "serviceEndpoints": null,
+  "type": "Microsoft.Network/virtualNetworks/subnets"
+}

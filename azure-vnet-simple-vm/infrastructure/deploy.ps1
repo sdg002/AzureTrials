@@ -15,6 +15,7 @@ CreateResourceGroup
 & $PSScriptRoot\deploy-vm.ps1
 & $PSScriptRoot\deploy-storage-account.ps1
 & $PSScriptRoot\deploy-acr.ps1
+# TODO Bring createimaeg.ps1 to the top level and include this call here
 & $PSScriptRoot\push-image.ps1
 & $PSScriptRoot\deploy-container-instance.ps1
 
