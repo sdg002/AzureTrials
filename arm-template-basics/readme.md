@@ -1,10 +1,10 @@
 [[_TOC_]]
 
+
 ---
 
-# Step by step link on ARM templates from Microsoft
-https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-export-template?tabs=azure-powershell#deploy-template
-
+# You were here,
+Try out more with object outputs
 
 # Simple object output
 
@@ -68,3 +68,15 @@ https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/templat
   "type": "Microsoft.Resources/deployments"
 }
 ```
+
+---
+
+# References
+## Step by step link on ARM templates from Microsoft
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-export-template?tabs=azure-powershell#deploy-template
+
+## ARM template output
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/outputs?tabs=azure-powershell
+
+## ARM template data types
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/data-types
