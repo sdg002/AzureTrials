@@ -1,15 +1,21 @@
 Set-StrictMode -Version "latest"
 $ErrorActionPreference="Stop"
-
-
-
-$subFolder=".\1-arm-object-output"
-$armFileName="$subFolder\arm.json"
-$armFilePath = Join-path -Path $PSScriptRoot -ChildPath $armFileName
-$outputFile=Join-path -Path "$PSScriptRoot\$subFolder" -ChildPath  "arm.output.json"
-
-
 $ResourceGroup="rg-demo-vm-vnet-experiment"
 
-az deployment group create --resource-group $ResourceGroup --template-file $armFilePath  --verbose > $outputFile
+
+function ExecuteSimpleArmTemplateOutput($folder,$armFileName){
+    $armFilePath = Join-path -Path $PSScriptRoot -ChildPath "$folder\$armFileName"
+    $outputFile=Join-path -Path "$PSScriptRoot\$subFolder" -ChildPath  "arm.output.json"
+    az deployment group create --resource-group $ResourceGroup --template-file $armFilePath  --verbose > $outputFile
+    Write-Host "The output was written to file file $outputFile"
+}
+ExecuteSimpleArmTemplateOutput -folder ".\1-arm-object-output" -armFileName "arm.json"
+
+# $subFolder=".\1-arm-object-output"
+# $armFileName="$subFolder\arm.json"
+
+
+
+
+
 #tried --what-if , did not work
