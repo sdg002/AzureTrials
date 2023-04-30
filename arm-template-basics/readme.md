@@ -42,3 +42,72 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 ![resource-group-tags.png](docs/images/resource-group-tags.png)
 
 ---
+
+# 1-Basic ARM template structure
+
+**VS Code** enhances the editing experience of ARM templates. 
+- Create a new file . Example. **arm.json**
+- Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!**
+![vscode-arm-code-snippet.png](docs/images/vscode-arm-code-snippet.png)
+
+this is a functioning ARM template. Let us try and deploy this ARM template by using the Azure CLI
+
+## Command
+```powershell
+az deployment group create --resource-group $Global:ResourceGroup --template-file $armFilePath  --verbose
+```
+
+## Output
+```json
+{
+  "id": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-arm-template-experiments/providers/Microsoft.Resources/deployments/arm",
+  "location": null,
+  "name": "arm",
+  "properties": {
+    "correlationId": "191c43f7-8126-4b37-9a9b-b553084db85f",
+    "debugSetting": null,
+    "dependencies": [],
+    "duration": "PT0.2946402S",
+    "error": null,
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [],
+    "outputs": {},
+    "parameters": {},
+    "parametersLink": null,
+    "providers": [],
+    "provisioningState": "Succeeded",
+    "templateHash": "11635883502557795404",
+    "templateLink": null,
+    "timestamp": "2023-04-30T22:46:12.610885+00:00",
+    "validatedResources": null
+  },
+  "resourceGroup": "rg-demo-arm-template-experiments",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}
+```
+
+## Understanding the structure of ARM
+```json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},  //The inputs to the ARM. E.g. Location, Name of the resource , etc. could be passed as parameters
+    "functions": [], //Custom functions built out of the of box ARM functions
+    "variables": {}, //Additional variables. E.g. you could create a variable that holds a calculated value and is referenced multiple times
+    "resources": [], //The actual Azure resources that are geting created
+    "outputs": {} //These are values that are programmed to be returned back. These values can be used for subsequent operations. 
+}
+```
+---
+
+
+# References
+## Azure ARM template reference
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
+
+## Azure ARM template - defining new functions
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax#functions
+
+---
