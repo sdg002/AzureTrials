@@ -101,7 +101,14 @@ az deployment group create --resource-group $Global:ResourceGroup --template-fil
 }
 ```
 ---
-
+# you were here
+- create a storage account
+- use the location from resource group
+- use the tags from resource group
+- output the storage key
+- create a key vault
+- can we add the storage key directly to the key vault
+---
 
 # References
 ## Azure ARM template reference
