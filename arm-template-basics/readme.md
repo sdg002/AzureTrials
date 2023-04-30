@@ -4,7 +4,11 @@
 ---
 
 # You were here,
-Try out more with object outputs
+Try out more resource referencing stuff, you did location
+
+- Make every folder atomic
+- Write down in the READM.MD what each folder does
+
 
 # Simple object output
 
@@ -66,6 +70,32 @@ Try out more with object outputs
   "resourceGroup": "rg-demo-vm-vnet-experiment",
   "tags": null,
   "type": "Microsoft.Resources/deployments"
+}
+```
+
+---
+
+# 3-Getting the location from the parent resource group
+In this example we reference the location of the parent resource group. This approach can simpilfy your scripts if you are sure that all your resources will follow the same location as the resource group
+```
+
+{
+  "myLocation": {
+      "type": "string",
+      "value":  "[resourceGroup().location]"
+}
+
+```
+
+What to expect?
+
+```
+{
+"myLocation": {
+        "type": "String",
+        "value": "uksouth"
+      }
+
 }
 ```
 
