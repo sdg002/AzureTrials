@@ -10,8 +10,9 @@ function ExecuteSimpleArmTemplateOutput($folder,$armFileName){
     Write-Host "The output was written to file file $outputFile"
 }
 
-ExecuteSimpleArmTemplateOutput -folder ".\1-arm-object-output" -armFileName "arm.json"
-ExecuteSimpleArmTemplateOutput -folder ".\2-arm-string-int-output" -armFileName "arm.json"
+# ExecuteSimpleArmTemplateOutput -folder ".\1-arm-object-output" -armFileName "arm.json"
+# ExecuteSimpleArmTemplateOutput -folder ".\2-arm-string-int-output" -armFileName "arm.json"
+ExecuteSimpleArmTemplateOutput -folder ".\3-arm-output-location-resource-id" -armFileName "arm.json"
 
 # $subFolder=".\1-arm-object-output"
 # $armFileName="$subFolder\arm.json"
