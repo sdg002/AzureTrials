@@ -57,7 +57,7 @@ this is a functioning ARM template. Let us try and deploy this ARM template by u
 az deployment group create --resource-group $Global:ResourceGroup --template-file $armFilePath  --verbose
 ```
 
-## Output
+## What to expect when deploy an ARM template ?
 ```json
 {
   "id": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-arm-template-experiments/providers/Microsoft.Resources/deployments/arm",
@@ -89,6 +89,7 @@ az deployment group create --resource-group $Global:ResourceGroup --template-fil
 ```
 
 ## Understanding the structure of ARM
+At the very root every ARM template has the 5 elements: **parameters**, **functions**, **variables**, **resources** and **outputs**
 ```json
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
@@ -100,9 +101,13 @@ az deployment group create --resource-group $Global:ResourceGroup --template-fil
     "outputs": {} //These are values that are programmed to be returned back. These values can be used for subsequent operations. 
 }
 ```
+
+When we deployed our skeletal ARM template, the elements **outputResources** and **outputs** are empty because the elements **resources** and **outputs** of the input ARM file were empty.
+
+
 ---
 # you were here
-- create a storage account
+- create a storage account with explicit location and tags using the Azure CLI
 - use the location from resource group
 - use the tags from resource group
 - output the storage key
