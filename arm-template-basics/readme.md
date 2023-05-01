@@ -1,7 +1,7 @@
 [[_TOC_]]
 
 # About this article
-I have presented a simple step by step hands on guide to understand Azure ARM templates. There is a widely held belief that Azure ARM templates are terribly complicated and thus there is a need for 3rd party solutions. It my humble hope that at the end of this hands on guide I will be able to convince you otherwise
+I have presented a simple step by step hands on guide to understand Azure ARM templates. There is a widely held belief that Azure ARM templates are terribly complicated and thus there is a need for 3rd party solutions. It my humble hope that at the end of this hands on guide I will be able to convince you otherwise.
 
 ---
 
@@ -11,6 +11,8 @@ I have presented a simple step by step hands on guide to understand Azure ARM te
 - Azure CLI installed and signed in
 - An Azure subscription
 
+The philosopy of this guide is to "_use Microsoft's Azure CLI tool and Microsoft's PowerShell and Microsoft's VS Code to take control of Microsoft Azure Cloud_" . No need to use any 3rd party tools.
+
 ![vscode_arm_template_extension.png](docs/images/vscode_arm_template_extension.png)
 
 ---
@@ -18,6 +20,24 @@ I have presented a simple step by step hands on guide to understand Azure ARM te
 # Structure of this Guide
 to be done
 [???talk about the folder structure, prep folder, how to run each of the scripts]
+
+```
+    -100-prep-create-resource-group
+        |
+        |--deploy.ps1
+        |
+    -200-arm-structure
+        |
+        |--deploy.ps1
+        |
+        |--arm.json
+        |
+    -common
+        |
+        |--variables.ps1
+        |
+
+```
 
 
 ---
