@@ -22,7 +22,7 @@ to be done
 
 ---
 
-# Step 0 - Prepping the resource group
+# 100-Prepping the resource group
 
 We will need a resource group to contain all the Azure resources we create. For this guide we will confine oursleves to a one and only resource group. 
 
@@ -43,7 +43,7 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 
 ---
 
-# 1-Basic ARM template structure
+# 200-Basic ARM template structure
 
 **VS Code** enhances the editing experience of ARM templates. 
 - Create a new file . Example. **arm.json**
@@ -104,8 +104,61 @@ At the very root every ARM template has the 5 elements: **parameters**, **functi
 
 When we deployed our skeletal ARM template, the elements **outputResources** and **outputs** are empty because the elements **resources** and **outputs** of the input ARM file were empty.
 
+---
+# 300-Deploy a storage account using just the Azure CLI (no ARM template)
+
+Creating a Storage account is very simple. Just 1 call to the Azure CLI and you are done. No need for an ARM template
+
+```powershell
+& az storage account create --resource-group $Global:ResourceGroup --name $Global:StorageAccount --location $Global:Location --sku $Global:StorageAccountSku
+```
+
+
+![300-storage-account-using-cli-only.png](docs/images/300-storage-account-using-cli-only.png)
 
 ---
+
+# 301-Deploy a storage account using just the Azure CLI and set the tags(no ARM template)
+
+In this example we using the `--tags` option of the Azure CLI to apply the tags on our Storage account. We are not yet using an ARM template.
+
+```powershell
+& az storage account create --resource-group $Global:ResourceGroup --name $Global:StorageAccount `
+    --location $Global:Location --sku $Global:StorageAccountSku `
+    --tags department=$Global:TagDepartment owner=$Global:TagOwner costcenter=$Global:TagCostCenter
+
+```
+
+Notice that we are referencing the same **Global** variables that were used during the resource group creation.
+
+![301-storage-account-using-cli-only-with-tags](docs/images/301-storage-account-using-cli-only-with-tags.png)
+
+So why bother using ARM templates if Azure CLI does it for you. In the broader picture, using ARM templates can simplify the overall CI/CD by removing redundant parameters and redundant calls to Azure CLI. 
+
+---
+
+# 302-Deploy a storage account using an ARM template
+
+## Step 1-How to grab the ARM template from the Azure portal ?
+[Show the steps with picutres, parameter names, could use Git repository]
+
+## Step 2-Tidy up the ARM template
+[remove unwanted parameters, etc.]
+
+## Step 3-Deploy the ARM template
+[pass location as parameter, explain how to grab the ARM template]
+
+---
+# 302-Deploy a storage account using an ARM template (location and tags as parameters)
+[Extend the pevious ARM template and pass the location and  ]
+
+---
+
+# 303-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
+[Extend the pevious ARM template and pass the location and  ]
+
+---
+
 # you were here
 - create a storage account with explicit location and tags using the Azure CLI
 - use the location from resource group
