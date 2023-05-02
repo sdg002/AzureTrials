@@ -138,7 +138,7 @@ Creating a Storage account is very simple. Just 1 call to the Azure CLI and you 
 
 ---
 
-# 301-Deploy a storage account using just the Azure CLI and set the tags(no ARM template)
+# 301-Deploy a storage account using just the Azure CLI and set the tags (no ARM template)
 
 In this example we using the `--tags` option of the Azure CLI to apply the tags on our Storage account. We are not yet using an ARM template.
 
@@ -160,7 +160,23 @@ So why bother using ARM templates if Azure CLI does it for you. In the broader p
 # 302-Deploy a storage account using an ARM template
 
 ## Step 1-How to grab the ARM template from the Azure portal ?
-[Show the steps with picutres, parameter names, could use Git repository]
+
+### Page 1
+![portal-storage-account-create-001](docs/images/portal-storage-account-create-001.png)
+
+### Page 2
+![portal-storage-account-create-001](docs/images/portal-storage-account-create-002.png)
+
+### Page 3
+![portal-storage-account-create-001](docs/images/portal-storage-account-create-003.png)
+
+### Page 4
+![portal-storage-account-create-001](docs/images/portal-storage-account-create-004.png)
+
+### Page 5
+![portal-storage-account-create-001](docs/images/portal-storage-account-template-download.png)
+
+
 
 ## Step 2-Tidy up the ARM template
 [remove unwanted parameters, etc.]
@@ -169,23 +185,32 @@ So why bother using ARM templates if Azure CLI does it for you. In the broader p
 [pass location as parameter, explain how to grab the ARM template]
 
 ---
-# 302-Deploy a storage account using an ARM template (location and tags as parameters)
+# 303-Deploy a storage account using an ARM template (location and tags as parameters)
 [Extend the pevious ARM template and pass the location and  ]
 
 ---
 
-# 303-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
+# 304-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
 [Extend the pevious ARM template and pass the location and  ]
 
 ---
 
 # you were here
-- create a storage account with explicit location and tags using the Azure CLI
-- use the location from resource group
-- use the tags from resource group
-- output the storage key
-- create a key vault
-- can we add the storage key directly to the key vault
+- ~~create a storage account with explicit location and tags using the Azure CLI~~
+- ARM-Storage-use the location from resource group
+- ARM-Storage-use the tags from resource group
+- ARM-Storage-output the storage key
+- ARM-Storage-use custom tags from a JSON file
+- ARM-create a key vault
+- ARM-can we add the storage key directly to the key vault
+- App service plan
+- Web app - Flask  
+    - simple form to save document to storage account
+    - simple form to read from storage account
+    - Create App service plan
+    - Create web app, pass app settings, raw environment value
+    - Create web app, pass app settings, key vault reference
+- ??
 ---
 
 # References
