@@ -178,18 +178,38 @@ Head over the Azure portal and browse to any resource group. Select New resource
 
 
 ## Understanding the ARM template
-[show the parameters, explain some of them, give references to thers ]
+[show the parameters, explain some of them, give references to thers ??]
 
 
 ---
 
 # 303-Deploy a storage account using an ARM template (using a parameters file)
-[use the same ARM template that was grabbed above and run it using the parameters file, give a different name, use the chapter number]
 
+All the parameters are specified in the file **parameters.json**. Notice a slight quirk here. The path to the parameter file should be prefixed with the **@** symbol. This is because there are multiple ways to pass parameters when deploying ARM templates via the **Azure CLI**.
+
+```powershell
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
+
+Write-Host "Going to create a storage account '$Global:StorageAccount' using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile --parameters @$armParameterFile --verbose
+
+```
 ---
-# 304-Deploy a storage account using an ARM template (location and tags as parameters)
-[Extend the pevious ARM template and pass the location and  ]
 
+# 304-Deploy a storage account using an ARM template (location and name as explicit parameters)
+We are still using a parameters file but overriding the **storageAccountName** and **location**.  This could be a very useful feature. Consider a scenario where a singe parameter file could serve as a template for all storage accounts involved in your application deployment.
+
+
+```powershell
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
+
+
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile location=westeurope  storageAccountName=section304 `
+    --verbose
+```
 ---
 
 # 305-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
