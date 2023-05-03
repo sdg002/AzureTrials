@@ -211,8 +211,55 @@ $armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
     --verbose
 ```
 ---
+# 305-Deploy a storage account using an ARM template (tags referenced from an external JSON file )
 
-# 305-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
+In this exercise we want to set the tags of our storage account with name-values stored in an external JSON file.
+
+## Step 1 - New parameter in the ARM template
+We define a new parameter in the ARM template which has a type of `object`:
+
+```json
+{
+"parameters": {
+    "tags":{
+        "type" : "object"
+        }
+    }
+}
+        
+```
+
+## Step 2 - New JSON file to store the tags
+
+We create a new file with tags information in JSON format:
+
+```json
+{
+    "department" :"finance",
+    "costcenter": "eusales",
+    "owner":"janedoe@cool.com"
+}
+```
+
+## Step 3 - Instruct Azure CLI to use the tags JSON file
+
+And finally pass the file name as a named parameter to the `Azure CLI`:
+
+```powershell
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
+$tagsJsonFile=Join-Path -Path $PSScriptRoot -ChildPath "tags.json"
+
+Write-Host "Going to create a storage account '$Global:StorageAccount' using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile storageAccountName=section305 `
+    tags=@$tagsJsonFile `
+    --verbose
+```
+
+---
+
+# 306-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
 [Extend the pevious ARM template and pass the location and  ]
 
 ---
