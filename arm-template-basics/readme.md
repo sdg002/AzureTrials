@@ -161,33 +161,30 @@ So why bother using ARM templates if Azure CLI does it for you. In the broader p
 
 Head over the Azure portal and browse to any resource group. Select New resource [??? Improve this line with a picture for better context]
 
-## Page 1
+## Page 1-[???]
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-001.png)
 
-## Page 2
+## Page 2-[???]
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-002.png)
 
-## Page 3
+## Page 3-[???]
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-003.png)
 
-## Page 4
+## Page 4-[???]
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-004.png)
 
-## Page 5
+## Page 5-[???]
 ![portal-storage-account-create-001](docs/images/portal-storage-account-template-download.png)
 
 
+## Understanding the ARM template
+[show the parameters, explain some of them, give references to thers ]
 
-## Tidy up the ARM template
-[remove unwanted parameters, etc.]
-
-## Step 3-Deploy the ARM template
-[pass location as parameter, explain how to grab the ARM template]
 
 ---
 
 # 303-Deploy a storage account using an ARM template (using a parameters file)
-[use the same ARM template that was grabbed above and run it using the parameters file]
+[use the same ARM template that was grabbed above and run it using the parameters file, give a different name, use the chapter number]
 
 ---
 # 304-Deploy a storage account using an ARM template (location and tags as parameters)

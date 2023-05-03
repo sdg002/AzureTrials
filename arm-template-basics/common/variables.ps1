@@ -2,7 +2,7 @@ Set-StrictMode -Version "latest"
 $ErrorActionPreference="Stop"
 $Global:ResourceGroup="rg-demo-arm-template-experiments"
 $Global:Location="uksouth"
-$Global:StorageAccount="sthelloworld123dev"
+# $Global:StorageAccount="sthelloworld123dev"
 $Global:StorageAccountSku="Standard_LRS"
 
 $Global:TagDepartment="finance"
