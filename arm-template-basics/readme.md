@@ -259,16 +259,42 @@ Write-Host "Going to create a storage account '$Global:StorageAccount' using ARM
 
 ---
 
-# 306-Deploy a storage account using an ARM template (location and tags borrowed referenced from resource group)
-[Extend the pevious ARM template and pass the location and  ]
+# 306-Deploy a storage account using an ARM template (location and tags borrowed from the parent resource group)
+We know now how to override the parameters of an ARM template. In most of the situations Azure resources might share the same **location** and **tags** as the parent resource group. If I have several resources to deploy in the same resource group then I will have to pass the location and tags for each and every one of them. Can we simplify our code by eliminating this repetition ? This is where built in ARM template functions come in handy.
+
+## The resourceGroup() ARM function
+
+The ARM template is now referencing the `tags` and `location` from the parent resource group
+
+```json
+"tags": "[resourceGroup().tags]"
+```
+
+```json
+"location": "[resourceGroup().location]"
+```
+
+## Simplification of the ARM template
+The parameters block in the ARM json no longer has the `tags` and `location` elements
+
+## Simplification of the Azure CLI invocation
+The `Azure CLI` invocation no longer needs the `location` and `tags` parameters to be supllied explicitly
+
+```powershell
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile storageAccountName=section306 `
+    --verbose
+
+```
+## ARM template functions reference
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 ---
 
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
-- ARM-Storage-use the location from resource group
-- ARM-Storage-use the tags from resource group
-- ARM-Storage-output the storage key
+- ARM-Storage-use the location and tags from resource group
+- ARM-Storage-output the storage key (Very important! Does it even work!)
 - ARM-Storage-use custom tags from a JSON file
 - ARM-create a key vault
 - ARM-can we add the storage key directly to the key vault
@@ -288,5 +314,8 @@ https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 
 ## Azure ARM template - defining new functions
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax#functions
+
+## ARM template functions reference
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 ---
