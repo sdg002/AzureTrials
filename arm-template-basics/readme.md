@@ -290,13 +290,58 @@ The `Azure CLI` invocation no longer needs the `location` and `tags` parameters 
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 ---
+# 307- Deploy a storage account using an ARM template and output the storage keys
+We know how to deploy a storage account. But, we would need the account keys for any downstream application to be able to make a connection (not strictly neccessary if using managed identity). This is where the ARM outputs are useful. 
+
+## The output element
+
+```json
+    "outputs": {
+        "primaryEndPoints": {
+            "type": "object",
+            "value":  "[reference(parameters('storageAccountName')).primaryEndPoints]"
+          },
+        "accountKey": {
+            "type": "string",
+            "value":  "[listKeys(variables('resourceId'),'2022-09-01').keys[0].value]"
+          }        
+
+    }
+
+```
+
+## Result of deployment
+```json
+    "outputs": {
+      "accountKey": {
+        "type": "String",
+        "value": "WE2RBZqF7EAiY+VO9Es3aQqy9yJrul7svRiwji1oaccNcVWRrF0LYn2cJ1H77B13WKx/Rb02yafb+AStdyK4pA=="
+      },
+      "primaryEndPoints": {
+        "type": "Object",
+        "value": {
+          "blob": "https://section307.blob.core.windows.net/",
+          "dfs": "https://section307.dfs.core.windows.net/",
+          "file": "https://section307.file.core.windows.net/",
+          "queue": "https://section307.queue.core.windows.net/",
+          "table": "https://section307.table.core.windows.net/",
+          "web": "https://section307.z33.web.core.windows.net/"
+        }
+      }
+    }
+```
+
+## Reference
+https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-arm-template-deployment/
+
+---
 
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
-- ARM-Storage-use the location and tags from resource group
-- ARM-Storage-output the storage key (Very important! Does it even work!)
-- ARM-Storage-use custom tags from a JSON file
-- ARM-create a key vault
+- ~~ARM-Storage-use the location and tags from resource group~~
+- ~~ARM-Storage-output the storage key (Very important! Does it even work!)~~
+- ~~ARM-Storage-use custom tags from a JSON file~~
+- ARM-create a key vault YOU WERE HERE
 - ARM-can we add the storage key directly to the key vault
 - App service plan
 - Web app - Flask  
@@ -319,3 +364,5 @@ https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax#
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 ---
+## How to use listkeys in an ARM template ?
+https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-arm-template-deployment/
