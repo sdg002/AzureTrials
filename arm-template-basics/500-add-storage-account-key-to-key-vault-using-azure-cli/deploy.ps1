@@ -1,6 +1,8 @@
 . $PSScriptRoot\..\common\variables.ps1
 
-
+<#
+We are querying the key of the storage account using Azure CLI and adding this key as a secret to the Azure KeyVault using the CLI
+#>
 
 $VaultName="saudemovault400"
 
