@@ -336,7 +336,7 @@ https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-ar
 
 ---
 
-# 400- Deploy a key vault using an ARM template
+# 400-Deploy a key vault using an ARM template
 
 In this example we will deploy an **Azure Key Vault** resource using ARM template. Like beore, I used the Azure portal to generate a skeletal ARM template for me. I removed the `location` and `tenantid` parameters and replaced these with calls to ARM functions.
 
@@ -356,13 +356,60 @@ In this example we will deploy an **Azure Key Vault** resource using ARM templat
 ```
 ---
 
+# 500-Add the storage account key to Key Vault
+
+## How to retrieve the storage account keys ?
+```powershell
+(& az storage account keys list --resource-group $Global:ResourceGroup --account-name section307 | ConvertFrom-Json -AsHashTable)
+```
+
+Expected output is:
+```json
+[
+  {
+    "creationTime": "2023-05-05T22:01:20.152464+00:00",
+    "keyName": "key1",
+    "permissions": "FULL",
+    "value": "WE2RBZqF7EAiY+VO9Es3aQqy9yJrul7svRiwji1oaccNcVWRrF0LYn2cJ1H77B13WKx/Rb02yafb+AStdyK4pA=="
+  },
+  {
+    "creationTime": "2023-05-05T22:01:20.152464+00:00",
+    "keyName": "key2",
+    "permissions": "FULL",
+    "value": "DcUdSKKr9oYkXubaN+FTY/6oiLfSdIhWYpHDOyVklp1RPFFlY6mjlEZBcge40ovou6bn1tEWa82l+AStQrE5ew=="
+  }
+]
+```
+
+## How to set a Key Vault secret ?
+```powershell
+& az keyvault secret set --vault-name "NAME OF THE KEY VAULT" --name "STORAGEACCOUNTKEY" --value "YOUR STORAGE ACCOUNT KEY"
+```
+
+## Putting it all together
+```powershell
+$VaultName="saudemovault400"
+$accountKeys = (& az storage account keys list --resource-group $Global:ResourceGroup --account-name section307 | ConvertFrom-Json -AsHashTable)
+$key=$accountKeys[0]["value"]
+Write-Host "Going to add the Storage account Key to the key vault $VaultName"
+& az keyvault secret set --vault-name $VaultName --name "STORAGEACCOUNTKEY" --value $key
+RaiseCliError -message "Failed to set secret in the key vault $VaultName"
+
+```
+
+## How to view the secret value ?
+```powershell
+az keyvault secret show --vault-name "saudemovault400" --name "STORAGEACCOUNTKEY"
+```
+---
+
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
 - ~~ARM-Storage-use the location and tags from resource group~~
 - ~~ARM-Storage-output the storage key (Very important! Does it even work!)~~
 - ~~ARM-Storage-use custom tags from a JSON file~~
-- ARM-create a key vault 
-- ARM how to add secrets to Key vault YOU WERE HERE
+- ~~ARM-create a key vault ~~
+- ARM how to add secrets to Key vault using CLI, YOU WERE HERE  (Do not use ARM templates, the MS link uses CLI so follow that)
 - ARM-can we add the storage key directly to the key vault 
 - App service plan
 - Web app - Flask  
@@ -384,6 +431,15 @@ https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax#
 ## ARM template functions reference
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
----
+
 ## How to use listkeys in an ARM template ?
 https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-arm-template-deployment/
+
+## How to use Azure CLI to add key vault secrets ?
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli
+
+
+## Step by step by tutorial from Microsoft
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-powershell
+
+---
