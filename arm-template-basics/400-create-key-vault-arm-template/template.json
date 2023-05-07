@@ -5,17 +5,11 @@
         "name": {
             "type": "string"
         },
-        "location": {
-            "type": "string"
-        },
         "sku": {
             "type": "string"
         },
         "accessPolicies": {
             "type": "array"
-        },
-        "tenant": {
-            "type": "string"
         },
         "enabledForDeployment": {
             "type": "bool"
@@ -47,7 +41,7 @@
         {
             "apiVersion": "2021-10-01",
             "name": "[parameters('name')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "type": "Microsoft.KeyVault/vaults",
             "properties": {
                 "enabledForDeployment": "[parameters('enabledForDeployment')]",
@@ -55,7 +49,7 @@
                 "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
                 "enableRbacAuthorization": "[parameters('enableRbacAuthorization')]",
                 "accessPolicies": "[parameters('accessPolicies')]",
-                "tenantId": "[parameters('tenant')]",
+                "tenantId": "[tenant().tenantId]",
                 "sku": {
                     "name": "[parameters('sku')]",
                     "family": "A"

@@ -336,13 +336,34 @@ https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-ar
 
 ---
 
+# 400- Deploy a key vault using an ARM template
+
+In this example we will deploy an **Azure Key Vault** resource using ARM template. Like beore, I used the Azure portal to generate a skeletal ARM template for me. I removed the `location` and `tenantid` parameters and replaced these with calls to ARM functions.
+
+```json
+"location": "[resourceGroup().location]"
+```
+
+```json
+"tenantId": "[tenant().tenantId]"
+```
+
+```powershell
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile `
+    name=saudemovault400 `
+    --verbose
+```
+---
+
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
 - ~~ARM-Storage-use the location and tags from resource group~~
 - ~~ARM-Storage-output the storage key (Very important! Does it even work!)~~
 - ~~ARM-Storage-use custom tags from a JSON file~~
-- ARM-create a key vault YOU WERE HERE
-- ARM-can we add the storage key directly to the key vault
+- ARM-create a key vault 
+- ARM how to add secrets to Key vault YOU WERE HERE
+- ARM-can we add the storage key directly to the key vault 
 - App service plan
 - Web app - Flask  
     - simple form to save document to storage account
