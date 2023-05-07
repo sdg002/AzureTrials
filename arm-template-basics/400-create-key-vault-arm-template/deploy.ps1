@@ -6,9 +6,16 @@ $armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
 $armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
 
 
-Write-Host "Going to create a storage account  using ARM template $armTemplateFile"
+Write-Host "Going to create a storage account '$Global:StorageAccount' using ARM template $armTemplateFile"
 & az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
     --parameters @$armParameterFile storageAccountName=section307 `
     --verbose
 
-RaiseCliError -message "Failed to deploy storage account"
+RaiseCliError -message "Failed to deploy storage account $Global:StorageAccount"
+
+<#
+You were here
+The following parameters can be provided via ARM functions
+-location
+-tenant
+#>
