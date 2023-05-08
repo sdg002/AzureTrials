@@ -12,6 +12,7 @@ Write-Host "Going to add secrets to the Key Vault $VaultName using ARM template 
 & az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
     --parameters  `
     keyVaultName=$VaultName `
+    storageAccountName=section307 `
     --verbose
 
 RaiseCliError -message "Failed to add secrets to the Key Vault"
