@@ -37,7 +37,7 @@
         {
         "type": "Microsoft.KeyVault/vaults/secrets",
         "apiVersion": "2021-11-01-preview",
-        "name": "[format('{0}/{1}', parameters('keyVaultName'), 'STORAGEACCOUNTKEY')]",
+        "name": "[concat( parameters('keyVaultName'),'/', 'STORAGEACCOUNTKEY')]",
         "properties": {
             "value": "[listKeys(resourceId(resourceGroup().name,'Microsoft.Storage/storageAccounts/',parameters('storageAccountName')),'2022-09-01').keys[0].value]"
             }

@@ -356,7 +356,7 @@ In this example we will deploy an **Azure Key Vault** resource using ARM templat
 ```
 ---
 
-# 500-Add the storage account key to Key Vault
+# 500-Add the storage account key to Key Vault (using Azure CLI)
 
 ## How to retrieve the storage account keys ?
 ```powershell
@@ -403,16 +403,66 @@ az keyvault secret show --vault-name "saudemovault400" --name "STORAGEACCOUNTKEY
 ```
 ---
 
+# 501-Add the storage account key to Key Vault (using ARM templates)
+
+In the previous section we learnt how to fetch the access key of a **Storage Account** using the `az storage account keys list` command and add this secret to the **key vault** by invoking the `az keyvault secret set` command of the Azure CLI. In this section we will explore how to add multiple secrets using a single ARM template deployment
+
+## Skeletal ARM structure for adding key vault secrets
+
+Essential points to keep in mind while adding secrets to the key vault:
+- We need to use the resource type `Microsoft.KeyVault/vaults/secrets`
+- A single ARM template can have one or more secrets (e.g. StorageAccount, Cosmos, etc.)
+- The ARM template deployment will only write the secrets that are referenced in the template. There could be other secrets which were added manually (e.g. the API key of a 3rd party CRM service) - those will remain untouched
+
+```json
+        {
+        "type": "Microsoft.KeyVault/vaults/secrets",
+        "apiVersion": "2021-11-01-preview",
+        "name": "[concat( parameters('keyVaultName'),'/', 'STORAGEACCOUNTKEY')]",
+        "properties": {
+            "value": "[listKeys(resourceId(resourceGroup().name,'Microsoft.Storage/storageAccounts/',parameters('storageAccountName')),'2022-09-01').keys[0].value]"
+            }
+        }
+
+```
+
+## Deploying the ARM template
+
+In this example, we are executing the ARM template and pasing the name of the key vault as a parameter. **Important** - The secret name in the ARM template should be qualified with the name of the key vault.
+
+
+```powershell
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters  `
+    keyVaultName=$VaultName `
+    storageAccountName=section307 `
+    --verbose
+
+```
+
+## Reference
+This is a sample ARM template from 
+https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?tabs=CLI
+
+
+---
+
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
 - ~~ARM-Storage-use the location and tags from resource group~~
 - ~~ARM-Storage-output the storage key (Very important! Does it even work!)~~
 - ~~ARM-Storage-use custom tags from a JSON file~~
 - ~~ARM-create a key vault ~~
-- ARM how to add secrets to Key vault using CLI, YOU WERE HERE  (Do not use ARM templates, the MS link uses CLI so follow that)
-- ARM-can we add the storage key directly to the key vault 
+- ~~ARM how to add secrets to Key vault using CLI, YOU WERE HERE  (Do not use ARM templates, the MS link uses CLI so follow that)~~
+- ARM-can we add the storage key directly to the key vault (https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?tabs=CLI)
 - App service plan
-- Web app - Flask  
+- Web app - Flask Basic
+    - Hello world page, show current date time
+    - No secrets
+    - Just plan
+    - Just web app
+    - A folder with requirements.txt, Dockerfile
+- Web app - Flask Advanced
     - simple form to save document to storage account
     - simple form to read from storage account
     - Create App service plan
