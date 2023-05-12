@@ -67,7 +67,9 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 
 # 200-Basic ARM template structure
 
-**VS Code** enhances the editing experience of ARM templates. 
+**VS Code** enhances the editing experience of ARM templates. Please ensure that you install the following extension:
+![vscode_arm_template_extension.png
+](docs/images/vscode_arm_template_extension.png)
 - Create a new file . Example. **arm.json**
 - Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!**
 ![vscode-arm-code-snippet.png](docs/images/vscode-arm-code-snippet.png)
