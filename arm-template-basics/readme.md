@@ -1,25 +1,25 @@
 [[_TOC_]]
 
 # About this article
-I have presented a simple step by step hands on guide to understand Azure ARM templates. There is a widely held belief that Azure ARM templates are terribly complicated and thus there is a need for 3rd party solutions. It my humble hope that at the end of this hands on guide I will be able to convince you otherwise.
+I have presented a simple step by step hands on guide to understand **Azure ARM** templates. There is a widely held belief that Azure ARM templates are terribly complicated and therefore there is a need for 3rd party solutions. It my humble opinion and hope that at the end of this hands on guide I will be able to convince you otherwise.
 
 ---
 
 # Prerequisites
-- VS Code with ARM extensions installed
+- **VS Code** with ARM extensions installed
 - PowerShell Core
-- Azure CLI installed and signed in
-- An Azure subscription
+- Relatively recent version of **Azure CLI** installed and signed in using `az login`
+- An active Azure subscription. **Attention!** - Some of the steps here may cost you some Azure money
 
-The philosopy of this guide is to "_use Microsoft's Azure CLI tool and Microsoft's PowerShell and Microsoft's VS Code to take control of Microsoft Azure Cloud_" . No need to use any 3rd party tools.
+The philosopy of this guide is to "_use Microsoft's Azure CLI tool and Microsoft's PowerShell and Microsoft's VS Code to take control of Microsoft Azure Cloud_" . Maximize the usage of the tools that the native platform provides and deliver a working solution.
 
 ![vscode_arm_template_extension.png](docs/images/vscode_arm_template_extension.png)
 
 ---
 
 # Structure of this Guide
-to be done
-[???talk about the folder structure, prep folder, how to run each of the scripts]
+Every section of this article is prefixed with a number and lab exercises for that section are in a folder which begins with the same numer.
+
 
 ```
     -100-prep-create-resource-group
@@ -39,12 +39,14 @@ to be done
 
 ```
 
-
 ---
 
 # 100-Prepping the resource group
 
-We will need a resource group to contain all the Azure resources we create. For this guide we will confine oursleves to a one and only resource group. 
+We will need a resource group to contain all the Azure resources we create. For this guide we will confine oursleves to a one and only resource group. The name of this resource group is governed by the variable `$Global:ResourceGroup` in the file `common/variables.ps1`
+```powershell
+$Global:ResourceGroup="rg-demo-arm-template-experiments"
+```
 
 ## Creating a basic resource group using the Azure CLI
 This is one of the simplest CLI commands
@@ -430,6 +432,7 @@ Essential points to keep in mind while adding secrets to the key vault:
 
 In this example, we are executing the ARM template and pasing the name of the key vault as a parameter. **Important** - The secret name in the ARM template should be qualified with the name of the key vault.
 
+[??show a picture of key vault with storage secret and some other secret]
 
 ```powershell
 & az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
@@ -455,7 +458,18 @@ https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?
 - ~~ARM-create a key vault ~~
 - ~~ARM how to add secrets to Key vault using CLI, YOU WERE HERE  (Do not use ARM templates, the MS link uses CLI so follow that)~~
 - ARM-can we add the storage key directly to the key vault (https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?tabs=CLI)
-- App service plan
+- Web app-round 1
+    - POWERSHELL-Create a new variables.ps1 and link with deploy.ps1
+    - ARM-app service plan
+    - ARM-web app
+    - ARM-storage account
+    - ARM-key vault
+    - Python-hello world code
+    - ARM-application insights (optional)
+    - ARM-log analytics(optional)
+    - Python-logging code using OpenCensus
+- Web app-round 2
+    - PYTHON-A custom page which reads static text from storage account (some popular text)
 - Web app - Flask Basic
     - Hello world page, show current date time
     - No secrets
