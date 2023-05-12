@@ -41,20 +41,20 @@ Every section of this article is prefixed with a number and lab exercises for th
 
 ---
 
-# 100-Prepping the resource group
+# Prepping the resource group
 
 We will need a resource group to contain all the Azure resources we create. For this guide we will confine oursleves to a one and only resource group. The name of this resource group is governed by the variable `$Global:ResourceGroup` in the file `common/variables.ps1`
 ```powershell
 $Global:ResourceGroup="rg-demo-arm-template-experiments"
 ```
 
-## Creating a basic resource group using the Azure CLI
+## 101-Creating a basic resource group using the Azure CLI
 This is one of the simplest CLI commands
 ```powershell
 & az group create --location $Global:Location --name $Global:ResourceGroup
 ```
 
-## Creating a resource group using the Azure CLI with tags
+## 102-Creating a resource group using the Azure CLI with tags
 
 Having tags is essential in an enterprise environment. This facilicates the central IT to get a birds eye view  of the dozens/hundreds of applications
 ```powershell
