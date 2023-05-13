@@ -48,13 +48,13 @@ We will need a resource group to contain all the Azure resources we create. For 
 $Global:ResourceGroup="rg-demo-arm-template-experiments"
 ```
 
-## 101-Creating a basic resource group using the Azure CLI
+#### 101-Creating a basic resource group using the Azure CLI
 This is one of the simplest CLI commands
 ```powershell
 & az group create --location $Global:Location --name $Global:ResourceGroup
 ```
 
-## 102-Creating a resource group using the Azure CLI with tags
+#### 102-Creating a resource group using the Azure CLI with tags
 
 Having tags is essential in an enterprise environment. This facilicates the central IT to get a birds eye view  of the dozens/hundreds of applications
 ```powershell
@@ -74,7 +74,7 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 - Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!** and VS Code will fill out the document with the a skeletal ARM structure:
 ![vscode-arm-code-snippet.png](docs/images/vscode-arm-code-snippet.png)
 
-## Understanding the structure 
+#### Understanding the structure 
 
 ![powerpoint-arm-template-structure](docs/images/powerpoint-arm-template-structure.png)
 
@@ -92,13 +92,13 @@ At the very root every ARM template has the 5 elements: **parameters**, **functi
 ```
 
 
-## 200-Azure CLI Command to deploy the ARM template
+#### 200-Azure CLI Command to deploy the ARM template
 Let us try and deploy the skeletal ARM template shown above by using the Azure CLI
 ```powershell
 az deployment group create --resource-group $Global:ResourceGroup --template-file $armFilePath  --verbose
 ```
 
-## What to expect when deploy an ARM template ?
+#### What to expect when deploy an ARM template ?
 ```json
 {
   "id": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-arm-template-experiments/providers/Microsoft.Resources/deployments/arm",
@@ -171,23 +171,23 @@ Head over the **Azure portal** and browse to any resource group. Click on the **
 
 ![azure-portal-create-new-resource-button.png](docs/images/azure-portal-create-new-resource-button.png)
 
-## Page 1
+#### Page 1
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-001.png)
 
-## Page 2
+#### Page 2
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-002.png)
 
-## Page 3
+#### Page 3
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-003.png)
 
-## Page 4
+#### Page 4
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-004.png)
 
-## Page 5
+#### Page 5
 ![portal-storage-account-create-001](docs/images/portal-storage-account-template-download.png)
 
 
-## Understanding the ARM template
+#### Understanding the ARM template
 [show the parameters, explain some of them, give references to thers ??]
 
 
@@ -225,7 +225,7 @@ $armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
 
 In this exercise we want to set the tags of our storage account with name-values stored in an external JSON file.
 
-## Step 1 - New parameter in the ARM template
+#### Step 1 - New parameter in the ARM template
 We define a new parameter in the ARM template which has a type of `object`:
 
 ```json
@@ -239,7 +239,7 @@ We define a new parameter in the ARM template which has a type of `object`:
         
 ```
 
-## Step 2 - New JSON file to store the tags
+#### Step 2 - New JSON file to store the tags
 
 We create a new file with tags information in JSON format:
 
@@ -251,7 +251,7 @@ We create a new file with tags information in JSON format:
 }
 ```
 
-## Step 3 - Instruct Azure CLI to use the tags JSON file
+#### Step 3 - Instruct Azure CLI to use the tags JSON file
 
 And finally pass the file name as a named parameter to the `Azure CLI`:
 
@@ -272,7 +272,7 @@ Write-Host "Going to create a storage account '$Global:StorageAccount' using ARM
 # 306-Deploy a storage account using an ARM template (location and tags borrowed from the parent resource group)
 We know now how to override the parameters of an ARM template. In most of the situations Azure resources might share the same **location** and **tags** as the parent resource group. If I have several resources to deploy in the same resource group then I will have to pass the location and tags for each and every one of them. Can we simplify our code by eliminating this repetition ? This is where built in ARM template functions come in handy.
 
-## The resourceGroup() ARM function
+#### The resourceGroup() ARM function
 
 The ARM template is now referencing the `tags` and `location` from the parent resource group
 
@@ -284,10 +284,10 @@ The ARM template is now referencing the `tags` and `location` from the parent re
 "location": "[resourceGroup().location]"
 ```
 
-## Simplification of the ARM template
+#### Simplification of the ARM template
 The parameters block in the ARM json no longer has the `tags` and `location` elements
 
-## Simplification of the Azure CLI invocation
+#### Simplification of the Azure CLI invocation
 The `Azure CLI` invocation no longer needs the `location` and `tags` parameters to be supllied explicitly
 
 ```powershell
@@ -296,14 +296,14 @@ The `Azure CLI` invocation no longer needs the `location` and `tags` parameters 
     --verbose
 
 ```
-## ARM template functions reference
+#### ARM template functions reference
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 ---
 # 307- Deploy a storage account using an ARM template and output the storage keys
 We know how to deploy a storage account. But, we would need the account keys for any downstream application to be able to make a connection (not strictly neccessary if using managed identity). This is where the ARM outputs are useful. 
 
-## The output element
+#### The output element
 
 ```json
     "outputs": {
@@ -320,7 +320,7 @@ We know how to deploy a storage account. But, we would need the account keys for
 
 ```
 
-## Result of deployment
+#### Result of deployment
 ```json
     "outputs": {
       "accountKey": {
@@ -341,7 +341,7 @@ We know how to deploy a storage account. But, we would need the account keys for
     }
 ```
 
-## Reference
+#### Reference
 https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-arm-template-deployment/
 
 ---
@@ -368,7 +368,7 @@ In this example we will deploy an **Azure Key Vault** resource using ARM templat
 
 # 500-Add the storage account key to Key Vault (using Azure CLI)
 
-## How to retrieve the storage account keys ?
+#### How to retrieve the storage account keys ?
 ```powershell
 (& az storage account keys list --resource-group $Global:ResourceGroup --account-name section307 | ConvertFrom-Json -AsHashTable)
 ```
@@ -391,12 +391,12 @@ Expected output is:
 ]
 ```
 
-## How to set a Key Vault secret ?
+#### How to set a Key Vault secret ?
 ```powershell
 & az keyvault secret set --vault-name "NAME OF THE KEY VAULT" --name "STORAGEACCOUNTKEY" --value "YOUR STORAGE ACCOUNT KEY"
 ```
 
-## Putting it all together
+#### Putting it all together
 ```powershell
 $VaultName="saudemovault400"
 $accountKeys = (& az storage account keys list --resource-group $Global:ResourceGroup --account-name section307 | ConvertFrom-Json -AsHashTable)
@@ -407,7 +407,7 @@ RaiseCliError -message "Failed to set secret in the key vault $VaultName"
 
 ```
 
-## How to view the secret value ?
+#### How to view the secret value ?
 ```powershell
 az keyvault secret show --vault-name "saudemovault400" --name "STORAGEACCOUNTKEY"
 ```
@@ -417,7 +417,7 @@ az keyvault secret show --vault-name "saudemovault400" --name "STORAGEACCOUNTKEY
 
 In the previous section we learnt how to fetch the access key of a **Storage Account** using the `az storage account keys list` command and add this secret to the **key vault** by invoking the `az keyvault secret set` command of the Azure CLI. In this section we will explore how to add multiple secrets using a single ARM template deployment
 
-## Skeletal ARM structure for adding key vault secrets
+#### Skeletal ARM structure for adding key vault secrets
 
 Essential points to keep in mind while adding secrets to the key vault:
 - We need to use the resource type `Microsoft.KeyVault/vaults/secrets`
@@ -436,7 +436,7 @@ Essential points to keep in mind while adding secrets to the key vault:
 
 ```
 
-## Deploying the ARM template
+#### Deploying the ARM template
 
 In this example, we are executing the ARM template and pasing the name of the key vault as a parameter. **Important** - The secret name in the ARM template should be qualified with the name of the key vault.
 
@@ -451,7 +451,7 @@ In this example, we are executing the ARM template and pasing the name of the ke
 
 ```
 
-## Reference ARM template
+#### Reference ARM template
 Here is a sample ARM template from Microsoft's quick start repo:
 https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?tabs=CLI
 
@@ -496,24 +496,24 @@ https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?
 
 
 # References
-## Azure ARM template reference
+#### Azure ARM template reference
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 
-## Azure ARM template - defining new functions
+#### Azure ARM template - defining new functions
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax#functions
 
-## ARM template functions reference
+#### ARM template functions reference
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions
 
 
-## How to use listkeys in an ARM template ?
+#### How to use listkeys in an ARM template ?
 https://devkimchi.com/2018/01/05/list-of-access-keys-from-output-values-after-arm-template-deployment/
 
-## How to use Azure CLI to add key vault secrets ?
+#### How to use Azure CLI to add key vault secrets ?
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli
 
 
-## Step by step by tutorial from Microsoft
+#### Step by step by tutorial from Microsoft
 https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-powershell
 
 ---
