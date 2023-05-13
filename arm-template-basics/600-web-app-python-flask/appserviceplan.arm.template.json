@@ -5,13 +5,10 @@
         "name": {
             "type": "string"
         },
-        "location": {
-            "type": "string"
-        },
         "sku": {
             "type": "string"
         },
-        "skucode": {
+        "skuCode": {
             "type": "string"
         },
         "workerSize": {
@@ -29,11 +26,9 @@
             "apiVersion": "2018-11-01",
             "name": "[parameters('name')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "kind": "linux",
-            "tags": {
-                "tag001": "value001"
-            },
+            "tags": "[resourceGroup().tags]",
             "properties": {
                 "name": "[parameters('name')]",
                 "workerSize": "[parameters('workerSize')]",

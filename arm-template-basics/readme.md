@@ -17,7 +17,7 @@ The philosopy of this guide is to "_use Microsoft's Azure CLI tool and Microsoft
 
 ---
 
-# Structure of this Guide
+# Structure of this tutorial
 Every section of this article is prefixed with a number and lab exercises for that section are in a folder which begins with the same numer.
 
 
@@ -71,7 +71,7 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 ![vscode_arm_template_extension.png
 ](docs/images/vscode_arm_template_extension.png)
 - Create a new file . Example. **arm.json**
-- Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!**
+- Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!** and VS Code will fill out the document with the a skeletal ARM structure:
 ![vscode-arm-code-snippet.png](docs/images/vscode-arm-code-snippet.png)
 
 ## Understanding the structure 
