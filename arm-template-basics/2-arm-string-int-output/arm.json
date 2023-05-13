@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [],
+    "outputs":{
+        "myStringOutput": {
+            "type": "string",
+            "value":  "hello world output value"
+          },
+        "myIntOutput": {
+            "type": "int",
+            "value":  123
+          },
+        "myArrayOutput": {
+            "type": "array",
+            "value":  [100,200,"hello"]
+          }
+          
+    }
+}
