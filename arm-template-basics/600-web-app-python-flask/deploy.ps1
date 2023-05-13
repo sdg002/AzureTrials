@@ -18,7 +18,7 @@ Deploy App Service Plan
 $armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "appserviceplan.arm.template.json"
 $armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "appserviceplan.arm.parameters.json"
 
-#YOU WERE HERE -  ,YOU JUST ADDED THE PARAMETERS
+
 Write-Host "Going to create App Service Plan $Global:AppServicePlan using ARM template $armTemplateFile"
 & az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
     --parameters  @$armParameterFile `

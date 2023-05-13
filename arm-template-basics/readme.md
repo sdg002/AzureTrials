@@ -451,13 +451,14 @@ In this example, we are executing the ARM template and pasing the name of the ke
 
 ```
 
-## Reference
-This is a sample ARM template from 
+## Reference ARM template
+Here is a sample ARM template from Microsoft's quick start repo:
 https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?tabs=CLI
 
 
 ---
 
+<!-- 
 # your progress is here
 - ~~create a storage account with explicit location and tags using the Azure CLI~~
 - ~~ARM-Storage-use the location and tags from resource group~~
@@ -491,7 +492,8 @@ https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-template?
     - Create web app, pass app settings, raw environment value
     - Create web app, pass app settings, key vault reference
 - ??
----
+-->
+
 
 # References
 ## Azure ARM template reference
