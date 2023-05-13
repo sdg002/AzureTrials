@@ -1,7 +1,7 @@
 [[_TOC_]]
 
 # About this article
-I have presented a simple step by step hands on guide to understand **Azure ARM** templates. There is a widely held belief that Azure ARM templates are terribly complicated and therefore there is a need for 3rd party solutions. It my humble opinion and hope that at the end of this hands on guide I will be able to convince you otherwise.
+I have presented a simple step by step hands on guide to understand **Azure ARM** templates. There is a widely held belief that **Azure ARM** templates are terribly complicated and therefore there is a need for 3rd party solutions. It my humble opinion and hope that at the end of this step-by-step hands on guide I will be able to convince you otherwise.
 
 ---
 
@@ -65,7 +65,7 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 
 ---
 
-# 200-Basic ARM template structure
+# 200-Creating a very basic ARM template structure
 
 **VS Code** enhances the editing experience of ARM templates. Please ensure that you install the following extension:
 ![vscode_arm_template_extension.png
@@ -74,9 +74,26 @@ Having tags is essential in an enterprise environment. This facilicates the cent
 - Type the key word **arm** and you should see the intellisense popping up. Select the option **arm!**
 ![vscode-arm-code-snippet.png](docs/images/vscode-arm-code-snippet.png)
 
-this is a functioning ARM template. Let us try and deploy this ARM template by using the Azure CLI
+## Understanding the structure 
 
-## Command
+![powerpoint-arm-template-structure](docs/images/powerpoint-arm-template-structure.png)
+
+At the very root every ARM template has the 5 elements: **parameters**, **functions**, **variables**, **resources** and **outputs**
+```json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},  //The inputs to the ARM. E.g. Location, Name of the resource , etc. could be passed as parameters
+    "functions": [], //Custom functions built out of the of box ARM functions
+    "variables": {}, //Additional variables. E.g. you could create a variable that holds a calculated value and is referenced multiple times
+    "resources": [], //The actual Azure resources that are geting created
+    "outputs": {} //These are values that are programmed to be returned back. These values can be used for subsequent operations. 
+}
+```
+
+
+## 200-Azure CLI Command to deploy the ARM template
+Let us try and deploy the skeletal ARM template shown above by using the Azure CLI
 ```powershell
 az deployment group create --resource-group $Global:ResourceGroup --template-file $armFilePath  --verbose
 ```
@@ -112,19 +129,6 @@ az deployment group create --resource-group $Global:ResourceGroup --template-fil
 }
 ```
 
-## Understanding the structure of ARM
-At the very root every ARM template has the 5 elements: **parameters**, **functions**, **variables**, **resources** and **outputs**
-```json
-{
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {},  //The inputs to the ARM. E.g. Location, Name of the resource , etc. could be passed as parameters
-    "functions": [], //Custom functions built out of the of box ARM functions
-    "variables": {}, //Additional variables. E.g. you could create a variable that holds a calculated value and is referenced multiple times
-    "resources": [], //The actual Azure resources that are geting created
-    "outputs": {} //These are values that are programmed to be returned back. These values can be used for subsequent operations. 
-}
-```
 
 When we deployed our skeletal ARM template, the elements **outputResources** and **outputs** are empty because the elements **resources** and **outputs** of the input ARM file were empty.
 
@@ -163,21 +167,23 @@ So why bother using ARM templates if Azure CLI does it for you. In the broader p
 
 # 302-How to grab an ARM template of an Azure resource using the Azure portal
 
-Head over the Azure portal and browse to any resource group. Select New resource [??? Improve this line with a picture for better context]
+Head over the **Azure portal** and browse to any resource group. Click on the **Create** button to initiate the wizard.
 
-## Page 1-[???]
+![azure-portal-create-new-resource-button.png](docs/images/azure-portal-create-new-resource-button.png)
+
+## Page 1
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-001.png)
 
-## Page 2-[???]
+## Page 2
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-002.png)
 
-## Page 3-[???]
+## Page 3
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-003.png)
 
-## Page 4-[???]
+## Page 4
 ![portal-storage-account-create-001](docs/images/portal-storage-account-create-004.png)
 
-## Page 5-[???]
+## Page 5
 ![portal-storage-account-create-001](docs/images/portal-storage-account-template-download.png)
 
 
