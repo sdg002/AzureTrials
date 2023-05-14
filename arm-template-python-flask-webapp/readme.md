@@ -9,6 +9,7 @@ This is a step by step guide to deploy a very simple Python Flask Web app. [??Li
 [?? link to the Github repo]
 
 # 100-Structure of the code
+[?? you will need to revisit this section , you have moved 501 to under the root level]
 ```
     - azuredevops
         |
@@ -41,17 +42,73 @@ Some notes on debugging
 # 400-Creating a Hello World Azure Web App manually
 [?? Talk about what you need to deploy , create a web app manuall and show all the elements]
 
+## Step 1-Create a new folder
+```
+    root
+        |
+        |
+        |
+        - 400-create-hello-world-flask-app-manually
+        |        |
+        |        |--app.py
+        |        |
+        |        |--requirements.txt
+        |        |
+        |
+
+```
+
+## Step 2-Launch VS Code with the new folder
+When working with Python and VS Code, I find it more convenient to keep the Python sources in a separate tree and have VS Code open that tree exlusively. Therefore, launch a fresh instance of `VS Code` and open the folder `400-create-hello-world-flask-app-manually` . This will be serve as the root folder of our `Hello world` Flask app
+
+
+## Step 3-Create a new VENV
+
+![vscode-create-venv.png](docs/images/vscode-create-venv.png)
+
+Give this step some time. Say 30 seconds or so. After this, you should new folder `.venv` . This is automatically excluded because of a .gitignore that was automatically created within
+
+## Step 4-Create a requirements.txt
+The file requirements.txt will contain all the packages that the App needs. To start with just add the `Flask` package
+
+```
+flask
+```
+
+## Step-5-Install the packages
+
+```PowerShell
+pip install -r .\requirements.txt
+```
+
+## Step 4-Create a new file app.py
+```python
+from flask import Flask
+import datetime
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return f"Hello, Flask! Current clock time is: {datetime.datetime.utcnow()}"
+
+```
+
+## Microsoft reference
+https://code.visualstudio.com/docs/python/tutorial-flask
+
+
+
+# 500-Deploying the Hello World Flask Web App to Azure (using ARM templates)
 [?? list down the elements]
 [?? Describe what is an App Service Plan and what is Web App]
 
-# 500-Deploying the Hello World Flask Web App to Azure (using ARM templates)
 ## 501-Create a App Service Plan
 [?? Azure cli and arm json]
 
-## 503-Create a Storage Account
+## 502-Create a Storage Account
 [?? Azure cli and arm json]
 
-## 504-Create the Web App
+## 503-Create the Web App
 [?? Azure cli and arm json]
 
 ## 505-Deploy the Python code to the Web App
@@ -60,6 +117,9 @@ Some notes on debugging
 ---
 
 # References
+
+## Creating a Python Flask App using VS Code
+https://code.visualstudio.com/docs/python/tutorial-flask
 
 ## UP command
 [??to be done]
