@@ -93,6 +93,16 @@ def home():
 
 ```
 
+## Step 5-Launch the Flask web app
+Run the following command from the `Terminal` window of `VS Code`
+```powershell
+python -m flask run
+```
+
+![run-flask-webapp-0.png](docs/images/run-flask-webapp-0.png)
+
+![run-flask-webapp.png](docs/images/run-flask-webapp-1.png)
+
 ## Microsoft reference
 https://code.visualstudio.com/docs/python/tutorial-flask
 
