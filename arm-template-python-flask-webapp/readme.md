@@ -109,11 +109,27 @@ https://code.visualstudio.com/docs/python/tutorial-flask
 
 
 # 500-Deploying the Hello World Flask Web App to Azure (using ARM templates)
-[?? list down the elements]
-[?? Describe what is an App Service Plan and what is Web App]
+
+## What are the elements of a Web App on Azure ?
+1. **App service plan** - this governs the compute capacity that we are provisioning. A single plan can host multiple web apps
+1. **Storage account** - The backing storage behind a web app
+1. **Web app** - This is the actual Python web app
+
 
 ## 501-Create a App Service Plan
-[?? Azure cli and arm json]
+
+```powershell
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "appserviceplan.arm.template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "appserviceplan.arm.parameters.json"
+
+
+Write-Host "Going to create App Service Plan $Global:AppServicePlan using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters  @$armParameterFile `
+    name=$Global:AppServicePlan `
+    --verbose
+
+```
 
 ## 502-Create a Storage Account
 [?? Azure cli and arm json]
