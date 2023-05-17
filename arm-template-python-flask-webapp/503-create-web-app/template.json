@@ -25,7 +25,7 @@
             "name": "[parameters('name')]",
             "type": "Microsoft.Web/sites",
             "location": "[resourceGroup().location]",
-            "tags": {},
+            "tags": "[resourceGroup().tags]",
             "dependsOn": [],
             "properties": {
                 "name": "[parameters('name')]",
