@@ -162,6 +162,17 @@ Write-Host "Going to create a web app using ARM template $armTemplateFile"
 
 ## 505-Deploy the Python code to the Web App
 
+We will use the `up` command of the `Azure CLI`. This command can do lots of things at once - something which I am not comfortable with. Example - if left it its devices, this will create the `App Service Plan` and the `App Service` followed by deploying the Python code. Fortunately, the `up` command accepts the prior creation of the plan and web app. 
+
+```powershell
+Write-Host "Going to deploy upload Python code to the web app $Global:WebAppName"
+$SourceCodeLocaiton = Join-Path -Path $PSScriptRoot -ChildPath "..\400-create-hello-world-flask-app-manually"
+Write-Host "The Python code will be deployed from the location $SourceCodeLocaiton"
+Push-Location -Path $SourceCodeLocaiton
+az webapp up --name $Global:WebAppName
+Pop-Location
+
+```
 
 ---
 
