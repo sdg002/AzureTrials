@@ -132,10 +132,33 @@ Write-Host "Going to create App Service Plan $Global:AppServicePlan using ARM te
 ```
 
 ## 502-Create a Storage Account
-[?? Azure cli and arm json]
+
+```powershell
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
+
+
+Write-Host "Going to create a storage account using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile storageAccountName=stopythonwebapdemo502 `
+    --verbose
+```
 
 ## 503-Create the Web App
-[?? Azure cli and arm json]
+I used the Azure portal to help me generate an ARM template for the web app.
+
+```powershell
+
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
+
+
+Write-Host "Going to create a web app using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile  `
+    name=$Global:WebAppName hostingPlanName=$Global:AppServicePlan `
+    --verbose
+```
 
 ## 505-Deploy the Python code to the Web App
 
