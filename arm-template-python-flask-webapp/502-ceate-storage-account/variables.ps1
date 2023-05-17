@@ -4,7 +4,7 @@ $ErrorActionPreference="Stop"
 $Global:environment="dev"
 $Global:ResourceGroup="rg-demo-arm-template-python-webapp-$Global:environment-uks"
 
-
+$Global:StorageAccount="stopythonwebapdemo502"
 
 
 <#

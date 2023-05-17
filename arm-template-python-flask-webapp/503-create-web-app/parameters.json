@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "635a2074-cc31-43ac-bebe-2bcd67e1abfe"
+        },
+        "name": {
+            "value": null
+        },
+        "location": {
+            "value": "UK South"
+        },
+        "hostingPlanName": {
+            "value": "app-plan-pyflaskdemo-dev"
+        },
+        "serverFarmResourceGroup": {
+            "value": "rg-demo-arm-template-python-webapp-dev-uks"
+        },
+        "alwaysOn": {
+            "value": false
+        },
+        "ftpsState": {
+            "value": "FtpsOnly"
+        },
+        "linuxFxVersion": {
+            "value": "PYTHON|3.9"
+        }
+    }
+}
