@@ -181,14 +181,32 @@ Pop-Location
 ## Creating a Python Flask App using VS Code
 https://code.visualstudio.com/docs/python/tutorial-flask
 
+
+## Use CI/CD to deploy a Python web app to Azure App Service on Linux
+https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops
+
 ## UP command
-[??to be done]
+https://learn.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest#az-webapp-up
+
 
 
 
 ---
 
 # your progress is here
+## Next steps
+- Remove the storage account creation from section 500
+- Add a 506 - "Putting it all together" which does all the deployment
+- 
+- New section 600 - Add logging and write some logging code in app.py, log to Terminal window
+- 601 - flask app that has logging to Application Insights and 
+- 602 Add `Log Analytics` and `Application Insights`
+- 603- Add InstrumentationKey to web app settings
+- Test if logging works
+- 
+
+## Broad ideas
+
 - Web app - Flask Basic without Azure
     - Hello world page, show current date time
     - No secrets
