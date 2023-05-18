@@ -10,6 +10,8 @@ $Global:TagCostCenter="eusales"
 $Global:TagOwner="janedoe@cool.com"
 $Global:AppServicePlan="app-plan-pyflaskdemo-$Global:environment"
 
+
+
 <#
 This function should be called after every invocation of Azure CLI to check for success
 #>

@@ -1,4 +1,4 @@
-. $PSScriptRoot/variables.ps1
+. $PSScriptRoot/../commonvariables.ps1
 
 <#
 Script for deploying all Azure resources neccessary for a Python Flask Web apps
