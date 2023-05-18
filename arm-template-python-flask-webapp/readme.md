@@ -131,20 +131,7 @@ Write-Host "Going to create App Service Plan $Global:AppServicePlan using ARM te
 
 ```
 
-## 502-Create a Storage Account
-
-```powershell
-$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "template.json"
-$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "parameters.json"
-
-
-Write-Host "Going to create a storage account using ARM template $armTemplateFile"
-& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
-    --parameters @$armParameterFile storageAccountName=stopythonwebapdemo502 `
-    --verbose
-```
-
-## 503-Create the Web App
+## 502-Create the Web App
 I used the Azure portal to help me generate an ARM template for the web app.
 
 ```powershell
@@ -160,7 +147,7 @@ Write-Host "Going to create a web app using ARM template $armTemplateFile"
     --verbose
 ```
 
-## 505-Deploy the Python code to the Web App
+## 503-Deploy the Python code to the Web App
 
 We will use the `up` command of the `Azure CLI`. This command can do lots of things at once - something which I am not comfortable with. Example - if left it its devices, this will create the `App Service Plan` and the `App Service` followed by deploying the Python code. Fortunately, the `up` command accepts the prior creation of the plan and web app. 
 
@@ -174,6 +161,29 @@ Pop-Location
 
 ```
 
+ ## 504-Putting it all togeher
+In this exercise we will combine all the ARM templates and deploy them from a single script. We end up with a single `deploy.ps1` which will do the following:
+
+- Apply tags on the resource group
+- Deploy the ARM templates from the `templates` sub-folder - one at a time.
+- Deploy the Python code using the `az webapp up`  command
+
+```
+    - root
+        |
+        |--deploy.ps1
+        |
+        |--templates
+        |        |
+        |        |
+        |        |--[template and parameter file for App Service Plan]
+        |        |
+        |        |--[template and parameter file for Web App]
+        |
+        |
+    
+
+```
 ---
 
 # References

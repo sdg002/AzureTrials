@@ -26,3 +26,39 @@ Write-Host "Going to create App Service Plan $Global:AppServicePlan using ARM te
     --parameters  @$armParameterFile `
     name=$Global:AppServicePlan `
     --verbose
+
+<#
+Deploy Web app
+#>
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/webapptemplate.arm.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/webappparameters.arm.json"
+
+
+Write-Host "Going to create a web app using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile  `
+    name=$Global:WebAppName hostingPlanName=$Global:AppServicePlan `
+    --verbose
+
+RaiseCliError -message "Failed to deploy web app"
+
+
+<#
+Deploy the Python code
+#>
+
+Write-Host "Going to deploy upload Python code to the web app $Global:WebAppName"
+$SourceFolder="400-create-hello-world-flask-app-manually"
+$SourceCodeLocaiton = Join-Path -Path $PSScriptRoot -ChildPath "..\$SourceFolder"
+
+$DotAzureFolder=Join-Path -Path $SourceCodeLocaiton -ChildPath ".azure"
+if (Test-Path -Path $DotAzureFolder){
+    Remove-Item -Path $DotAzureFolder -Recurse -Force -Verbose
+}
+
+Write-Host "The Python code will be deployed from the location $SourceCodeLocaiton"
+Push-Location -Path $SourceCodeLocaiton
+az webapp up --name $Global:WebAppName
+Pop-Location
+
+RaiseCliError -message "Failed to deploy storage account"

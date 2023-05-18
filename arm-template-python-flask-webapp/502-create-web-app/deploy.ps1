@@ -12,4 +12,4 @@ Write-Host "Going to create a web app using ARM template $armTemplateFile"
     name=$Global:WebAppName hostingPlanName=$Global:AppServicePlan `
     --verbose
 
-RaiseCliError -message "Failed to deploy storage account"
+RaiseCliError -message "Failed to deploy web app"
