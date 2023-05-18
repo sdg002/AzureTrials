@@ -8,8 +8,8 @@ $Global:Location="uksouth"
 $Global:TagDepartment="finance"
 $Global:TagCostCenter="eusales"
 $Global:TagOwner="janedoe@cool.com"
-$Global:AppServicePlan="app-plan-pyflaskdemo-$Global:environment"
-$Global:WebAppName="saudemowebapp123-$Global:environment"
+$Global:AppServicePlan="asp-pythonflaskdemo-$Global:environment"
+$Global:WebAppName="app-saupythonflaskwebapp123-$Global:environment"
 
 
 <#
