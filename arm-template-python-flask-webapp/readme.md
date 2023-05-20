@@ -20,9 +20,9 @@ The accompanying source code can be found in this [Github repository](https://gi
 The folder `400-create-hello-world-flask-app-manually` implements a very basic and a functioning Flask web application. I have followed the [guidance from Microsoft](https://code.visualstudio.com/docs/python/tutorial-flask) to get started with `VS Code` and `Flask`. 
 
 #### Debugging the "Infrastructure as Code"
-All IaC should be easily debuggable. With that in mind I have used PowerShell scripts which deploy the ARM template squentially. You will need to have a moderately recent edition of `PowerShell Core` 
+Any `IaC` should be easily debuggable. With that in mind I have used PowerShell scripts which deploy the ARM template squentially. You will need to have a moderately recent edition of `PowerShell Core` 
 
-
+---
 
 # 100-Structure of the code
 
@@ -116,28 +116,28 @@ When working with Python and VS Code, I find it more convenient to keep the Pyth
 
 
 
-## Step 3-Create a new VENV
+## Step 2-Create a new VENV
 `VS Code` names the virtual env folder as `.venv`
 
 ![vscode-create-venv.png](docs/images/vscode-create-venv.png)
 
 Give this step some time. Say 30 seconds or so. After this, you should new folder `.venv` . This is automatically excluded because of a .gitignore that was automatically created within
 
-## Step 4-Create a requirements.txt
+## Step 3-Create a requirements.txt
 The file requirements.txt will contain all the packages that the App needs. To start with just add the `Flask` package
 
 ```
 flask
 ```
 
-## Step-5-Install the packages
+## Step-4-Install the packages
 Run the following commanf from the Terminal Window of VS Code. 
 ```PowerShell
 .\.venv\Scripts\Activate.ps1
 pip install -r .\requirements.txt
 ```
 
-## Step 4-Create a new file app.py
+## Step 5-Create a new file app.py
 ```python
 from flask import Flask
 import datetime
@@ -149,7 +149,7 @@ def home():
 
 ```
 
-## Step 5-Launch the Flask web app
+## Step 6-Launch the Flask web app
 Run the following command from the `Terminal` window of `VS Code`
 ```powershell
 python -m flask run
