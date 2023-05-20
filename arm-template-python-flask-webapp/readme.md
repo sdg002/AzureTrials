@@ -73,17 +73,32 @@ All IaC should be easily debuggable. With that in mind I have used PowerShell sc
 ```
 
 # 200-How to be productive with PowerShell and Python in the same repository ?
-to be done?? [state the problem. propose the solution - divide and conquer]
+You could use `PyCharm` or `VS Code` to develop Flask application. Regardless of the choice of IDE, it makes practical sense to keep Python separate from PowerShell.
 
-# 300-Creating a very simple Python Flask Web App
-[No azure here, just a self container hello world Flask app, with one page which shows the time]
-Some notes on debugging
-??
+```
+    - azuredevops
+        |
+        |---docs
+        |
+        |
+        |---400-create-hello-world-flask-app-manually (Launch this folder in VS Code/PyCharm)
+        |            |
+        |
+        |---commonvariables.ps1
+        |
+        |---readme.md
+        |
+
+```
+---
 
 # 400-Creating a Hello World Azure Web App manually
-[?? Talk about what you need to deploy , create a web app manuall and show all the elements]
+I have followed Microsoft's guidelines [here](https://code.visualstudio.com/docs/python/tutorial-flask) to create a very simple `Flask` application using `VS Code`
 
 ## Step 1-Create a new folder
+
+When working with Python and VS Code, I find it more convenient to keep the Python sources in a separate tree and have VS Code open that tree exlusively. Therefore, launch a fresh instance of `VS Code` and open the folder `400-create-hello-world-flask-app-manually` . This will be serve as the root folder of our `Hello world` `Flask` app
+
 ```
     root
         |
@@ -99,11 +114,10 @@ Some notes on debugging
 
 ```
 
-## Step 2-Launch VS Code with the new folder
-When working with Python and VS Code, I find it more convenient to keep the Python sources in a separate tree and have VS Code open that tree exlusively. Therefore, launch a fresh instance of `VS Code` and open the folder `400-create-hello-world-flask-app-manually` . This will be serve as the root folder of our `Hello world` Flask app
 
 
 ## Step 3-Create a new VENV
+`VS Code` names the virtual env folder as `.venv`
 
 ![vscode-create-venv.png](docs/images/vscode-create-venv.png)
 
@@ -117,8 +131,9 @@ flask
 ```
 
 ## Step-5-Install the packages
-
+Run the following commanf from the Terminal Window of VS Code. 
 ```PowerShell
+.\.venv\Scripts\Activate.ps1
 pip install -r .\requirements.txt
 ```
 
@@ -130,7 +145,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return f"Hello, Flask! Current clock time is: {datetime.datetime.utcnow()}"
+    return f"<h1>Hello world, Flask on Azure Web App!</h1><hr/>Current clock time is: {datetime.datetime.utcnow()}"
 
 ```
 
