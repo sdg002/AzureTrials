@@ -1,12 +1,28 @@
 [[_TOC_]]
 
-# Deploy a Python Flask Web app to Azure using ARM templates and Azure CLI
+# Deploy a very simple Python Flask application to an Azure Web App using ARM templates and Azure CLI
 
-# About
-This is a step by step guide to deploy a very simple Python Flask Web app. [??Link to first part of the article on Azure ARM]
+![flask-to-webapp.png](docs/ppt-images/flask-to-webapp.png)
+
+
+# Overview
+This is a step by step guide to which demonstrates how easy it is to deploy a simple Python Flask application in just a few easy steps. The primary objective is to create an asset of `Infrastructure as Code` which can be easily automated via `Azure Devops` or any other deployment automation pipelines. 
+- Create an Azure `App Service Plan` using ARM template
+- Create an Azure `Web App` using ARM template
+- Deploy the Python code into the Azure Web app using the Azure CLI
+
+If you are interested to get a quick understanding of `Azure ARM` templates,then I would direct you to my previous article [here](https://medium.com/@saurabh.dasgupta1/azure-arm-template-step-by-step-a78ceba43931)
 
 # Link to source code
-[?? link to the Github repo]
+The accompanying source code can be found in this [Github repository](https://github.com/sdg002/AzureTrials/tree/main/arm-template-python-flask-webapp). I have used `VS Code` for developing both the Flask app and the PowerShell scripts neccessary to deploy the ARM templates
+
+## Debugging the Flask App
+??
+
+## Debugging the "Infrastructure as Code"
+??
+
+
 
 # 100-Structure of the code
 [?? you will need to revisit this section , you have moved 501 to under the root level]
@@ -207,7 +223,7 @@ https://learn.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest#az-weba
 ## Next steps
 - Remove the storage account creation from section 500
 - Add a 506 - "Putting it all together" which does all the deployment
-- 
+- DO THE FOLLOWING IN SUBSEQUENT PROJECT (for now tidy up the readme.md and publish it, add some pictures)
 - New section 600 - Add logging and write some logging code in app.py, log to Terminal window
 - 601 - flask app that has logging to Application Insights and 
 - 602 Add `Log Analytics` and `Application Insights`
