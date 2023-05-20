@@ -25,24 +25,49 @@ All IaC should be easily debuggable. With that in mind I have used PowerShell sc
 
 
 # 100-Structure of the code
-[?? you will need to revisit this section , you have moved 501 to under the root level]
+
 ```
     - azuredevops
         |
-        |--deploy.ps1
-        |
-        |--cicd.yml
-        |
-    - webapp-source
-        |
-        |--app.py
-        |
-        |--requirements.txt
+        |---docs
         |
         |
-    - docs
+        |---400-create-hello-world-flask-app-manually
+        |            |
+        |            |---app.py
+        |            |
+        |            |---requirements.txt
+        |            |
+        |            |---.venv
+        |            |
         |
-        |--pics
+        |
+        |---501-create-app-service-plan 
+        |            |
+        |            |---deploy.ps1
+        |            |
+        |
+        |
+        |---502-create-web-app
+        |            |
+        |            |---deploy.ps1
+        |            |
+        |
+        |---503-deploy-web-app-code
+        |            |
+        |            |---deploy.ps1
+        |            |
+        |
+        |
+        |---504-putting-it-all-together
+        |            |
+        |            |---deploy.ps1
+        |            |
+        |
+        |
+        |---commonvariables.ps1
+        |
+        |---readme.md
         |
 
 ```
