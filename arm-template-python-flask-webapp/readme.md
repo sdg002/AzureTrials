@@ -16,11 +16,11 @@ If you are interested to get a quick understanding of `Azure ARM` templates,then
 # Link to source code
 The accompanying source code can be found in this [Github repository](https://github.com/sdg002/AzureTrials/tree/main/arm-template-python-flask-webapp). I have used `VS Code` for developing both the Flask app and the PowerShell scripts neccessary to deploy the ARM templates
 
-## Debugging the Flask App
-??
+#### Debugging the Flask App
+The folder `400-create-hello-world-flask-app-manually` implements a very basic and a functioning Flask web application. I have followed the [guidance from Microsoft](https://code.visualstudio.com/docs/python/tutorial-flask) to get started with `VS Code` and `Flask`. 
 
-## Debugging the "Infrastructure as Code"
-??
+#### Debugging the "Infrastructure as Code"
+All IaC should be easily debuggable. With that in mind I have used PowerShell scripts which deploy the ARM template squentially. You will need to have a moderately recent edition of `PowerShell Core` 
 
 
 
