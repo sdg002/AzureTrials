@@ -32,8 +32,18 @@ Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
 
 ```
 
+# To be done
+- New plan
+- Function app
+- Log analytics
+- Application insights
+- Connect the Function app with the Application insights via INSTRU-KEY
+- Csharp code
+- Deploy
+- POST end point to capture the payload and write to application insights
+
 # References
-to be done
+
 
 ## MS documentation on Azure actions for web hooks
 https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-log-webhook

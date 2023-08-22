@@ -10,7 +10,8 @@ if ([string]::IsNullOrWhiteSpace($Global:environment)){
 Write-Host "The environment is $Global:environment"
 $Global:ResourceGroup="rg-demo-azure-alert-msteams-$Global:environment-uks"
 $Global:Location="uksouth"
-
+$Global:AppServicePlan="asp-azurealertsmsteams-$Global:environment"
+$Global:WebAppName="app-azurealertsmsteams-$Global:environment"
 
 
 <#
