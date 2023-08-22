@@ -12,7 +12,7 @@ $Global:ResourceGroup="rg-demo-azure-alert-msteams-$Global:environment-uks"
 $Global:Location="uksouth"
 $Global:AppServicePlan="asp-azurealertsmsteams-$Global:environment"
 $Global:WebAppName="app-azurealertsmsteams-$Global:environment"
-
+$Global:LogAnalytics="log-azurealertsmsteams-$Global:environment-uksouth"
 
 <#
 This function should be called after every invocation of Azure CLI to check for success

@@ -43,5 +43,18 @@ Write-Host "Going to create a web app using ARM template $armTemplateFile"
 
 RaiseCliError -message "Failed to deploy web app $Global:WebAppName"
 
+<#
+Deploy Log Analytics
+#>
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/loganalytics.arm.template.json"
+$armParameterFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/loganalytics.arm.parameters.json"
+Write-Host "Going to Log Analytics using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile  `
+    name=$Global:LogAnalytics `
+    --verbose
+
+RaiseCliError -message "Failed to deploy web app $Global:WebAppName"
+
 
 
