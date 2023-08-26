@@ -1,0 +1,35 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "requestSource": {
+            "type": "string"
+        },
+        "logWorkspaceName": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('name')]",
+            "type": "microsoft.insights/components",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "apiVersion": "2020-02-02-preview",
+            "dependsOn": [],
+            "properties": {
+                "ApplicationId": "[parameters('name')]",
+                "Application_Type": "[parameters('type')]",
+                "Flow_Type": "Redfield",
+                "Request_Source": "[parameters('requestSource')]",
+                "WorkspaceResourceId": "[resourceId(subscription().subscriptionId,resourceGroup().name,'Microsoft.OperationalInsights/workspaces',parameters('logWorkspaceName'))]"
+            }
+        }
+    ]
+}
