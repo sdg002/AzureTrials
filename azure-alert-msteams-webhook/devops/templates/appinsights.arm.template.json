@@ -33,3 +33,11 @@
         }
     ]
 }
+
+/*
+this did not work
+[reference('/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth','2015-05-01', 'Full')]
+
+this worked
+reference('/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth').InstrumentationKey
+*/

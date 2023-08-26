@@ -16,9 +16,11 @@
         },
         "linuxFxVersion": {
             "type": "string"
-        }
-        ,
+        },
         "environment":{
+            "type": "string"
+        },
+        "appinsightResourceName":{
             "type": "string"
         }
     },
@@ -42,7 +44,11 @@
                         {
                             "name" : "SCM_DO_BUILD_DURING_DEPLOYMENT",
                             "value" : "1"
-                        }           
+                        },
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference(resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/components',parameters('appinsightResourceName')),'2015-05-01').ConnectionString]"
+                        }      
                     ],
                     "linuxFxVersion": "[parameters('linuxFxVersion')]",
                     "alwaysOn": "[parameters('alwaysOn')]",
@@ -57,3 +63,18 @@
         }
     ]
 }
+
+/*
+This works
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference('/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth','2015-05-01').ConnectionString]"
+                        }      
+
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference(resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/components','appi-azurealertsmsteams-dev-uksouth'),'2015-05-01').ConnectionString]"
+                        }      
+
+
+*/
