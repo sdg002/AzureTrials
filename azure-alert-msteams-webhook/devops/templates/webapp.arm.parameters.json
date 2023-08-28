@@ -15,7 +15,7 @@
             "value": "FtpsOnly"
         },
         "linuxFxVersion": {
-            "value": "PYTHON|3.9"
+            "value": "DOTNETCORE|7.0"
         }
     }
 }

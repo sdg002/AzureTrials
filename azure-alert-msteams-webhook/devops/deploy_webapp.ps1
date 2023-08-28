@@ -1,6 +1,5 @@
-<#
-to be done
-#>
+. $PSScriptRoot/commonvariables.ps1
+
 
 $pathToCsharp=Join-Path -Path $PSScriptRoot -ChildPath "../csharp-webapp/csharp-webapp/csharp-webapp.csproj"
 $pathToCsharpPublish=Join-Path -Path $env:TEMP -ChildPath csharp-demo-webapp
@@ -24,3 +23,4 @@ Pop-Location
 Write-Host "End-The ZIP was created in the folder $pathToZip"
 
 
+az webapp deploy --resource-group $Global:ResourceGroup --name $Global:WebAppName --type zip --src-path $pathToZip --verbose
