@@ -43,7 +43,7 @@
                         },
                         {
                             "name" : "SCM_DO_BUILD_DURING_DEPLOYMENT",
-                            "value" : "1"
+                            "value" : "0"
                         },
                         {
                             "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
