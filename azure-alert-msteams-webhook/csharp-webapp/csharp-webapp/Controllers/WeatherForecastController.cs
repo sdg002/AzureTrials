@@ -21,6 +21,8 @@ namespace csharp_webapp.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation("Inside method GetWeatherForecase (Information)");
+            _logger.LogWarning("Inside method GetWeatherForecase (Warning)");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

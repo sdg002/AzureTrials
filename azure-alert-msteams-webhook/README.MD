@@ -61,3 +61,26 @@ Example:
                         }      
                     ]
 ```
+
+# Lessons learnt
+## How to let Azure know that you are deploying a dotnet core app ?
+The parameter  `linuxFxVersion` should be specified. Example: via the parameters file is one of the options
+```
+    "linuxFxVersion": 
+    {
+            "value": "DOTNETCORE|7.0"
+    }
+```
+
+## How to let Azure not initiate a build from your code ?
+
+Since we are deploying a dotnet core application, there is no need to do an online build (unlike Python). We should specify SCM_DO_BUILD_DURING_DEPLOYMENT as 0
+
+```
+"appSettings": [
+    {
+        "name" : "SCM_DO_BUILD_DURING_DEPLOYMENT",
+        "value" : "0"
+    }
+]
+```
