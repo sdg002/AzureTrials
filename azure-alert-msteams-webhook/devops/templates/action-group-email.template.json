@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "actionGroups_myemail_name": {
+            "defaultValue": "myemail",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/actionGroups",
+            "apiVersion": "2023-01-01",
+            "name": "[parameters('actionGroups_myemail_name')]",
+            "location": "Global",
+            "properties": {
+                "groupShortName": "[parameters('actionGroups_myemail_name')]",
+                "enabled": true,
+                "emailReceivers": [
+                    {
+                        "name": "mynotification_-EmailAction-",
+                        "emailAddress": "saurabh_dasgupta@hotmail.com",
+                        "useCommonAlertSchema": true
+                    }
+                ],
+                "smsReceivers": [],
+                "webhookReceivers": [],
+                "eventHubReceivers": [],
+                "itsmReceivers": [],
+                "azureAppPushReceivers": [],
+                "automationRunbookReceivers": [],
+                "voiceReceivers": [],
+                "logicAppReceivers": [],
+                "azureFunctionReceivers": [],
+                "armRoleReceivers": []
+            }
+        }
+    ]
+}

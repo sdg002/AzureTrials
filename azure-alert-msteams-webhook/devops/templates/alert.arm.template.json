@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "scheduledqueryrules_mysimplealertandaction_name": {
+            "defaultValue": "mysimplealertandaction",
+            "type": "String"
+        },
+        "components_appi_azurealertsmsteams_dev_uksouth_externalid": {
+            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth",
+            "type": "String"
+        },
+        "actiongroups_myemail_externalid": {
+            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actiongroups/myemail",
+            "type": "String"
+        },
+        "actiongroups_mywebhook_externalid": {
+            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actiongroups/mywebhook",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/scheduledqueryrules",
+            "apiVersion": "2023-03-15-preview",
+            "name": "[parameters('scheduledqueryrules_mysimplealertandaction_name')]",
+            "location": "uksouth",
+            "properties": {
+                "displayName": "[parameters('scheduledqueryrules_mysimplealertandaction_name')]",
+                "description": "this is a hand crafter alert and action",
+                "severity": 3,
+                "enabled": true,
+                "evaluationFrequency": "PT5M",
+                "scopes": [
+                    "[parameters('components_appi_azurealertsmsteams_dev_uksouth_externalid')]"
+                ],
+                "targetResourceTypes": [
+                    "microsoft.insights/components"
+                ],
+                "windowSize": "PT5M",
+                "criteria": {
+                    "allOf": [
+                        {
+                            "query": "exceptions\n| order by timestamp desc\n",
+                            "timeAggregation": "Count",
+                            "dimensions": [],
+                            "operator": "GreaterThan",
+                            "threshold": 0,
+                            "failingPeriods": {
+                                "numberOfEvaluationPeriods": 1,
+                                "minFailingPeriodsToAlert": 1
+                            }
+                        }
+                    ]
+                },
+                "autoMitigate": false,
+                "actions": {
+                    "actionGroups": [
+                        "[parameters('actiongroups_myemail_externalid')]",
+                        "[parameters('actiongroups_mywebhook_externalid')]"
+                    ],
+                    "customProperties": {},
+                    "actionProperties": {}
+                }
+            }
+        }
+    ]
+}
