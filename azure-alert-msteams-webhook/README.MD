@@ -6,6 +6,7 @@ You have applications that log to Azure Application Insights.
 [?? to be done] Talk more about the problem
 Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
 Talk about the intended audience
+Talk about that this appears to be seemingly complex but fairly simple
 
 ---
 
@@ -25,20 +26,21 @@ To be done
 to be done . Show a block diagram depicting Alert leading to multiple action groups
 
 ---
-# Create an Azure alert using ARM template ?
+# How to deploy an Azure alert using ARM template ?
 to be done
 
 ---
 
-# Create an email Action group using ARM template ?
+# How to deploy an email Action group using ARM template ?
 Cheating using the UI
 to be done
 
 ---
 
-# Create a web hook action group using ARM template ?
+# How to deploy a web hook action group using ARM template ?
 Cheating using the UI
 to be done
+
 ---
 
 # How to write any information to a MS Teams channel using out of box REST end points ?
@@ -49,11 +51,11 @@ To be done
 
 ---
 
-# How to use the out of box Web hook to write anything to a MS teams channels ?
+# How to influence the JSON structure of the Azure Alert payload before publishing to a MS teams channels ?
 to be done
 
 
-# Structure
+# Structure of the repo (improve this)
 
 ```
 
@@ -81,6 +83,11 @@ to be done
     
 
 ```
+---
+
+# How to execute the code ?
+Caveat on Azure subscription with billing.
+
 
 ---
 
