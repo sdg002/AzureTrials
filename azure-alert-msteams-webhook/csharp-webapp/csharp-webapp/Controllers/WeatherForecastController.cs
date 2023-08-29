@@ -51,5 +51,15 @@ namespace csharp_webapp.Controllers
             }
             return message;
         }
+
+        [HttpGet]
+        [HttpPost]
+        [Route("/CatchIncomingMessage")]
+        public async Task<string> CatchIncomingMessage()
+        {
+            var body = await new StreamReader(this.Request.Body).ReadToEndAsync();
+            _logger.LogInformation("Inside method {method}, {body}", nameof(CatchIncomingMessage), body);
+            return body;
+        }
     }
 }
