@@ -1,0 +1,60 @@
+{
+    "schemaId": "azureMonitorCommonAlertSchema",
+    "data": {
+      "essentials": {
+        "alertId": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/providers/Microsoft.AlertsManagement/alerts/b7ea130e-df07-bc43-9f38-7990bb5f4eea",
+        "alertRule": "mysimplealertandaction",
+        "severity": "Sev3",
+        "signalType": "Log",
+        "monitorCondition": "Fired",
+        "monitoringService": "Log Alerts V2",
+        "alertTargetIDs": [
+          "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourcegroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth"
+        ],
+        "configurationItems": [
+          "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth"
+        ],
+        "originAlertId": "7e079c7a-e175-4325-9fac-89e7fa2dc398",
+        "firedDateTime": "2023-08-29T21:31:30.0405751Z",
+        "description": "this is a hand crafter alert and action",
+        "essentialsVersion": "1.0",
+        "alertContextVersion": "1.0"
+      },
+      "alertContext": {
+        "properties": {
+          
+        },
+        "conditionType": "LogQueryCriteria",
+        "condition": {
+          "windowSize": "PT5M",
+          "allOf": [
+            {
+              "searchQuery": "exceptions\n| order by timestamp desc\n",
+              "metricMeasureColumn": null,
+              "targetResourceTypes": "['microsoft.insights/components']",
+              "operator": "GreaterThan",
+              "threshold": "0",
+              "timeAggregation": "Count",
+              "dimensions": [
+                
+              ],
+              "metricValue": 3.0,
+              "failingPeriods": {
+                "numberOfEvaluationPeriods": 1,
+                "minFailingPeriodsToAlert": 1
+              },
+              "linkToSearchResultsUI": "https://portal.azure.com#@e66fc46b-2666-4ea3-984d-bb30c06f2c75/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F635a2074-cc31-43ac-bebe-2bcd67e1abfe%2FresourceGroups%2Frg-demo-azure-alert-msteams-dev-uks%2Fproviders%2Fmicrosoft.insights%2Fcomponents%2Fappi-azurealertsmsteams-dev-uksouth%22%7D%5D%7D/q/eJxLrUhOLSjJzM8r5qpRyC9KSS1SSKpUKMnMTS0uScwtUEhJLU4GAA%3D%3D/prettify/1/timespan/2023-08-29T21%3a25%3a59.0000000Z%2f2023-08-29T21%3a30%3a59.0000000Z",
+              "linkToFilteredSearchResultsUI": "https://portal.azure.com#@e66fc46b-2666-4ea3-984d-bb30c06f2c75/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F635a2074-cc31-43ac-bebe-2bcd67e1abfe%2FresourceGroups%2Frg-demo-azure-alert-msteams-dev-uks%2Fproviders%2Fmicrosoft.insights%2Fcomponents%2Fappi-azurealertsmsteams-dev-uksouth%22%7D%5D%7D/q/eJxLrUhOLSjJzM8r5qpRyC9KSS1SSKpUKMnMTS0uScwtUEhJLU4GAA%3D%3D/prettify/1/timespan/2023-08-29T21%3a25%3a59.0000000Z%2f2023-08-29T21%3a30%3a59.0000000Z",
+              "linkToSearchResultsAPI": "https://api.applicationinsights.io/v1/apps/ced38915-ee77-4990-ad04-a38366fa47bd/query?query=exceptions%0A%7C%20order%20by%20timestamp%20desc&timespan=2023-08-29T21%3a25%3a59.0000000Z%2f2023-08-29T21%3a30%3a59.0000000Z",
+              "linkToFilteredSearchResultsAPI": "https://api.applicationinsights.io/v1/apps/ced38915-ee77-4990-ad04-a38366fa47bd/query?query=exceptions%0A%7C%20order%20by%20timestamp%20desc&timespan=2023-08-29T21%3a25%3a59.0000000Z%2f2023-08-29T21%3a30%3a59.0000000Z"
+            }
+          ],
+          "windowStartTime": "2023-08-29T21:25:59Z",
+          "windowEndTime": "2023-08-29T21:30:59Z"
+        }
+      },
+      "customProperties": {
+        
+      }
+    }
+  }
