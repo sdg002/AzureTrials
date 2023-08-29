@@ -19,6 +19,7 @@ namespace csharp_webapp.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
+        [Route("/GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             _logger.LogInformation("Inside method GetWeatherForecase (Information)");
@@ -30,6 +31,25 @@ namespace csharp_webapp.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet(Name = "LogException")]
+        [Route("/LogException")]
+        public string GenerateException()
+        {
+            var now = DateTime.Now;
+            var message = $"Going to generate an exception at {now}";
+            try
+            {
+                _logger.LogInformation(message);
+                int x = 0;
+                var y = 1 / x;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception was logged at time:{now}", now);
+            }
+            return message;
         }
     }
 }
