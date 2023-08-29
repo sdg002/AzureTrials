@@ -1,7 +1,57 @@
 [[_TOC_]]
 
-# Overview
+# Redirecting Azure Alerts to a Microsoft Teams channel (using ARM templates)
+# Problem
+You have applications that log to Azure Application Insights.
+[?? to be done] Talk more about the problem
 Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
+Talk about the intended audience
+
+---
+
+# Link to Source Code
+To be done
+- Pointed to ARM template
+- Pointer to C# web app for capturing Azure Alerts via web hook
+---
+
+# What to expect from this article ?
+- Create the neccessary Azure resources for a web app (this includes ????)
+- Create a simple C# web app which logs to App Insights
+- Deploy an Azure ARM template which alerts for exceptions to an email recipients
+- We will extend the Azure ARM templat to redirect the alerts to a Microsoft Teams channels
+
+# Understanding Azure Alerts and Action Groups
+to be done . Show a block diagram depicting Alert leading to multiple action groups
+
+---
+# Create an Azure alert using ARM template ?
+to be done
+
+---
+
+# Create an email Action group using ARM template ?
+Cheating using the UI
+to be done
+
+---
+
+# Create a web hook action group using ARM template ?
+Cheating using the UI
+to be done
+---
+
+# How to write any information to a MS Teams channel using out of box REST end points ?
+To be done
+- MS teams
+- Grab the REST end point of your Teams channel
+- Show the structure of the REST end point (fudge the secure bits)
+
+---
+
+# How to use the out of box Web hook to write anything to a MS teams channels ?
+to be done
+
 
 # Structure
 
@@ -42,6 +92,13 @@ Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
 - Deploy the Csharp code (done)
 - Configure app insights configured (X)
 - POST end point to capture the payload and write to application insights (X)
+- GET end point to generate exceptions
+- Create an action group via Azure ARM which has an email recipient (X)
+- Create a manual azure alert which looks for exceptions in a 5 minute window and sends to email action group above (X)
+- Script the manual azure alert via ARM template (X)
+- Add a web hook action group (X)
+- Inspect JSON payload (X)
+- Modify action group to convert JSON payload (X)
 - Create an Azure Alert which writes to Web hook as an action group - pass the JSON as it is (X)
 
 # References
