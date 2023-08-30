@@ -2,8 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "actionGroups_myemail_name": {
-            "defaultValue": "myemail",
+        "name": {
             "type": "String"
         }
     },
@@ -12,10 +11,10 @@
         {
             "type": "microsoft.insights/actionGroups",
             "apiVersion": "2023-01-01",
-            "name": "[parameters('actionGroups_myemail_name')]",
+            "name": "[parameters('name')]",
             "location": "Global",
             "properties": {
-                "groupShortName": "[parameters('actionGroups_myemail_name')]",
+                "groupShortName": "[parameters('name')]",
                 "enabled": true,
                 "emailReceivers": [
                     {

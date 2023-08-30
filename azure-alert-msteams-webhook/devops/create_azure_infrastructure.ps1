@@ -72,3 +72,27 @@ Write-Host "Going to create a web app using ARM template $armTemplateFile"
 
 RaiseCliError -message "Failed to deploy web app $Global:WebAppName"
 
+
+<#
+Deploy Azure Alert
+#>
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/alert.arm.template.json"
+Write-Host "Going to create a Alert using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters `
+    name=$Global:AlertName  `
+    --verbose
+
+RaiseCliError -message "Failed to deploy Alert $Global:AlertName"
+
+<#
+Deploy Email Action Group
+#>
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/action-group-email.arm.template.json"
+Write-Host "Going to create an Action Group $Global:ActionGroupEmail using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters `
+    name=$Global:ActionGroupEmail `
+    --verbose
+
+RaiseCliError -message "Failed to deploy Action Group $Global:ActionGroupEmail"

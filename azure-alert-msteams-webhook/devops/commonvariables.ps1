@@ -14,6 +14,10 @@ $Global:AppServicePlan="asp-azurealertsmsteams-$Global:environment"
 $Global:WebAppName="app-azurealertsmsteams-$Global:environment"
 $Global:LogAnalytics="log-azurealertsmsteams-$Global:environment-uksouth"
 $Global:AppInsight="appi-azurealertsmsteams-$Global:environment-uksouth"
+$Global:AlertName="alert-anyexceptions-$Global:environment-uksouth"
+$Global:ActionGroupEmail="agemail$Global:environment"
+$Global:ActionGroupWebHook="agwebhook$Global:environment"
+$Global:WebhookEndPoint="https://app-azurealertsmsteams-dev.azurewebsites.net//CatchIncomingMessage"
 <#
 This function should be called after every invocation of Azure CLI to check for success
 #>

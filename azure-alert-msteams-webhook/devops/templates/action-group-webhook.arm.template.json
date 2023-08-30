@@ -2,27 +2,30 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "actionGroups_mywebhook_name": {
-            "defaultValue": "mywebhook",
+        "name": {
+            "type": "String"
+        },
+        "webhookendpoint": {
             "type": "String"
         }
+
     },
     "variables": {},
     "resources": [
         {
             "type": "microsoft.insights/actionGroups",
             "apiVersion": "2023-01-01",
-            "name": "[parameters('actionGroups_mywebhook_name')]",
+            "name": "[parameters('name')]",
             "location": "Global",
             "properties": {
-                "groupShortName": "[parameters('actionGroups_mywebhook_name')]",
+                "groupShortName": "[parameters('name')]",
                 "enabled": true,
                 "emailReceivers": [],
                 "smsReceivers": [],
                 "webhookReceivers": [
                     {
                         "name": "mycsharpendpoint",
-                        "serviceUri": "https://app-azurealertsmsteams-dev.azurewebsites.net//CatchIncomingMessage",
+                        "serviceUri": "[parameters('webhookendpoint')]",
                         "useCommonAlertSchema": true,
                         "useAadAuth": false
                     }
