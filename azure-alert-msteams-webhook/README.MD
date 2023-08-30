@@ -109,6 +109,11 @@ Example:
                     ]
 ```
 
+## Custom JSON Payload is no longer supported
+https://github.com/MicrosoftDocs/azure-docs/issues/14571
+
+---
+
 # Lessons learnt
 ## How to let Azure know that you are deploying a dotnet core app ?
 The parameter  `linuxFxVersion` should be specified. Example: via the parameters file is one of the options

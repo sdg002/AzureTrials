@@ -1,3 +1,6 @@
+/*
+The count of errors detected  by the query is captured in the parameter 'metricValue'
+*/
 {
     "schemaId": "azureMonitorCommonAlertSchema",
     "data": {

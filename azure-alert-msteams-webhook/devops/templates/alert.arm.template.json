@@ -10,12 +10,12 @@
             "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth",
             "type": "String"
         },
-        "actiongroups_myemail_externalid": {
-            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actiongroups/myemail",
+        "actionGroups_myemail_externalid": {
+            "defaultValue": "/subscriptions/635A2074-CC31-43AC-BEBE-2BCD67E1ABFE/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actionGroups/myemail",
             "type": "String"
         },
-        "actiongroups_mywebhook_externalid": {
-            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actiongroups/mywebhook",
+        "actionGroups_mywebhook_externalid": {
+            "defaultValue": "/subscriptions/635A2074-CC31-43AC-BEBE-2BCD67E1ABFE/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/actionGroups/mywebhook",
             "type": "String"
         }
     },
@@ -57,10 +57,13 @@
                 "autoMitigate": false,
                 "actions": {
                     "actionGroups": [
-                        "[parameters('actiongroups_myemail_externalid')]",
-                        "[parameters('actiongroups_mywebhook_externalid')]"
+                        "[parameters('actionGroups_myemail_externalid')]",
+                        "[parameters('actionGroups_mywebhook_externalid')]"
                     ],
-                    "customProperties": {},
+                    "customProperties": {
+                        "myprop1": "some value 1",
+                        "myprop2": "some value 2"
+                    },
                     "actionProperties": {}
                 }
             }

@@ -9,11 +9,15 @@
 - Configure app insights configured (done)
 - GET end point to generate exceptions
 - POST end point to capture the payload and write to Application Insights
+- Create a manual azure alert which looks for exceptions in a 5 minute window and sends to email action group above
+- Test for custom property, examine the JSON
 
 # Under progress
-- Create a manual azure alert which looks for exceptions in a 5 minute window and sends to email action group above (under test)
+- Manuall modify the JSON payload
+
 
 # To be done
+- Test manual web hook with MS Teams
 - Create an action group via Azure ARM which has an email recipient (X)
 - Script the manual azure alert via ARM template (X)
 - Add a web hook action group (X)
