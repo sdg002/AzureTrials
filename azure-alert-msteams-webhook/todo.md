@@ -11,19 +11,21 @@
 - POST end point to capture the payload and write to Application Insights
 - Create a manual azure alert which looks for exceptions in a 5 minute window and sends to email action group above
 - Test for custom property, examine the JSON
+- Deploy Azure alerts using new schema
+- Create an action group via Azure ARM which has an email recipient (X)
+- Add a web hook action group (X)
+- Create an Azure Alert which writes to Web hook as an action group - pass the JSON as it is (X)
 
 # Under progress
-- Manuall modify the JSON payload
-
+- Test the newly deployed Azure alerts (email and web hook) 4 exceptions at 23:12
 
 # To be done
+- Create an Azure alert with an old schema (look in github for custom json paylo)
+- Manuall modify the JSON payload
 - Test manual web hook with MS Teams
-- Create an action group via Azure ARM which has an email recipient (X)
 - Script the manual azure alert via ARM template (X)
-- Add a web hook action group (X)
 - Inspect JSON payload (X)
 - Modify action group to convert JSON payload (X)
-- Create an Azure Alert which writes to Web hook as an action group - pass the JSON as it is (X)
 
 ---
 

@@ -1,8 +1,11 @@
 [[_TOC_]]
 
-# Redirecting Azure Alerts to a Microsoft Teams channel (using ARM templates)
+# Deploy Azure Alerts using ARM templates - So easy!
 # Problem
-You have applications that log to Azure Application Insights.
+Consider a very simple business scenario which comprises of web applications and backend services deployed to Azure. Each of these services log their traces and exceptions to Azure Application Insights. The application is deployed across several environments (DEV, UAT, PROD, etc). You have manually created Azure Alerts. But you are finding it onerous to propage the alerts to all the environments. In this article we will see how simple it is to automate the deployment of Azure Alerts and Action Groups via ARM templates.
+
+The primary objective of my writing this article was to dispel the notion that Azure deployment is difficult. On the contrary if you stick to the basics - automation can be a breeze.
+
 [?? to be done] Talk more about the problem
 Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
 Talk about the intended audience
@@ -111,6 +114,21 @@ Example:
 
 ## Custom JSON Payload is no longer supported
 https://github.com/MicrosoftDocs/azure-docs/issues/14571
+
+## Reference to ARM template of Alert Web hook
+https://learn.microsoft.com/en-us/azure/templates/microsoft.insights/2017-04-01/actiongroups?pivots=deployment-language-arm-template
+
+## StackOverflow - ARM Template parameter is not working for custom payload json
+https://stackoverflow.com/questions/70439846/arm-template-parameter-is-not-working-for-custom-payload-json
+
+## Github - Parameters in Custom JSON Webhook Action #40167
+https://github.com/MicrosoftDocs/azure-docs/issues/40167
+
+## Approach using Run book as a middleware
+https://stackoverflow.com/questions/59883257/azure-monitor-alerts-using-webhook-to-microsoft-teams-no-messages-to-teams
+
+## Azure alert sample payloads
+https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-payload-samples
 
 ---
 
