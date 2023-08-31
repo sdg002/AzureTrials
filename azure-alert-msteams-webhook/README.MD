@@ -31,12 +31,15 @@ Structure of the code is as follows
 └───docs
 
 ```
+---
+# Tutorial on ARM Templates (to be done)
+Give link to your Step by step medium article
 
 ---
 
 # What to expect from this article (to be done) ?
 [[a block diagram - with a web app on one side and Azure on other , app insight as a DB, a console EXE which logs to App insights]]
-- ARM templates to deply the following
+- ARM templates to deploy the following
     - Web app
     - Log analytics
     - Application Insights
@@ -47,8 +50,13 @@ Structure of the code is as follows
 - Create a simple C# web app which receives the web call backs from Azure alerting infrastructure
 - PowerShell script to deploy all the Azure templates
 
+---
+
 # Understanding Azure Alerts and Action Groups (to be done)
-to be done . Show a block diagram depicting Alert leading to multiple action groups
+Show a block diagram depicting 
+- Alerts engine running and querying App insights (as a DB)
+- Every 5 minutes window of aggregation
+- Alert leading to multiple action groups.  
 
 ---
 # How to deploy an Azure alert using ARM template (to be done) ?
@@ -57,20 +65,23 @@ to be done
 ---
 
 # How to deploy an email Action group using ARM template (to be done) ?
-Cheating using the UI
+- Cheating using the UI (just talk lightly and some screen captures)
+- Explain the structure of the ARM template of Action Group
 to be done
+- Explain what you replaced
 
 ---
 
 # How to deploy a web hook action group using ARM template (to be done)?
-Cheating using the UI
-to be done
+-Cheating using the UI (just talk lightly and some screen captures)
+- Explain the structure of the ARM template of Action Group
+- Explain what tags you replaced in the ARM template
 
 ---
 
-# How to write any information to a MS Teams channel using out of box REST end points ?
+# How to write any information to a MS Teams channel using out of box REST end points (to be done) ?
 To be done
-- MS teams
+- MS teams (show pictures of setting the web hook)
 - Grab the REST end point of your Teams channel
 - Show the structure of the REST end point (fudge the secure bits)
 
@@ -82,8 +93,10 @@ to be done
 
 ---
 
-# How to execute the code ?
-Caveat on Azure subscription with billing.
+# How to execute the code (to be done) ?
+- Caveat on Azure subscription with billing.
+- Visual Studio
+- Azure CLI
 
 
 ---
