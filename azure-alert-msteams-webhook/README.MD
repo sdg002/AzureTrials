@@ -34,18 +34,18 @@ Structure of the code is as follows
 
 ---
 
-# What to expect from this article ?
-[[a block diagram - with a web app on one side and Azure on other , app insight as a DB]]
-- ARM tempaltes to deply the following
+# What to expect from this article (to be done) ?
+[[a block diagram - with a web app on one side and Azure on other , app insight as a DB, a console EXE which logs to App insights]]
+- ARM templates to deply the following
     - Web app
     - Log analytics
     - Application Insights
-    - Azure alert
     - Azure email action group
     - Azure webhook action group
-- Create a simple C# web app which logs to App Insights
-- Deploy an Azure ARM template which alerts for exceptions to an email recipients
-- We will extend the Azure ARM templat to redirect the alerts to a Microsoft Teams channels
+    - Azure alert rule which fires if there are more than 0 exceptions in a 5 minute window
+- Create a simple C# console app which logs exceptions to Application Insights
+- Create a simple C# web app which receives the web call backs from Azure alerting infrastructure
+- PowerShell script to deploy all the Azure templates
 
 # Understanding Azure Alerts and Action Groups
 to be done . Show a block diagram depicting Alert leading to multiple action groups
