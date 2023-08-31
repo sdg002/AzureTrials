@@ -14,13 +14,35 @@ Talk about that this appears to be seemingly complex but fairly simple
 ---
 
 # Link to Source Code
-To be done
-- Pointed to ARM template
-- Pointer to C# web app for capturing Azure Alerts via web hook
+
+https://github.com/sdg002/AzureTrials/tree/main/azure-alert-msteams-webhook
+
+Structure of the code is as follows
+```
+
+├───csharp-webapp <-- Web API to receive calls from Azure alerts
+│
+├───devops
+│   │
+|   ├───create_azure_infrastructure.ps1
+│   │
+│   └───templates  <-- ARM templates
+│
+└───docs
+
+```
+
 ---
 
 # What to expect from this article ?
-- Create the neccessary Azure resources for a web app (this includes ????)
+[[a block diagram - with a web app on one side and Azure on other , app insight as a DB]]
+- ARM tempaltes to deply the following
+    - Web app
+    - Log analytics
+    - Application Insights
+    - Azure alert
+    - Azure email action group
+    - Azure webhook action group
 - Create a simple C# web app which logs to App Insights
 - Deploy an Azure ARM template which alerts for exceptions to an email recipients
 - We will extend the Azure ARM templat to redirect the alerts to a Microsoft Teams channels
@@ -118,7 +140,7 @@ https://github.com/MicrosoftDocs/azure-docs/issues/14571
 ## Reference to ARM template of Alert Web hook
 https://learn.microsoft.com/en-us/azure/templates/microsoft.insights/2017-04-01/actiongroups?pivots=deployment-language-arm-template
 
-## StackOverflow - ARM Template parameter is not working for custom payload json
+## StackOverflow - ARM Template parameter is not working for custom payload json  (customWebhookPayload)
 https://stackoverflow.com/questions/70439846/arm-template-parameter-is-not-working-for-custom-payload-json
 
 ## Github - Parameters in Custom JSON Webhook Action #40167
@@ -129,6 +151,14 @@ https://stackoverflow.com/questions/59883257/azure-monitor-alerts-using-webhook-
 
 ## Azure alert sample payloads
 https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-payload-samples
+
+
+## Github documentation on Azure action group schema
+https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-monitor/alerts/alerts-log-webhook.md
+
+## Application Insights alerts no longer have a custom JSON payload option
+
+https://learn.microsoft.com/en-us/answers/questions/800320/application-insights-alerts-no-longer-have-a-custo
 
 ---
 
