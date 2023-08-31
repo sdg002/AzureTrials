@@ -47,22 +47,22 @@ Structure of the code is as follows
 - Create a simple C# web app which receives the web call backs from Azure alerting infrastructure
 - PowerShell script to deploy all the Azure templates
 
-# Understanding Azure Alerts and Action Groups
+# Understanding Azure Alerts and Action Groups (to be done)
 to be done . Show a block diagram depicting Alert leading to multiple action groups
 
 ---
-# How to deploy an Azure alert using ARM template ?
+# How to deploy an Azure alert using ARM template (to be done) ?
 to be done
 
 ---
 
-# How to deploy an email Action group using ARM template ?
+# How to deploy an email Action group using ARM template (to be done) ?
 Cheating using the UI
 to be done
 
 ---
 
-# How to deploy a web hook action group using ARM template ?
+# How to deploy a web hook action group using ARM template (to be done)?
 Cheating using the UI
 to be done
 
@@ -80,34 +80,6 @@ To be done
 to be done
 
 
-# Structure of the repo (improve this)
-
-```
-
-----
-    |
-    |
-    |
-    ----devops
-    |
-    |
-    |
-    ----csharp
-    |
-    |
-    README.MD
-    |
-    |
-    cicd.yml
-    |
-    |
-    build-template.yml
-    |
-    |
-    release-template.yml
-    
-
-```
 ---
 
 # How to execute the code ?

@@ -18,6 +18,7 @@
 
 # Under progress
 - Test the newly deployed Azure alerts (email and web hook) 4 exceptions at 23:12
+- You were trying Chat GPT
 
 # To be done
 - Create an Azure alert with an old schema (look in github for custom json paylo)
