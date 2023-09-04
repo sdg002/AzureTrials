@@ -98,6 +98,9 @@ to be done
 - Visual Studio
 - Azure CLI
 
+## Using the console logger to log exceptions to Application Insights ?
+Talk about how to set the environment variable **APPLICATIONINSIGHTS_CONNECTION_STRING**
+
 
 ---
 
