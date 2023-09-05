@@ -9,10 +9,10 @@ Consider a very simple business scenario which comprises of web applications and
 
 The primary objective of my writing this article was to dispel the notion that deploying Azure Alerts via_ Infrastructure as Code_ (IAC) is difficult. On the contrary if you stick to the fundamentals  - automation can be a breeze. 
 
-#### End goal
+## End goal
 One set of templates and PowerShell script that can be deployed across environments
 
-#### Intended audience
+## Intended audience
 I firmly believe that "Infrastructure as code" is not the reserve of a full time cloud engineer. Anybody who writes applications should be in a position to script it out. You could be a Python developer who wants to deploy a Flask web application or a NodeJS developer or a C# developer. I wrote this article keeping you in mind.
 
 ---
@@ -45,25 +45,32 @@ Structure of the code is as follows
 
 ```
 ---
-# Tutorial on ARM Templates (to be done)
-Give link to your Step by step medium article
+# Tutorial on ARM Templates
+If you are new to ARM templates then do not worry. Refer my prior article [Azure ARM template - Step by step](https://medium.com/@saurabh.dasgupta1/azure-arm-template-step-by-step-a78ceba43931) on Medium
 
 ---
 
-# What to expect from this article (to be done) ?
-[[a block diagram - with a web app on one side and Azure on other , app insight as a DB, a console EXE which logs to App insights]]
-[[not the above]]
-[[a block diagram which shows IAC (arm templates, ps1) and output of DEV Azure Alerts/Actions , PRO Azure Alerts/Actions]]
-- ARM templates to deploy the following
-    - Web app
-    - Log analytics
-    - Application Insights
-    - Azure email action group
-    - Azure webhook action group
-    - Azure alert rule which fires if there are more than 0 exceptions in a 5 minute window
-- Create a simple C# console app which logs exceptions to Application Insights
-- Create a simple C# web app which receives the web call backs from Azure alerting infrastructure
-- PowerShell script to deploy all the Azure templates
+# What to expect from this article ?
+
+![what-to-expect](docs/ppt-images/what-to-expect.png)
+
+
+## ARM templates to deploy the following
+- Web app
+- Log analytics
+- Application Insights
+- Azure email action group
+- Azure webhook action group
+- Azure alert rule which fires if there are more than 0 exceptions in a 5 minute window
+
+A PowerShell script will be used for deploying the above templates
+
+## Console logger (C#) 
+This will be used for logging exceptions to Application Insights
+
+## Web App (C#)
+A simple C# web app which receives the web call backs from Azure alerting infrastructure
+
 
 ---
 
