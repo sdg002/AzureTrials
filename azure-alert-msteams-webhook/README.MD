@@ -1,16 +1,19 @@
 [[_TOC_]]
 
 # Deploy Azure Alerts using ARM templates - So easy!
-# Problem
-[[show a block diagram comprising of  multiple services logging to appinsight, multiple languages, mobile app, browser]]
-Consider a very simple business scenario which comprises of web applications and backend services deployed to Azure. Each of these services log their traces and exceptions to Azure Application Insights. The application is deployed across several environments (DEV, UAT, PROD, etc). You have manually created Azure Alerts. But you are finding it onerous to propage the alerts to all the environments. In this article we will see how simple it is to automate the deployment of Azure Alerts and Action Groups via ARM templates.
+# Overview
 
-The primary objective of my writing this article was to dispel the notion that Azure deployment is difficult. On the contrary if you stick to the basics - automation can be a breeze.
+![azure-infra](docs/ppt-images/azure-infrastructure.png)
 
-[?? to be done] Talk more about the problem
-Demonstarte how to display Azure alerts on a MS Teams channel via a web hook.
-Talk about the intended audience
-Talk about that this appears to be seemingly complex but fairly simple
+Consider a very simple business scenario which comprises of web applications and backend services deployed to Azure. Each of these services log their traces and exceptions to Azure Application Insights. The application is deployed across several environments (DEV, UAT, PROD, etc). You have manually created Azure Monitor Alert rules and action groups. But you are finding it onerous to propage the this part of your infrastructure consistently to all the environments. In this article we will see how simple it is to automate the deployment of Azure Alerts and Action Groups via ARM templates.
+
+The primary objective of my writing this article was to dispel the notion that deploying Azure Alerts via_ Infrastructure as Code_ (IAC) is difficult. On the contrary if you stick to the fundamentals  - automation can be a breeze. 
+
+#### End goal
+One set of templates and PowerShell script that can be deployed across environments
+
+#### Intended audience
+I firmly believe that "Infrastructure as code" is not the reserve of a full time cloud engineer. Anybody who writes applications should be in a position to script it out. You could be a Python developer who wants to deploy a Flask web application or a NodeJS developer or a C# developer. I wrote this article keeping you in mind.
 
 ---
 
