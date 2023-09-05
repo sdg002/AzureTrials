@@ -2,6 +2,7 @@
 
 # Deploy Azure Alerts using ARM templates - So easy!
 # Problem
+[[show a block diagram comprising of  multiple services logging to appinsight, multiple languages, mobile app, browser]]
 Consider a very simple business scenario which comprises of web applications and backend services deployed to Azure. Each of these services log their traces and exceptions to Azure Application Insights. The application is deployed across several environments (DEV, UAT, PROD, etc). You have manually created Azure Alerts. But you are finding it onerous to propage the alerts to all the environments. In this article we will see how simple it is to automate the deployment of Azure Alerts and Action Groups via ARM templates.
 
 The primary objective of my writing this article was to dispel the notion that Azure deployment is difficult. On the contrary if you stick to the basics - automation can be a breeze.
@@ -20,11 +21,19 @@ https://github.com/sdg002/AzureTrials/tree/main/azure-alert-msteams-webhook
 Structure of the code is as follows
 ```
 
-├───csharp-webapp <-- Web API to receive calls from Azure alerts
+│
+│
+├───devops
+│
+├───csharp
+│   │
+|   ├───webapp <-- Web API to receive calls from Azure alerts
+│   │
+|   ├───console logger <-- Console EXE  to log Exceptions to Application Insights
 │
 ├───devops
 │   │
-|   ├───create_azure_infrastructure.ps1
+|   ├───create_azure_infrastructure.ps1  <--single script to deploy the infrastructure to Azure
 │   │
 │   └───templates  <-- ARM templates
 │
@@ -39,6 +48,8 @@ Give link to your Step by step medium article
 
 # What to expect from this article (to be done) ?
 [[a block diagram - with a web app on one side and Azure on other , app insight as a DB, a console EXE which logs to App insights]]
+[[not the above]]
+[[a block diagram which shows IAC (arm templates, ps1) and output of DEV Azure Alerts/Actions , PRO Azure Alerts/Actions]]
 - ARM templates to deploy the following
     - Web app
     - Log analytics
@@ -52,7 +63,7 @@ Give link to your Step by step medium article
 
 ---
 
-# Understanding Azure Alerts and Action Groups (to be done)
+# Understanding Azure Alerts and Action Groups (to be done, remove this)
 Show a block diagram depicting 
 - Alerts engine running and querying App insights (as a DB)
 - Every 5 minutes window of aggregation
@@ -60,11 +71,14 @@ Show a block diagram depicting
 
 ---
 # How to deploy an Azure alert using ARM template (to be done) ?
+Talk about Azure CLI approach and passing parameters. Give an example.
 to be done
 
 ---
 
-# How to deploy an email Action group using ARM template (to be done) ?
+# How to extract the ARM template of action groups ?
+
+## Email Action Group(to be done) ?
 - Cheating using the UI (just talk lightly and some screen captures)
 - Explain the structure of the ARM template of Action Group
 to be done
@@ -72,7 +86,7 @@ to be done
 
 ---
 
-# How to deploy a web hook action group using ARM template (to be done)?
+##  Web hook action group (to be done)?
 -Cheating using the UI (just talk lightly and some screen captures)
 - Explain the structure of the ARM template of Action Group
 - Explain what tags you replaced in the ARM template
