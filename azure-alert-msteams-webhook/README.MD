@@ -26,17 +26,18 @@ Structure of the code is as follows
 
 │
 │
-├───devops
 │
 ├───csharp
 │   │
 |   ├───webapp <-- Web API to receive calls from Azure alerts
 │   │
-|   ├───console logger <-- Console EXE  to log Exceptions to Application Insights
+|   ├───console logger <-- Console EXE  to log sample Exceptions to App Insights
 │
 ├───devops
 │   │
-|   ├───create_azure_infrastructure.ps1  <--single script to deploy the infrastructure to Azure
+|   ├───variables.ps1  <-- common .PS1 script which contain resource names
+│   │
+|   ├───create_azure_infrastructure.ps1  <-- .PS1 script to deploy ARM templates
 │   │
 │   └───templates  <-- ARM templates
 │
