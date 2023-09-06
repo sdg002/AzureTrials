@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Text.Json;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -40,13 +41,14 @@ namespace csharp_webapp.Controllers
 
         private async Task RelayTextToTeams(string channelEndPoint, string text)
         {
-            //you were here, call a get use hard coded url
-            //then get the JSON and get url
-            //pass URL from Postman using sample payload
+            //TODO pass URL from Postman using sample payload
             var payload = new { text = text };
             var jsonPayload = JsonSerializer.Serialize(payload);
+            _logger.LogInformation("Begin-Going to post the payload:{payload}", jsonPayload);
             var httpClient = new HttpClient();
+            var sw = new Stopwatch();
             await httpClient.PostAsync(channelEndPoint, new StringContent(jsonPayload));
+            _logger.LogInformation("End-Going to post the payload:{payload}, time:{elapsed}", jsonPayload, sw.ElapsedMilliseconds);
         }
     }
 
