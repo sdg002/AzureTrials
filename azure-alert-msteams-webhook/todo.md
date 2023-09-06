@@ -17,16 +17,17 @@
 - Create an Azure Alert which writes to Web hook as an action group - pass the JSON as it is (X)
 - Test the newly deployed Azure alerts (email and web hook) 4 exceptions at 23:12
 - You were trying Chat GPT
+- Change Catching end point to a custom controller (AzureAlertWebHook)
 
 # Under progress
-- Readme.md refinement
-- Added console logger
-- About to app insihgt logging
+- Readme.md refinement (you finished what to expect?)
+- Change web hook end point in Azure Action Group
+- Write a new web hook which relays the call to MS teams
 
 # To be done
-- C# Console EXE to inject Exceptions and Traces (with various severity levels)
 - Document the C# Console EXE
 - Intercept the JSON 1)Read the URL of the Teams Channel from the extra properties 2)Invoke the web hook
+- Alert processing rules
 ---
 
 # Current status

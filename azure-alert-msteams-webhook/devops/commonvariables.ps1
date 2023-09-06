@@ -17,7 +17,7 @@ $Global:AppInsight="appi-azurealertsmsteams-$Global:environment-uksouth"
 $Global:AlertName="alert-anyexceptions-$Global:environment-uksouth"
 $Global:ActionGroupEmail="agemail$Global:environment"
 $Global:ActionGroupWebHook="agwebhook$Global:environment"
-$Global:WebhookEndPoint="https://app-azurealertsmsteams-dev.azurewebsites.net//CatchIncomingMessage"
+$Global:WebhookEndPoint="https://app-azurealertsmsteams-dev.azurewebsites.net/api/AzureAlertsWebHooks/RelayIncomingMessage"
 <#
 This function should be called after every invocation of Azure CLI to check for success
 #>

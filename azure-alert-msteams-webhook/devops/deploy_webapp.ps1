@@ -1,7 +1,7 @@
 . $PSScriptRoot/commonvariables.ps1
 
 
-$pathToCsharp=Join-Path -Path $PSScriptRoot -ChildPath "../csharp-webapp/csharp-webapp/csharp-webapp.csproj"
+$pathToCsharp=Join-Path -Path $PSScriptRoot -ChildPath "../csharp/csharp-webapp/csharp-webapp.csproj"
 $pathToCsharpPublish=Join-Path -Path $env:TEMP -ChildPath csharp-demo-webapp
 $pathToZip = Join-Path -Path $PSScriptRoot -ChildPath "webapp.zip"
 if (Test-Path -Path $pathToCsharpPublish)
