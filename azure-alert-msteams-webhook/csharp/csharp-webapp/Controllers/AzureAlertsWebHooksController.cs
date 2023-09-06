@@ -36,11 +36,29 @@ namespace csharp_webapp.Controllers
         {
             var body = await new StreamReader(this.Request.Body).ReadToEndAsync();
             var parser = new AzureAlertParser();
-            AlertInfo alertInfo = parser.Parse(body);
-            TeamsWebHookPayload teamsPayload = parser.ConvertAlertToTeamsPayload(alertInfo);
+            AlertInfo alertInfo = null;
+            TeamsWebHookPayload teamsPayload = null;
+            try
+            {
+                alertInfo=parser.Parse(body);
+                teamsPayload = parser.ConvertAlertToTeamsPayload(alertInfo);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while attempting to parse the Azure Alert JSON:{json}", body);
+                teamsPayload = new TeamsWebHookPayload
+                {
+                    Text = $"Exception was raised while trying to process the Azure JSON:{body}, Exception:{ex.ToString()}"
+                };
+            }
             
+            
+
+
             _logger.LogInformation("Inside method {method}, {body}", nameof(CatchIncomingMessage), body);
             var mslink = "https://petroineos.webhook.office.com/webhookb2/27a85953-b219-48a9-8381-10515a7df0fd@65795a07-17bb-4e5a-a1fa-1c3d63e0a4fd/IncomingWebhook/7c76e7ba05c24cdc8b301f46772af8ea/61665664-9bff-4859-bd66-55797f42dada";
+
+            //TODO The mslink should be read from the Azure alerts
             await RelayTextToTeams(mslink,teamsPayload);
             return body;
         }
