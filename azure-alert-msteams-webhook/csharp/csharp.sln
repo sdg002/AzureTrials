@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csharp-webapp", "csharp-webapp\csharp-webapp.csproj", "{893DD88C-4487-4845-A9AD-2A3F07183781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console-logger", "console-logger\console-logger.csproj", "{1B3DEC41-A5A9-4873-B5AA-0EA256888F82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "console-logger", "console-logger\console-logger.csproj", "{1B3DEC41-A5A9-4873-B5AA-0EA256888F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{33527736-4E79-4A09-8D1A-D7C6D6195556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1B3DEC41-A5A9-4873-B5AA-0EA256888F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B3DEC41-A5A9-4873-B5AA-0EA256888F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B3DEC41-A5A9-4873-B5AA-0EA256888F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33527736-4E79-4A09-8D1A-D7C6D6195556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33527736-4E79-4A09-8D1A-D7C6D6195556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33527736-4E79-4A09-8D1A-D7C6D6195556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33527736-4E79-4A09-8D1A-D7C6D6195556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@
     public class AlertInfo
     {
         public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public DateTime AlertStartTime { get; set; }
         public DateTime AlertEndTime { get; set; }
         public int CountOfAlerts { get; set; }

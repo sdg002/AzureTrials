@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json.Nodes;
 
 namespace csharp_webapp
 {
@@ -29,13 +30,16 @@ namespace csharp_webapp
 
         public AlertInfo Parse(string body)
         {
+            var node=JsonObject.Parse(body);
+            node = node ?? throw new InvalidOperationException($"Could not parse Alert JSON: {body}");
             return new AlertInfo
             {
-                Name = "Hello world alerts",
-                AlertEndTime = DateTime.Now.AddMinutes(-30),
-                AlertStartTime = DateTime.Now,
-                CountOfAlerts = 5,
-                AppInsightLink = "http://www.bing.com/"
+                Name = node["data"]["essentials"]["alertRule"].ToString(),
+                Description = node["data"]["essentials"]["description"].ToString(),
+                AlertEndTime = node["data"]["alertContext"]["condition"]["windowEndTime"].GetValue<DateTime>(),
+                AlertStartTime = node["data"]["alertContext"]["condition"]["windowStartTime"].GetValue<DateTime>(),
+                CountOfAlerts = (int)node["data"]["alertContext"]["condition"]["allOf"][0]["metricValue"].GetValue<float>(),
+                AppInsightLink = node["data"]["alertContext"]["condition"]["allOf"][0]["linkToFilteredSearchResultsUI"].ToString()
             };
         }
     }
