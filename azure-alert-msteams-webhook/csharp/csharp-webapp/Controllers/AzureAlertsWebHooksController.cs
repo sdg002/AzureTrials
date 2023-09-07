@@ -35,6 +35,7 @@ namespace csharp_webapp.Controllers
         public async Task<string> RelayIncomingMessage()
         {
             var body = await new StreamReader(this.Request.Body).ReadToEndAsync();
+            _logger.LogInformation("Inside method {method}, {body}", nameof(RelayIncomingMessage), body);
             var parser = new AzureAlertParser();
             AlertInfo alertInfo = null;
             TeamsWebHookPayload teamsPayload = null;
@@ -50,15 +51,16 @@ namespace csharp_webapp.Controllers
                 {
                     Text = $"Exception was raised while trying to process the Azure JSON:{body}, Exception:{ex.ToString()}"
                 };
+                throw;
             }
-            
-            
-
-
+                        
             _logger.LogInformation("Inside method {method}, {body}", nameof(CatchIncomingMessage), body);
-            var mslink = "https://petroineos.webhook.office.com/webhookb2/27a85953-b219-48a9-8381-10515a7df0fd@65795a07-17bb-4e5a-a1fa-1c3d63e0a4fd/IncomingWebhook/7c76e7ba05c24cdc8b301f46772af8ea/61665664-9bff-4859-bd66-55797f42dada";
-
-            //TODO The mslink should be read from the Azure alerts
+            if (!alertInfo.ContextProperties.ContainsKey(AzureAlertParser.MsteamsLinkPropertyName))
+            {
+                throw new InvalidOperationException($"The custom property {AzureAlertParser.MsteamsLinkPropertyName} was not found in the Azure alert payload: {body}");
+            }
+            var mslink = alertInfo.ContextProperties[AzureAlertParser.MsteamsLinkPropertyName];
+                
             await RelayTextToTeams(mslink,teamsPayload);
             return body;
         }

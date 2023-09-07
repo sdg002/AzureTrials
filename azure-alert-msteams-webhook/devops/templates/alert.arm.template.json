@@ -58,7 +58,7 @@
                         "[resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/actionGroups', parameters('actionGroupWebHook'))]"
                     ],
                     "customProperties": {
-                        "myprop1": "some value 1",
+                        "teamswebhookurl": "https://petroineos.webhook.office.com/webhookb2/27a85953-b219-48a9-8381-10515a7df0fd@65795a07-17bb-4e5a-a1fa-1c3d63e0a4fd/IncomingWebhook/7c76e7ba05c24cdc8b301f46772af8ea/61665664-9bff-4859-bd66-55797f42dada",
                         "myprop2": "some value 2"
                     },
                     "actionProperties": {}

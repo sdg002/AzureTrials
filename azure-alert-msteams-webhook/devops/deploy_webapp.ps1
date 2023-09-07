@@ -24,4 +24,5 @@ Write-Host "End-The ZIP was created in the folder $pathToZip"
 
 Write-Host "Begin-ZIP deployment from location $pathToZip"
 az webapp deploy --resource-group $Global:ResourceGroup --name $Global:WebAppName --type zip --src-path $pathToZip --verbose
-Write-Host "End-ZIP deployment from location $pathToZip"
+Write-Host "End-ZIP deployment from location $pathToZip "
+Get-Date

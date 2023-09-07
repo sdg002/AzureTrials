@@ -24,6 +24,10 @@ namespace UnitTestProject1
 
             info.AlertStartTime.Should().Be(DateTime.Parse("2023-08-30T07:20:59Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal));
             info.AlertEndTime.Should().Be(DateTime.Parse("2023-08-30T07:25:59Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal));
+
+            info.ContextProperties.Should().HaveCount(2);
+            info.ContextProperties["teamswebhookurl"].Should().Be("http://myteams.channel.link/blah");
+            info.ContextProperties["myprop2"].Should().Be("some value 2");
         }
 
         [TestMethod]

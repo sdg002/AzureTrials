@@ -22,7 +22,7 @@
         },
         "alertContext": {
             "properties": {
-                "myprop1": "some value 1",
+                "teamswebhookurl": "http://myteams.channel.link/blah",
                 "myprop2": "some value 2"
             },
             "conditionType": "LogQueryCriteria",

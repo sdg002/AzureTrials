@@ -63,3 +63,5 @@ Write-Host "Going to create a Alert using ARM template $armTemplateFile"
 
 RaiseCliError -message "Failed to deploy Alert $Global:AlertName"
 
+Write-Host "Complete"
+Get-Date

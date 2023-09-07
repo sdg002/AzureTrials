@@ -9,5 +9,6 @@
         public int CountOfAlerts { get; set; }
         public string TeamsWebHookEndPoint { get; set; } = string.Empty;
         public string AppInsightLink { get; set; } = string.Empty;
+        public Dictionary<string,string> ContextProperties { get; set; } = new Dictionary<string,string>();
     }
 }
