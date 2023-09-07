@@ -11,8 +11,11 @@ namespace csharp_webapp
 
         public TeamsWebHookPayload ConvertAlertToTeamsPayload(AlertInfo alertInfo)
         {
+
             var sb = new StringBuilder();
-            sb.Append($"<h1>{alertInfo.Name}</h1>");
+            sb.Append($"<h1>{alertInfo.Description}</h1>");
+            sb.Append("<br/>");
+            sb.Append($"<strong>Name:</strong> {alertInfo.Name}");
             sb.Append("<br/>");
             sb.Append($"<strong>Start time:</strong> {alertInfo.AlertStartTime}");
             sb.Append("<br/>");

@@ -25,5 +25,32 @@ namespace UnitTestProject1
             info.AlertStartTime.Should().Be(DateTime.Parse("2023-08-30T07:20:59Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal));
             info.AlertEndTime.Should().Be(DateTime.Parse("2023-08-30T07:25:59Z", null, System.Globalization.DateTimeStyles.AdjustToUniversal));
         }
+
+        [TestMethod]
+        public void When_Html()
+        {
+            var parser = new AzureAlertParser();
+            var payload = new AlertInfo
+            {
+                Description="some description",
+                Name="some name",
+                CountOfAlerts=3,
+                AlertEndTime = DateTime.UtcNow.AddMinutes(10),
+                AlertStartTime = DateTime.UtcNow,
+                AppInsightLink= "http://some.link/",
+                TeamsWebHookEndPoint = "http://teams"
+            };
+
+            // Act
+            var teamsPayload = parser.ConvertAlertToTeamsPayload(payload);
+
+            // Assert
+            teamsPayload.Text.Should().Contain(payload.Description);
+            teamsPayload.Text.Should().Contain(payload.Name);
+            teamsPayload.Text.Should().Contain(payload.CountOfAlerts.ToString());
+
+
+        }
+
     }
 }
