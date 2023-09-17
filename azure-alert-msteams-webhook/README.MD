@@ -1,13 +1,13 @@
 [[_TOC_]]
 
-# Deploy Azure Alerts using ARM templates - So easy!
+# TITLE: Deploy Azure Alerts using ARM templates - So easy!
 # Overview
 
 ![azure-infra](docs/ppt-images/azure-infrastructure.png)
 
 Consider a very simple business scenario which comprises of web applications and backend services deployed to Azure. Each of these services log their traces and exceptions to Azure Application Insights. The application is deployed across several environments (DEV, UAT, PROD, etc). You have manually created Azure Monitor Alert rules and action groups. But you are finding it onerous to propage the this part of your infrastructure consistently to all the environments. In this article we will see how simple it is to automate the deployment of Azure Alerts and Action Groups via ARM templates.
 
-The primary objective of my writing this article was to dispel the notion that deploying Azure Alerts via_ Infrastructure as Code_ (IAC) is difficult. On the contrary if you stick to the fundamentals  - automation can be a breeze. 
+The primary objective of my writing this article was to dispel the notion that deploying Azure Alerts via_ Infrastructure as Code_ (IAC) is difficult. On the contrary if you stick to the fundamentals  - Azure automation can be very easy. 
 
 ## End goal
 One set of templates and PowerShell script that can be deployed across environments
@@ -31,13 +31,15 @@ Structure of the code is as follows
 │   │
 |   ├───webapp <-- Web API to receive calls from Azure alerts
 │   │
-|   ├───console logger <-- Console EXE  to log sample Exceptions to App Insights
+|   ├───console logger <-- Console EXE  to log sample Exceptions to │   │
+App Insights
 │
 ├───devops
 │   │
 |   ├───variables.ps1  <-- common .PS1 script which contain resource names
 │   │
-|   ├───create_azure_infrastructure.ps1  <-- .PS1 script to deploy ARM templates
+|   ├───create_azure_infrastructure.ps1  <-- .PS1 script to deploy │   │
+ARM templates
 │   │
 │   └───templates  <-- ARM templates
 │
@@ -56,7 +58,8 @@ If you are new to ARM templates then do not worry. Refer my prior article [Azure
 
 
 ## ARM templates to deploy the following
-- Web app
+- App service plan
+- C# Web app
 - Log analytics
 - Application Insights
 - Azure email action group
@@ -74,11 +77,11 @@ A simple C# web app which receives the web call backs from Azure alerting infras
 
 ---
 
-# Understanding Azure Alerts and Action Groups (to be done, remove this)
-Show a block diagram depicting 
-- Alerts engine running and querying App insights (as a DB)
-- Every 5 minutes window of aggregation
-- Alert leading to multiple action groups.  
+# Understanding Azure Alerts and Action Groups
+Refer [MS documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-overview) on this subject for an indepth discussion.
+
+![ms-documentation-azure-alets.png](docs/images/ms-documentation-azure-alets.png)
+
 
 ---
 # How to deploy an Azure alert using ARM template (to be done) ?
@@ -185,7 +188,7 @@ The parameter  `linuxFxVersion` should be specified. Example: via the parameters
     }
 ```
 
-## How to let Azure not initiate a build from your code ?
+## How to let Azure not initiate a build your Web App code ?
 
 Since we are deploying a dotnet core application, there is no need to do an online build (unlike Python). We should specify SCM_DO_BUILD_DURING_DEPLOYMENT as 0
 
@@ -197,3 +200,8 @@ Since we are deploying a dotnet core application, there is no need to do an onli
     }
 ]
 ```
+
+## MS documentation on Azure alerts
+https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-overview
+
+---

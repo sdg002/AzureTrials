@@ -18,11 +18,12 @@
 - Test the newly deployed Azure alerts (email and web hook) 4 exceptions at 23:12
 - You were trying Chat GPT
 - Change Catching end point to a custom controller (AzureAlertWebHook)
+- ms team - Change web hook end point in Azure Action Group
+- ms team - c# Read the Web hook from Azure Payload
+- Write a new web hook which relays the call to MS teams
 
 # Under progress
 - Readme.md refinement (you finished what to expect?)
-- Change web hook end point in Azure Action Group
-- Write a new web hook which relays the call to MS teams
 
 # To be done
 - Document the C# Console EXE
