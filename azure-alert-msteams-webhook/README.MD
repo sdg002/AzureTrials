@@ -84,9 +84,30 @@ Refer [MS documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/a
 
 
 ---
-# How to deploy an Azure alert using ARM template (to be done) ?
+# How to deploy an Azure alert using ARM template ?
 Talk about Azure CLI approach and passing parameters. Give an example.
 to be done
+
+## Using a parameters file
+
+```powershell
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile  `
+    name=$Global:LogAnalytics `
+    --verbose
+```
+## Using a parameters file and additional parameters
+You could specify additional parameters via `name=value` pairs
+
+```powershell
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters @$armParameterFile  `
+    name1=value1 name2=value2 `
+    name=$Global:LogAnalytics `
+    --verbose
+
+```
+
 
 ---
 
