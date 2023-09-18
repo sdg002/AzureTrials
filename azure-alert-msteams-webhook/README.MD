@@ -128,15 +128,35 @@ to be done
 
 ---
 
-# How to write any information to a MS Teams channel using out of box REST end points (to be done) ?
-To be done
-- MS teams (show pictures of setting the web hook)
-- Grab the REST end point of your Teams channel
-- Show the structure of the REST end point (fudge the secure bits)
+# How to programmatically send some text to a MS Teams channel  ?
+
+MS Teams provides web hooks as a means of integration with external services
+
+## Configure an incoming web hook
+Use the connectors dialog to setup a new web hook
+
+![Connectors dialog](docs/images/msteams-connectors.png)
+
+MS Teams will give you an end point:
+
+![Alt text](docs/images/msteams-hook-url.png)
+
+## Use POSTMAN or any REST client to test the web hook
+
+The REST API protocol is fairly simple:
+A JSON payload posted to the above end point:
+```json
+{
+    "text": "hello world from my postman 123"
+}
+```
+will appear on the configured Teams Channel
+
+![Alt text](docs/images/msteams-chat-message.png)
 
 ---
 
-# How to influence the JSON structure of the Azure Alert payload before publishing to a MS teams channels ?
+# How to influence the JSON structure of the Azure Alert payload before publishing to a MS teams channels (to be done)?
 to be done
 
 
@@ -196,6 +216,9 @@ https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-monitor/ale
 ## Application Insights alerts no longer have a custom JSON payload option
 
 https://learn.microsoft.com/en-us/answers/questions/800320/application-insights-alerts-no-longer-have-a-custo
+
+## Creating a web hook in MS Teams
+https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet
 
 ---
 
