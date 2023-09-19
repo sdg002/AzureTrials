@@ -78,3 +78,13 @@ You need to download latest Powershell cmdlets. Change of signature
  - Add event hub secret
  - Rotation .PS1
  
+
+# References
+
+## Stack Overflow 
+https://stackoverflow.com/questions/51320268/arm-get-eventhub-namespace-shareacesspolicykey
+
+
+## MS guidance on accessing Event Hub connection strings
+https://github.com/pascalnaber/EnterpriseARMTemplates/blob/6babc4d3e65f10f999bb144a1d616ccb2a085e9d/templates/resources/Microsoft.Eventhub/azuredeploy.json
+
