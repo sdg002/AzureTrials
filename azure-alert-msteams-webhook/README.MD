@@ -156,10 +156,10 @@ will appear on the configured Teams Channel
 
 ---
 
-# How to influence the JSON structure of the Azure Alert payload before publishing to a MS teams channels (to be done)?
+# How to influence the JSON structure of the Azure Alert payload before publishing to a MS teams channels (to be done, you were here)?
 to be done
 
-
+you were here ,write about the caveats , what you ended up doing , the fact that JSON man
 ---
 
 # How to execute the code (to be done) ?
