@@ -30,3 +30,18 @@ New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $globa
 ```
 
 You need to download latest Powershell cmdlets. Change of signature
+
+
+# Adding to key vault via ARM template
+
+```
+    {
+    "type": "Microsoft.KeyVault/vaults/secrets",
+    "apiVersion": "2021-11-01-preview",
+    "name": "[concat( parameters('keyVaultName'),'/', 'STORAGEACCOUNTKEY')]",
+    "properties": {
+        "value": "[listKeys(resourceId(resourceGroup().name,'Microsoft.Storage/storageAccounts/',parameters('storageAccountName')),'2022-09-01').keys[0].value]"
+        }
+    }
+
+```

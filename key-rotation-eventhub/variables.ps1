@@ -3,6 +3,7 @@ $ErrorActionPreference="Stop"
 $global:ResourceGroup="rg-demo-event-hub-key-rotation"
 $global:EventHubNameSpace="saueventhub001"
 $Global:Location="uksouth"
+$Global:KeyVault="saudemovault456"
 
 
 <#
