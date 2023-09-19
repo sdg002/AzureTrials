@@ -1,4 +1,3 @@
-[[_TOC_]]
 
 # Azure event hub key rotation solution
 
@@ -49,7 +48,6 @@ Explain the significance of
 Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 ```
 
-## Getting the primary connection string
 ```
 $keys=Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 
