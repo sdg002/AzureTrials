@@ -50,6 +50,7 @@ https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubke
 Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 ```
 
+# Getting the primary connection string
 ```
 $keys=Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 
@@ -92,6 +93,7 @@ $keys=Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName 
 
 Explain about using the variables
 
+Write-Host $keys.PrimaryConnectionString
 ```
 .\rotate.ps1 -rg $Global:ResourceGroup -eventhub $Global:EventHubNameSpace -keyvault $Global:KeyVault -secret "eventhubcnstring"
 ```
