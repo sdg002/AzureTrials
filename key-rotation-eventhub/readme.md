@@ -45,3 +45,14 @@ You need to download latest Powershell cmdlets. Change of signature
     }
 
 ```
+
+# Progress
+
+ # Done
+ - YOu created key vault
+
+ # To be done
+ - Create event hub via ARM
+ - Add event hub secret
+ - Rotation .PS1
+ 

@@ -15,5 +15,17 @@ Write-Host "Going to create the Key Vault $VaultName using ARM template $armTemp
     name=$Global:KeyVault `
     --verbose
 
-RaiseCliError -message "Failed to add secrets to the Key Vault"
+RaiseCliError -message "Failed to create the Key Vault"
+
+
+$armTemplateFile=Join-Path -Path $PSScriptRoot -ChildPath "templates/eventhub.arm.json"
+
+Write-Host "Going to create the Event Hub  $Global:EventHubNameSpace using ARM template $armTemplateFile"
+& az deployment group create --resource-group $Global:ResourceGroup --template-file $armTemplateFile `
+    --parameters  `
+    name=$Global:EventHubNameSpace `
+    --verbose
+
+RaiseCliError -message "Failed to create the Key Vault"
+
 
