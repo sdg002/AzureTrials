@@ -8,10 +8,12 @@ write-Host "Going to display all secrets that are held in the Key Vault $Global:
 $secrets= (az keyvault secret list  --vault-name $Global:KeyVault | ConvertFrom-Json) 
 
 $secrets =  ($null -eq $secrets) ? @() : $secrets
+Write-Host "Found $($secrets.length) secrets"
 foreach ($secret in $secrets)
 {
     Write-Host "Fetching the secret value of $($secret.name)"
-    az keyvault secret show --name $secret.name --vault-name $Global:VaultName
+    az keyvault secret show --name $secret.name --vault-name $Global:KeyVault
+    Write-Host "---------------------------------------"
 }
 
-$secrets
+$secrets | Format-Table
