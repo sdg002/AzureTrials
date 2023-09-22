@@ -1,11 +1,10 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Azure.Identity;
-using Microsoft.Azure.KeyVault;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using Azure.Security.KeyVault.Secrets;
+using System.Net.Sockets;
 
 namespace TestProject1
 {
@@ -66,7 +65,7 @@ namespace TestProject1
 
         }
         [TestMethod]
-        public void KeyVaultConfiguration()
+        public void KeyVault_ConfigurationBuilder()
         {
             //You were here, do some key vault stuff
 
@@ -76,27 +75,30 @@ namespace TestProject1
                 //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
                 //you were about to install the package Azure.Security.KeyVault.Secrets
 
-                var keyVaultConfigOptions = new AzureKeyVaultConfigurationOptions
+                var keyVaultConfigOptions = new Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions
                 {
-                    ReloadInterval = TimeSpan.FromSeconds(10),
-                    Vault = "saudemovault456"
+                    ReloadInterval = TimeSpan.FromSeconds(30),
                 };
                 //var secretClient = new KeyVaultClient(new Defau)
                 string keyVaultName = "saudemovault456";
                 var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
-                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+                //var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
                 var configuration = new ConfigurationBuilder()
                     .AddInMemoryCollection(new Dictionary<string, string?>()
                     {
                         ["SomeKey"] = "SomeValue"
                     })
+                    .AddAzureKeyVault(new Uri(kvUri), new DefaultAzureCredential(), keyVaultConfigOptions)
                     .Build();
 
                 Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
 
                 var eventHub = configuration["eventhubcnstring"];
+                var secretName = "eventhubcnstring";
+                var secretValue = configuration[secretName];
+                Trace.WriteLine($"Value of secret:{secretName} is {secretValue}");
             }
             catch (Exception ex)
             {
