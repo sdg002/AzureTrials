@@ -12,8 +12,8 @@ Write-Host "Found $($secrets.length) secrets"
 foreach ($secret in $secrets)
 {
     Write-Host "Fetching the secret value of $($secret.name)"
-    az keyvault secret show --name $secret.name --vault-name $Global:KeyVault
+    $secretJson=(az keyvault secret show --name $secret.name --vault-name $Global:KeyVault | ConvertFrom-Json)
+    $secretJson.value
     Write-Host "---------------------------------------"
 }
 
-$secrets | Format-Table
