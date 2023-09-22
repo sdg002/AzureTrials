@@ -193,13 +193,23 @@ You need to download latest Powershell cmdlets. Change of signature
 # Progress
 
  # Done
- - YOu created key vault
-
- # To be done
- - Create event hub via ARM
- - Add event hub secret
- - Rotation .PS1
+- You created key vault
+- Create event hub via ARM
+- Add event hub secret
  
+ # To be done
+- Rotation .PS1
+- C# code to poll Key Vault (IConfiguration) and demonstrate that the value changes
+
+---
+
+# Rotate.ps1
+
+```
+.\rotate.ps1 -rg $Global:ResourceGroup -eventhub $Global:EventHubNameSpace -keyvault $Global:KeyVault -secret "eventhubcnstring"
+```
+
+--- 
 
 # References
 
@@ -210,3 +220,20 @@ https://stackoverflow.com/questions/51320268/arm-get-eventhub-namespace-shareace
 ## MS guidance on accessing Event Hub connection strings
 https://github.com/pascalnaber/EnterpriseARMTemplates/blob/6babc4d3e65f10f999bb144a1d616ccb2a085e9d/templates/resources/Microsoft.Eventhub/azuredeploy.json
 
+
+## MS Guidance on Key rotation solution using Azure function
+https://learn.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual?tabs=azure-cli
+
+
+## MS Sample Azure function code to automate the secret rotation
+https://github.com/Azure-Samples/KeyVault-Rotation-StorageAccountKey-PowerShell
+
+## MS Article on fetching secrets from C# (not using IConfiguration)
+https://learn.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-vault-azure-web-app
+
+## MS Article on fetching secrets from C# (using IConfiguration approach)
+https://learn.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-7.0
+
+
+
+---
