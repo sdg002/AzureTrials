@@ -234,6 +234,11 @@ https://learn.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-va
 ## MS Article on fetching secrets from C# (using IConfiguration approach)
 https://learn.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-7.0
 
+## MS warning on deprecation of package?
+https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/
+
+**Warning from Microsoft!**
+While this package is still supported, it has been replaced by Azure.Extensions.AspNetCore.Configuration.Secrets per https://github.com/aspnet/Announcements/issues/408.  We recommend using that instead.
 
 
 ---
