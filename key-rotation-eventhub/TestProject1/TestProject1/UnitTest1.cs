@@ -5,6 +5,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using Azure.Security.KeyVault.Secrets;
 
 namespace TestProject1
 {
@@ -38,15 +39,18 @@ namespace TestProject1
         {
             try
             {
-                //
-                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
-                //you were about to install the package Azure.Security.KeyVault.Secrets
 
-                //var secretClient = new KeyVaultClient(new Defau)
                 string keyVaultName = "saudemovault456";
                 var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
-                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+                var options = new SecretClientOptions()
+                {
+                    Retry = 
+                    {
+                        Mode = Azure.Core.RetryMode.Exponential
+                    }
+                };
+                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential(),options);
 
 
                 var secretName = "eventhubcnstring";
