@@ -17,3 +17,4 @@ foreach ($secret in $secrets)
     Write-Host "---------------------------------------"
 }
 
+$secrets | Format-Table
