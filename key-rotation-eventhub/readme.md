@@ -108,6 +108,7 @@ https://github.com/Azure-Samples/KeyVault-Rotation-StorageAccountKey-PowerShell
 
 ## MS Article on fetching secrets from C# (not using IConfiguration)
 https://learn.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-vault-azure-web-app
+https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
 
 ## MS Article on fetching secrets from C# (using IConfiguration approach)
 https://learn.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-7.0
