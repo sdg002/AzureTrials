@@ -29,9 +29,6 @@ Show a simple tree like structure of the code and explain what is what
 ## How to deploy the infrstructure ?
 ???
 
-## Setting the Azure resource names in variables.ps1 (to be done)
-Significance of one and only one `Variables.ps1` file
-
 ## Rotate the EventHub connection string and update the key vault
 
 ??
@@ -43,14 +40,13 @@ Explain the significance of
 
 # Essential commands and snippets
 
-You were reading this 
-https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
+## Getting the Event hub connection string
 
 ```
 Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 ```
 
-# Getting the primary connection string
+## Getting the primary connection string
 ```
 $keys=Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 
@@ -161,6 +157,9 @@ While this package is still supported, it has been replaced by Azure.Extensions.
 ## Adding environment variables to C# configuration builder
 https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider
 
+```
+New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey -KeyType PrimaryKey
+```
 ## PowerShell sample to regenerate they key of a Storage Account
 https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
 
@@ -173,10 +172,11 @@ https://learn.microsoft.com/en-us/azure/event-grid/overview
 ## MS Azure Event Grid use cases
 https://learn.microsoft.com/en-us/azure/event-grid/overview
 
-You need to download latest Powershell cmdlets. Change of signature
 
+## Getting a secret value from Azure Key Vault (to be done)
+???
 
-# Adding to key vault via ARM template
+## ARM template-Adding to key vault via ARM template
 
 ```
     {
@@ -190,14 +190,18 @@ You need to download latest Powershell cmdlets. Change of signature
 
 ```
 
+
+---
+
+
 # Progress
 
- # Done
+## Done
 - You created key vault
 - Create event hub via ARM
 - Add event hub secret
  
- # To be done
+## To be done
 - Rotation .PS1
 - C# code to poll Key Vault (IConfiguration) and demonstrate that the value changes
 
@@ -239,6 +243,13 @@ https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/
 
 **Warning from Microsoft!**
 While this package is still supported, it has been replaced by Azure.Extensions.AspNetCore.Configuration.Secrets per https://github.com/aspnet/Announcements/issues/408.  We recommend using that instead.
+
+## Adding environment variables to configuration
+https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider
+
+## PowerShell regenerate they key
+https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
+
 
 
 ---
