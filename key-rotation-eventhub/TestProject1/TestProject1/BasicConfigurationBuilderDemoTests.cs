@@ -31,6 +31,30 @@ namespace TestProject1
                 throw;
             }
         }
+        [TestMethod]
+        public void EnvironmentConfiguration()
+        {
+            //You were here, do some key vault stuff
+
+            try
+            {
+                var configuration = new ConfigurationBuilder()
+                    .AddEnvironmentVariables()
+                    .AddInMemoryCollection(new Dictionary<string, string?>()
+                    {
+                        ["SomeKey"] = "SomeValue"
+                    })
+                    .Build();
+
+                Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
+
+                Assert.AreEqual<string>("C:", configuration!["SYSTEMDRIVE"]);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
     }
 }
