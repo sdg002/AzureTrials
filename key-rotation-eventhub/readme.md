@@ -1,14 +1,52 @@
-to be done
+[[_TOC_]]
 
+# Azure event hub key rotation solution
+
+# Objective
+?? talk about the problem, talk about key rotation
+talk about C# code refreshing its secrets from key vault
+
+
+# Remove the following (to be done)
 ```
 Set-AzContext -Subscription "Pay-As-You-Go-demo"
 ```
+
+# Minimum requirements for running the accompanying code (to be done)?
+
+- PoweShell Core
+- PowerShell cmdlets
+- Visual Studio 2022
+- Azure subscription (caveat on pricing)
+
+
+# About the code (to be done)
+
+## Structure of the code
+Show a simple tree like structure of the code and explain what is what
+
+
+## How to deploy the infrstructure ?
+???
+
+## Rotate the EventHub connection string and update the key vault
+
+??
+
+## Sampel C# code to fetch configuration from Key Vault
+Explain the significance of 
+
+---
+
+# Essential commands and snippets
+
+## Getting the Event hub connection string
 
 ```
 Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 ```
 
-# Getting the primary connection string
+## Getting the primary connection string
 ```
 $keys=Get-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey
 
@@ -16,10 +54,7 @@ Write-Host $keys.PrimaryConnectionString
 ```
 
 
-# Regenerate the key
-
-You were reading this 
-https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
+## Regenerate the Event hub connection key
 
 ```
 New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey -KeyType PrimaryKey
@@ -29,10 +64,11 @@ New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $globa
 New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $global:ResourceGroup -Name RootManageSharedAccessKey -KeyType SecondaryKey
 ```
 
-You need to download latest Powershell cmdlets. Change of signature
 
+## Getting a secret value from Azure Key Vault (to be done)
+???
 
-# Adding to key vault via ARM template
+## ARM template-Adding to key vault via ARM template
 
 ```
     {
@@ -46,14 +82,18 @@ You need to download latest Powershell cmdlets. Change of signature
 
 ```
 
+
+---
+
+
 # Progress
 
- # Done
+## Done
 - You created key vault
 - Create event hub via ARM
 - Add event hub secret
  
- # To be done
+## To be done
 - Rotation .PS1
 - C# code to poll Key Vault (IConfiguration) and demonstrate that the value changes
 
@@ -96,6 +136,13 @@ https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/
 
 **Warning from Microsoft!**
 While this package is still supported, it has been replaced by Azure.Extensions.AspNetCore.Configuration.Secrets per https://github.com/aspnet/Announcements/issues/408.  We recommend using that instead.
+
+## Adding environment variables to configuration
+https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider
+
+## PowerShell regenerate they key
+https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
+
 
 
 ---

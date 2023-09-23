@@ -48,7 +48,7 @@ namespace TestProject1
 
                 Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
 
-                Assert.AreEqual<string>("C:", configuration!["SYSTEMDRIVE"]);
+                Assert.AreEqual<string>("C:", configuration["SYSTEMDRIVE"]!);
             }
             catch (Exception ex)
             {
