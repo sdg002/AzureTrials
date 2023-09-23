@@ -9,7 +9,7 @@ using System.Net.Sockets;
 namespace TestProject1
 {
     [TestClass]
-    public class UnitTest1
+    public class KeyVaultTest1
     {
 
         [TestMethod]
