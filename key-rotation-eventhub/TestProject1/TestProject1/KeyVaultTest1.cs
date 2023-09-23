@@ -11,15 +11,14 @@ namespace TestProject1
     [TestClass]
     public class KeyVaultTest1
     {
+        readonly static string _keyVaultName = "saudemovault456";
+        readonly static string _kvUri = "https://" + _keyVaultName + ".vault.azure.net";
 
         [TestMethod]
-        public async Task KeyVault_SecretClient()
+        public async Task KeyVault_Using_SecretClient()
         {
             try
             {
-
-                string keyVaultName = "saudemovault456";
-                var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
                 var options = new SecretClientOptions()
                 {
@@ -28,7 +27,7 @@ namespace TestProject1
                         Mode = Azure.Core.RetryMode.Exponential
                     }
                 };
-                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential(),options);
+                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(_kvUri), new DefaultAzureCredential(),options);
 
 
                 var secretName = "eventhubcnstring";
@@ -46,30 +45,20 @@ namespace TestProject1
         [TestMethod]
         public void KeyVault_ConfigurationBuilder()
         {
-            //You were here, do some key vault stuff
-
             try
             {
-                //
-                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
-                //you were about to install the package Azure.Security.KeyVault.Secrets
-
                 var keyVaultConfigOptions = new Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions
                 {
                     ReloadInterval = TimeSpan.FromSeconds(30),
                 };
-                //var secretClient = new KeyVaultClient(new Defau)
-                string keyVaultName = "saudemovault456";
-                var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
-                //var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
                 var configuration = new ConfigurationBuilder()
                     .AddInMemoryCollection(new Dictionary<string, string?>()
                     {
                         ["SomeKey"] = "SomeValue"
                     })
-                    .AddAzureKeyVault(new Uri(kvUri), new DefaultAzureCredential(), keyVaultConfigOptions)
+                    .AddAzureKeyVault(new Uri(_kvUri), new DefaultAzureCredential(), keyVaultConfigOptions)
                     .Build();
 
                 Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
@@ -84,27 +73,22 @@ namespace TestProject1
                 throw;
             }
         }
+
+        [Timeout(timeout:60000)]
         [TestMethod]
         public void KeyVault_ConfigurationBuilder_Refresh()
         {
-            //You were here, do some key vault stuff
-
             try
             {
-                //
-                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
-                //you were about to install the package Azure.Security.KeyVault.Secrets
 
                 const int RefreshSeconds = 30;
                 var keyVaultConfigOptions = new Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions
                 {
                     ReloadInterval = TimeSpan.FromSeconds(RefreshSeconds),
                 };
-                //var secretClient = new KeyVaultClient(new Defau)
                 string keyVaultName = "saudemovault456";
                 var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
-                //var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
                 var configuration = new ConfigurationBuilder()
                     .AddInMemoryCollection(new Dictionary<string, string?>()
@@ -125,6 +109,7 @@ namespace TestProject1
                     Trace.WriteLine($"{DateTime.Now}:Value of secret:{secretName} is {secretValue}");
                     Trace.WriteLine($"Waiting....{counter}");
                     Thread.Sleep(5000);
+                    counter++;
                 }
             }
             catch (Exception ex)
