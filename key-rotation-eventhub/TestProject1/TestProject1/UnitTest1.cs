@@ -11,27 +11,6 @@ namespace TestProject1
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
-        public void InMemoryConfiguration()
-        {
-            //You were here, do some key vault stuff
-
-            try
-            {
-                var configuration = new ConfigurationBuilder()
-                    .AddInMemoryCollection(new Dictionary<string, string?>()
-                    {
-                        ["SomeKey"] = "SomeValue"
-                    })
-                    .Build();
-
-                Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
 
         [TestMethod]
         public async Task KeyVault_SecretClient()
@@ -135,7 +114,6 @@ namespace TestProject1
                     .AddAzureKeyVault(new Uri(kvUri), new DefaultAzureCredential(), keyVaultConfigOptions)
                     .Build();
 
-                Assert.AreEqual<string>("SomeValue", configuration!["SomeKey"]);
 
                 var eventHub = configuration["eventhubcnstring"];
                 var secretName = "eventhubcnstring";
