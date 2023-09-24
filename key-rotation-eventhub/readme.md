@@ -29,6 +29,9 @@ Show a simple tree like structure of the code and explain what is what
 ## How to deploy the infrstructure ?
 ???
 
+## Setting the Azure resource names in variables.ps1 (to be done)
+Significance of one and only one `Variables.ps1` file
+
 ## Rotate the EventHub connection string and update the key vault
 
 ??
@@ -99,13 +102,35 @@ New-AzEventHubKey -Namespace $Global:EventHubNameSpace -ResourceGroupName $globa
 
 ---
 
-# Rotate.ps1
+# Rotate.ps1 (to be done, move this upwards)
+
+Explain about using the variables
 
 ```
 .\rotate.ps1 -rg $Global:ResourceGroup -eventhub $Global:EventHubNameSpace -keyvault $Global:KeyVault -secret "eventhubcnstring"
 ```
 
 --- 
+
+# Understanding Microsoft's sample PowerShell script  on Key roation
+
+## Link to article
+
+Article
+
+https://learn.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual?tabs=azure-cli
+
+Azure function and ARM templates
+
+https://github.com/Azure-Samples/keyvault-rotation-storageaccountkey-powershell
+
+## How does this work ?
+
+![msft-rotation-diagram.png](docs/images/msft-rotation-diagram.png)
+
+There is an event grid subscription to key vault expiration. The 
+
+---
 
 # References
 
@@ -131,18 +156,25 @@ https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=
 ## MS Article on fetching secrets from C# (using IConfiguration approach)
 https://learn.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-7.0
 
-## MS warning on deprecation of package?
+## MS warning on deprecation of C# Azure KeyVault  package?
 https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/
 
 **Warning from Microsoft!**
 While this package is still supported, it has been replaced by Azure.Extensions.AspNetCore.Configuration.Secrets per https://github.com/aspnet/Announcements/issues/408.  We recommend using that instead.
 
-## Adding environment variables to configuration
+## Adding environment variables to C# configuration builder
 https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider
 
-## PowerShell regenerate they key
+## PowerShell sample to regenerate they key of a Storage Account
 https://learn.microsoft.com/en-us/powershell/module/az.eventhub/new-azeventhubkey?view=azps-10.3.0#examples
 
+## Understanding MS Azure Event Grid
+https://learn.microsoft.com/en-us/azure/event-grid/overview
 
+![msft-pull-events-at-your-own-pace-high-res.png](docs/images/msft-pull-events-at-your-own-pace-high-res.png)
+
+
+## MS Azure Event Grid use cases
+https://learn.microsoft.com/en-us/azure/event-grid/overview
 
 ---
