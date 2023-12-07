@@ -3,6 +3,9 @@ $ErrorActionPreference="Stop"
 $global:ResourceGroup="RG-BICEP-DEMO-001"
 $Global:Location="uksouth"
 $Global:KeyVault="saudemovault456"
+$Global:TagDepartment="finance"
+$Global:TagCostCenter="eusales"
+$Global:TagOwner="janedoe@cool.com"
 
 
 <#
