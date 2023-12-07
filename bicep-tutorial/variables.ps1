@@ -8,6 +8,8 @@ $Global:TagCostCenter="eusales"
 $Global:TagOwner="janedoe@cool.com"
 
 
+$Global:StorageAccount="stosaudemo0123"
+
 <#
 This function should be called after every invocation of Azure CLI to check for success
 #>
