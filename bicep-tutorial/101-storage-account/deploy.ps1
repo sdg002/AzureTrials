@@ -1,3 +1,4 @@
+. $PSScriptRoot/../common.ps1
 . $PSScriptRoot/variables.ps1
 
 <#
@@ -14,9 +15,8 @@ RaiseCliError -message "Failed to create the resource group $Global:ResourceGrou
 
 
 Write-Host "Deploying storage account $Global:StorageAccount"
-$file="C:\Users\saurabhd\MyTrials\AzureStuff\AzureTrials\AzureTrials\bicep-tutorial\templates\storage.bicep"
 & az deployment group create --resource-group $Global:ResourceGroup `
-    --template-file $file `
+    --template-file "$PSScriptRoot\templates\storage.bicep" `
     --parameters name=$Global:StorageAccount  --verbose
 RaiseCliError -message "Failed to create the storage account $Global:StorageAccount"
 
