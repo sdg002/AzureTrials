@@ -2,6 +2,11 @@
 # Overview
 This is step by step basics of Bicep
 
+# Next
+1. Deploy file share
+1. Azure plan
+1. Azure function app
+1. Assign permissoin of function managed identity to file share 
 
 # Reference
 
