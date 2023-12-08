@@ -12,11 +12,25 @@ RaiseCliError -message "Failed to create the resource group $Global:ResourceGrou
 <#
 Deploying Log analytics workspace
 #>
-Write-Host "Deploying Log Analytics worksapce $Global:LogAnalyticsWorkspace"
+Write-Host "Deploying Log Analytics workspace $Global:LogAnalyticsWorkspace"
 & az deployment group create --resource-group $Global:ResourceGroup `
     --template-file "$PSScriptRoot\templates\loganalyticsworkspace.bicep" `
     --parameters name=$Global:LogAnalyticsWorkspace  --verbose
 RaiseCliError -message "Failed to create Log Analytics Workspace $Global:LogAnalyticsWorkspace"
+
+<#
+Deploying Application Insights
+#>
+Write-Host "Deploying Application Insights $Global:ApplicationInsights"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\templates\appinsight.bicep" `
+    --parameters `
+    name=$Global:ApplicationInsights `
+    logworkspace=$Global:LogAnalyticsWorkspace  --verbose
+RaiseCliError -message "Failed to create Application Insights $Global:ApplicationInsights"
+
+
+
 
 
 
