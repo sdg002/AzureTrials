@@ -1,11 +1,14 @@
 param location string = resourceGroup().location
 param name string
+param logworkspace string
 
-resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+resource appInsightsComponents 'Microsoft.Insights/components@2020-02-02' = {
   name: name
   location: location
-  kind: 'StorageV2'
-  sku: {
-    name: 'Standard_LRS'
+  kind: 'web'
+  tags: resourceGroup().tags
+  properties: {
+    Application_Type: 'web'
+    WorkspaceResourceId: resourceId('Microsoft.OperationalInsights/workspaces',logworkspace)
   }
 }

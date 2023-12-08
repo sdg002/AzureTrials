@@ -16,3 +16,5 @@ $Global:Location="uksouth"
 $Global:TagDepartment="finance"
 $Global:TagCostCenter="eusales"
 $Global:TagOwner="janedoe@cool.com"
+
+$Global:environment="dev"
