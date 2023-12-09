@@ -25,6 +25,17 @@ RaiseCliError -message "Failed to create storage account $Global:FunctionStorage
 <#
 Deploying first function app
 #>
+<#
+Deploying the Storage account for 
+#>
+Write-Host "Deploying  Function App $Global:FirstFunctionApp"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\templates\functionapp.bicep" `
+    --parameters name=$Global:FirstFunctionApp `
+    storageaccount=$Global:FunctionStorageAccount `
+    planname=$Global:AppPlan `
+    --verbose
+RaiseCliError -message "Failed to create function app $Global:FirstFunctionApp"
 
 # Write-Host "Deploying Application Insights $Global:ApplicationInsights"
 # & az deployment group create --resource-group $Global:ResourceGroup `
