@@ -13,7 +13,7 @@ resource storageSetting 'Microsoft.Web/sites/config@2021-01-15' = {
       shareName: azureShareName
       mountPath: mountPath
       accountName: storageaccount
-      accessKey: storageaccount
+      accessKey: storageaccountkey
     }
   }
 }
