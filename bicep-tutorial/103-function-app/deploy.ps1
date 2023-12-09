@@ -13,6 +13,16 @@ Write-Host "Deploying App Service plan $Global:AppPlan"
 RaiseCliError -message "Failed to create App Service Plan $Global:AppPlan"
 
 <#
+Deploying the Storage account for 
+#>
+Write-Host "Deploying storage account for Function App $Global:FunctionStorageAccount"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\templates\storage.bicep" `
+    --parameters name=$Global:FunctionStorageAccount `
+    --verbose
+RaiseCliError -message "Failed to create storage account $Global:FunctionStorageAccount"
+
+<#
 Deploying first function app
 #>
 

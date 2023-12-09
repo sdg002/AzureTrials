@@ -6,6 +6,10 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: name
   location: location
   tags:resourceGroup().tags
+  kind: 'linux'
+  properties:{
+    
+  }
   sku: {
     name: sku
     capacity: 1
