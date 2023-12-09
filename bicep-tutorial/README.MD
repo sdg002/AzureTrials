@@ -15,6 +15,8 @@ This is step by step basics of Bicep
 # 102-Deploy Application insights and Log analytics workspace
 ???
 
+# 104-Function App
+To specify the Python version, you will need to specify the property `linuxFxVersion` under `siteConfig` to `Python|3.9`.
 ---
 
 # Bicep function nuances
