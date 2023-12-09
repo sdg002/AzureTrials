@@ -18,11 +18,10 @@ Deploying file share
 #>
 Write-Host "Deploying  File Share $Global:ShareName"
 & az deployment group create --resource-group $Global:ResourceGroup `
-    --template-file "$PSScriptRoot\templates\functionapp.bicep" `
-    --parameters name=$Global:FirstFunctionApp `
-    storageaccount=$Global:FunctionStorageAccount `
-    planname=$Global:AppPlan `
-    appinsight=$Global:ApplicationInsights `
+    --template-file "$PSScriptRoot\templates\fileshare.bicep" `
+    --parameters `
+    storageaccount=$Global:StorageAccount `
+    name=$Global:ShareName `
     --verbose
 RaiseCliError -message "Failed to create file share $Global:ShareName"
 
