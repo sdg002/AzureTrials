@@ -65,6 +65,17 @@ Do not be tempted to use **--force** parameter
 
 ----
 
+# Mount path inside Azure function
+
+Once an Azure file share has been mounted to the Azure Function, the Azure function would see the following directory:
+
+```
+import os
+...
+
+files_in_share = os.listdir("/path/to/mount")
+```
+
 # Reference
 
 ## VS Code quick start - Microsoft link
@@ -75,3 +86,12 @@ https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/quickstart-
 https://github.com/Azure/bicep/issues/2364
 ```
 https://github.com/Azure/bicep/issues/2364
+
+## Azure Bicep template reference for File Shares
+https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/2022-09-01/storageaccounts/fileservices?pivots=deployment-language-bicep
+
+
+## Using Azure Cli to mount a file share
+https://learn.microsoft.com/en-us/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux
+
+

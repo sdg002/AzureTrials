@@ -37,7 +37,10 @@ resource azureFunction 'Microsoft.Web/sites@2020-12-01' = {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appinsightcnstring
         }
-      ]
+        {
+          name: 'MOUNTEDSHARENAME'
+          value: '/hello123'
+        }      ]
     }
   }
 }
