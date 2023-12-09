@@ -39,12 +39,27 @@ var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appi
 ---
 
 
-# Working with Python Azure function
+# Setting up the local development environment for Azure functions
 
-1. Ensure you have the **VS Code** and **Azure Function** extension
+## Essential tools
+1. **Azure Functions Core tools** should be installed (64-bit, Version 4)
+1.  **VS Code** and **Azure Function** extension
+
+## Debug locally
 1. Launch the folder `src-python-function` in **VS Code**  
 1. The accompanying source has a simple timer trigger
 1. You should be able to debug by pressing **F5**
+
+
+## Deploying your function code to Azure
+
+- Ensure that you have created the infrastructure on Azure by executing the deploy script under 104 folder 
+- Run the following command to deploy your local code to Azure
+
+```powershell
+func azure functionapp publish <name of the function app> --python
+```
+Do not be tempted to use **--force** parameter
 
 ----
 
