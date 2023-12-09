@@ -13,9 +13,13 @@ resource azureFunction 'Microsoft.Web/sites@2020-12-01' = {
   location: location
   kind: 'functionapp'
   tags: resourceGroup().tags
-  properties: {
+  properties: {    
     serverFarmId: resourceId('Microsoft.Web/serverfarms',planname)
     siteConfig: {
+      use32BitWorkerProcess: false
+      ftpsState:'FtpsOnly'
+      linuxFxVersion:'Python|3.9'
+      alwaysOn:true
       appSettings: [
         {
           name: 'AzureWebJobsStorage'

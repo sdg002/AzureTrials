@@ -53,6 +53,7 @@ Write-Host "Deploying  Function App $Global:FirstFunctionApp"
     --parameters name=$Global:FirstFunctionApp `
     storageaccount=$Global:FunctionStorageAccount `
     planname=$Global:AppPlan `
+    appinsight=$Global:ApplicationInsights `
     --verbose
 RaiseCliError -message "Failed to create function app $Global:FirstFunctionApp"
 

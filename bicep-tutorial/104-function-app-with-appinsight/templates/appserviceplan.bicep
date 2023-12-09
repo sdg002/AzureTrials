@@ -8,9 +8,12 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   tags:resourceGroup().tags
   kind: 'linux'
   properties:{
-    
+    targetWorkerCount:1
+    targetWorkerSizeId:0
+    reserved:true    
   }
   sku: {
+    tier: 'Basic'
     name: sku
     capacity: 1
   }

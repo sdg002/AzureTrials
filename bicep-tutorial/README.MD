@@ -3,9 +3,9 @@
 This is step by step basics of Bicep
 
 # Next
+1. Deploy the Azure function and test if it is logging
 1. Deploy file share
-1. Azure plan
-1. Azure function app
+1. Mount file share
 1. Assign permissoin of function managed identity to file share 
 
 
@@ -15,9 +15,31 @@ This is step by step basics of Bicep
 # 102-Deploy Application insights and Log analytics workspace
 ???
 
+---
 
-----
-# Python Azure function
+# Bicep function nuances
+
+## Retrieving the storage account key
+```
+param storageaccount string
+var storageaccountkey=listkeys(resourceId('Microsoft.Storage/storageAccounts/', storageaccount),'2021-02-01').keys[0].value
+var storagecnstring='DefaultEndpointsProtocol=https;AccountName=${storageaccount};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageaccountkey}'
+
+```
+
+## Retrieving the Application Insights connection string
+
+```
+param appinsight string
+var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appinsight),'2020-02-02').ConnectionString
+```
+
+
+
+---
+
+
+# Working with Python Azure function
 
 1. Ensure you have the **VS Code** and **Azure Function** extension
 1. Launch the folder `src-python-function` in **VS Code**  
