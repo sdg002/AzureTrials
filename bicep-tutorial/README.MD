@@ -8,6 +8,17 @@ This is step by step basics of Bicep
 1. Azure function app
 1. Assign permissoin of function managed identity to file share 
 
+
+# 101-Deploy a simple storage account
+???
+
+# 102-Deploy Application insights and Log analytics workspace
+???
+
+
+----
+
+
 # Reference
 
 ## VS Code quick start - Microsoft link
