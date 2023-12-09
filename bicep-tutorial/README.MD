@@ -17,7 +17,14 @@ This is step by step basics of Bicep
 
 
 ----
+# Python Azure function
 
+1. Ensure you have the **VS Code** and **Azure Function** extension
+1. Launch the folder `src-python-function` in **VS Code**  
+1. The accompanying source has a simple timer trigger
+1. You should be able to debug by pressing **F5**
+
+----
 
 # Reference
 
