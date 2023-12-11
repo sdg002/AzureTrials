@@ -45,7 +45,7 @@ Write-Host "Deploying storage account for Function App $Global:FunctionStorageAc
 RaiseCliError -message "Failed to create storage account $Global:FunctionStorageAccount"
 
 <#
-Deploying the Storage account for 
+Deploying the Storage account for the Azure Function
 #>
 Write-Host "Deploying  Function App $Global:FirstFunctionApp"
 & az deployment group create --resource-group $Global:ResourceGroup `

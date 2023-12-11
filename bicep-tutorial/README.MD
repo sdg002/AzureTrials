@@ -3,10 +3,9 @@
 This is step by step basics of Bicep
 
 # Next
-1. Deploy the Azure function and test if it is logging
-1. Deploy file share
-1. Mount file share
-1. Assign permissoin of function managed identity to file share 
+1. Do complete deployment of Azure Function in the 105 folder
+1. Rename 105 folder to 105-function-app-with-mounted-file-share
+1. Create a variable to hold the mountpath
 
 
 # 101-Deploy a simple storage account
