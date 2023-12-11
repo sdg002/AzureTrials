@@ -12,6 +12,9 @@ resource azureFunction 'Microsoft.Web/sites@2020-12-01' = {
   location: location
   kind: 'functionapp'
   tags: resourceGroup().tags
+  identity:{
+    type:'SystemAssigned'
+  }
   properties: {
     serverFarmId: resourceId('Microsoft.Web/serverfarms',planname)
     siteConfig: {
