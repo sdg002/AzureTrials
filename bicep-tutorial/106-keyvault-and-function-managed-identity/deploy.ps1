@@ -23,11 +23,19 @@ Write-Host "Adding secrets to the key vault $Global:KeyVault"
     --verbose
 RaiseCliError -message "Adding secrets to the key vault $Global:KeyVault failed"
 
+<#
+Clear all role assignments
+#>
+$oKeyVault=& az resource show --resource-group $Global:ResourceGroup --name $Global:KeyVault --resource-type "Microsoft.KeyVault/vaults" --verbose | ConvertFrom-Json
+Write-Host "Id of the key value is $($oKeyVault.id)"
+RaiseCliError -message "Failed to get id of the key vault $Global:KeyVault"
+
+az role assignment delete --scope $oKeyVault.id  --verbose
+
 
 <#
 Assign RBAC access for the function app
 #>
-
 Write-Host "Deploying function app  $Global:FirstFunctionApp access policy for the Key Vault $Global:KeyVault"
 & az deployment group create --resource-group $Global:ResourceGroup `
     --template-file "$PSScriptRoot\templates\functionappvaultaccess.bicep" `
