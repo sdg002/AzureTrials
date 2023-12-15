@@ -123,6 +123,17 @@ var mong_cn_string=listConnectionStrings(resourceId('Microsoft.DocumentDB/databa
 */
 ```
 
+## Get a Storage account connection string
+
+```
+param storageaccount string
+var storageaccountkey=listkeys(resourceId('Microsoft.Storage/storageAccounts/', storageaccount),'2021-02-01').keys[0].value
+
+var storagecnstring='DefaultEndpointsProtocol=https;AccountName=${storageaccount};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageaccountkey}'
+
+output mystorageaccountcnstring string=storagecnstring
+
+```
 ---
 
 
