@@ -36,6 +36,33 @@ var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appi
 ```
 
 
+---
+
+# Snippets
+
+## Create a Blob container in an existing Storage account
+```
+param storageaccount string
+param container string
+
+resource rStorageAccountContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  name: '${storageaccount}/default/${container}'
+  properties: {}
+}
+```
+## Create an Azure file share in an existing Storage account
+
+```
+param storageaccount string
+param share string
+
+resource myShare2 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-09-01' = {
+  name: '${storageaccount}/default/${share}'
+  properties: {}
+}
+
+```
+
 
 ---
 
