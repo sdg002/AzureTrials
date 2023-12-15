@@ -63,6 +63,65 @@ resource myShare2 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-09
 
 ```
 
+## Simple example of output values
+
+Simplest possible output 
+```
+param myparam string
+output myparm string=myparam
+
+```
+
+Expected output
+
+```json
+{
+  "id": "/subscriptions/12345678-1234-43ac-1234-123467e1abfe/resourceGroups/RG-BICEP-DEMO-001/providers/Microsoft.Resources/deployments/outputs",
+  "location": null,
+  "name": "outputs",
+  "properties": {
+    "correlationId": "12345678-1234-1234-1234-c7f4c8ea33c6",
+    "debugSetting": null,
+    "dependencies": [],
+    "duration": "PT1.064109S",
+    "error": null,
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [],
+    "outputs": {
+      "myparm": {
+        "type": "String",
+        "value": "value for my param"
+      }
+    },
+    "parameters": {
+      "myparam": {
+        "type": "String",
+        "value": "value for my param"
+      }
+    },
+    "parametersLink": null,
+    "providers": [],
+    "provisioningState": "Succeeded",
+    "templateHash": "9639229030702551116",
+    "templateLink": null,
+    "timestamp": "2023-12-15T22:47:50.964464+00:00",
+    "validatedResources": null
+  },
+  "resourceGroup": "RG-BICEP-DEMO-001",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}
+```
+
+## Get a reference to Cosmos connection string
+
+https://github.com/Azure/bicep/discussions/8951
+
+```
+var mong_cn_string=listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts/',mongodatabaseaccount),'2023-11-15').connectionStrings[0].connectionString
+*/
+```
 
 ---
 
