@@ -12,10 +12,19 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 }
 
 
-resource symbolicname 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+resource symbolicName1 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
   name: '${name}/default/mycontainer9001'
   properties: {
-    defaultEncryptionScope: 'Default'
+    defaultEncryptionScope: '$account-encryption-key'
+    denyEncryptionScopeOverride: false
+    publicAccess: 'None'
+  }
+}
+
+resource symbolicName2 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+  name: '${name}/default/mycontainer9002'
+  properties: {
+    defaultEncryptionScope: '$account-encryption-key'
     denyEncryptionScopeOverride: false
     publicAccess: 'None'
   }
