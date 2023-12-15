@@ -6,4 +6,5 @@
     --template-file "$PSScriptRoot\templates\outputs.bicep" `
     --parameters `
     myparam="value for my param" `
+    cosmosaccount=$Global:CosmosAccount `
     --verbose
