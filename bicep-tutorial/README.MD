@@ -9,13 +9,30 @@ This is step by step basics of Bicep
 
 
 # 101-Deploy a simple storage account
-???
+
+```
+param location string = resourceGroup().location
+param name string
+
+resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+  name: name
+  location: location
+  tags: resourceGroup().tags
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
+  }
+}
+
+```
 
 # 102-Deploy Application insights and Log analytics workspace
-???
+
+Refer folder [102-applicationinsights](102-applicationinsights)
 
 # 104-Function App
 To specify the Python version, you will need to specify the property `linuxFxVersion` under `siteConfig` to `Python|3.9`.
+
 ---
 
 # Bicep function nuances
