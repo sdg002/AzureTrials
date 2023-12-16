@@ -2,10 +2,11 @@
 # Overview
 This is step by step basics of Bicep
 
-# Next
-1. Do complete deployment of Azure Function in the 105 folder
-1. Rename 105 folder to 105-function-app-with-mounted-file-share
-1. Create a variable to hold the mountpath
+# Next - REMOVE THIS WHEN DONE
+1. network rules on key vault
+1. network rules on storage account
+
+
 
 
 # 101-Deploy a simple storage account
@@ -31,13 +32,15 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 Refer folder [102-applicationinsights](102-applicationinsights)
 
 # 104-Function App
-To specify the Python version, you will need to specify the property `linuxFxVersion` under `siteConfig` to `Python|3.9`.
+To specify the Python version, you will need to specify the property `linuxFxVersion` under `siteConfig` to `Python|3.9` of the functionapp bicep template.
+
+Refer folder [104-function-app-with-appinsight](104-function-app-with-appinsight)
 
 ---
 
-# Bicep function nuances
 
-## Retrieving the storage account key
+# Retrieving the storage account key
+
 ```
 param storageaccount string
 var storageaccountkey=listkeys(resourceId('Microsoft.Storage/storageAccounts/', storageaccount),'2021-02-01').keys[0].value
@@ -45,7 +48,9 @@ var storagecnstring='DefaultEndpointsProtocol=https;AccountName=${storageaccount
 
 ```
 
-## Retrieving the Application Insights connection string
+---
+
+# Retrieving the Application Insights connection string
 
 ```
 param appinsight string
@@ -55,9 +60,8 @@ var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appi
 
 ---
 
-# Snippets
 
-## Create a Blob container in an existing Storage account
+# Create a Blob container in an existing Storage account
 ```
 param storageaccount string
 param container string
@@ -66,8 +70,12 @@ resource rStorageAccountContainer 'Microsoft.Storage/storageAccounts/blobService
   name: '${storageaccount}/default/${container}'
   properties: {}
 }
+
 ```
-## Create an Azure file share in an existing Storage account
+
+---
+
+# Create an Azure file share in an existing Storage account
 
 ```
 param storageaccount string
@@ -80,7 +88,7 @@ resource myShare2 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-09
 
 ```
 
-## Simple example of output values
+# Simple example of output values
 
 Simplest possible output 
 ```
