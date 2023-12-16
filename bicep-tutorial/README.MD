@@ -72,7 +72,7 @@ output myparm string=myparam
 
 ```
 
-Expected output
+You can see the element by the name `myparam` under the top level `outputs` node.
 
 ```json
 {
@@ -119,8 +119,37 @@ Expected output
 https://github.com/Azure/bicep/discussions/8951
 
 ```
+param cosmosaccount string
+var mong_cn_string =listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts/',cosmosaccount),'2023-11-15').connectionStrings[0].connectionString
+
+output mongo string = mong_cn_string
+
+param cosmosaccount string
 var mong_cn_string=listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts/',mongodatabaseaccount),'2023-11-15').connectionStrings[0].connectionString
 */
+```
+
+You should see the connection string emitted under the `outputs` node 
+
+```json
+{
+    .
+    .
+    .
+   "outputs": {
+      "mongo": {
+        "type": "String",
+        "value": "mongodb://cosmon-demo-dev:YOURSECRETCONNECTIONKEY==@cosmon-demo-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@cosmon-demo-dev@"
+      },
+      "myparm": {
+        "type": "String",
+        "value": "value for my param"
+      }
+    }
+    .
+    .
+    .
+}
 ```
 
 ## Get a Storage account connection string
@@ -191,3 +220,5 @@ https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/2022-09-01/s
 https://learn.microsoft.com/en-us/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux
 
 
+## Getting a reference to Cosmos connection string
+https://github.com/Azure/bicep/discussions/8951
