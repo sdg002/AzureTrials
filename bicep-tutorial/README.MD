@@ -139,9 +139,9 @@ You can see the element by the name `myparam` under the top level `outputs` node
 }
 ```
 
-## Get a reference to Cosmos connection string
+# Get a reference to Cosmos connection string
 
-https://github.com/Azure/bicep/discussions/8951
+Refer this [Github thread](https://github.com/Azure/bicep/discussions/8951) for more insight
 
 ```
 param cosmosaccount string
@@ -176,8 +176,9 @@ You should see the connection string emitted under the `outputs` node
     .
 }
 ```
+---
 
-## Get a Storage account connection string
+# Get a Storage account connection string
 
 ```
 param storageaccount string
@@ -190,7 +191,6 @@ output mystorageaccountcnstring string=storagecnstring
 ```
 ---
 
-
 # Setting up the local development environment for Azure functions
 
 ## Essential tools
@@ -198,6 +198,7 @@ output mystorageaccountcnstring string=storagecnstring
 1.  **VS Code** and **Azure Function** extension
 
 ## Debug locally
+1. Ensure you have done a `az login` and followed by `az account set --name <YOUR_SUBSCRIPTION_NAME>` (if you have multiple subscriptins)
 1. Launch the folder `src-python-function` in **VS Code**  
 1. The accompanying source has a simple timer trigger
 1. You should be able to debug by pressing **F5**
@@ -215,7 +216,7 @@ Do not be tempted to use **--force** parameter
 
 ----
 
-# Mount path inside Azure function
+# Mount path inside Azure function (TO BE DONE, improve this, provide app settings)
 
 Once an Azure file share has been mounted to the Azure Function, the Azure function would see the following directory:
 
