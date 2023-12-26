@@ -14,7 +14,11 @@ function RaiseCliError($message){
 $global:ResourceGroup="RG-BICEP-DEMO-001"
 $Global:Location="uksouth"
 $Global:TagDepartment="finance"
-$Global:TagCostCenter="eusales"
+$Global:TagCostCenter="cost 123"
 $Global:TagOwner="janedoe@cool.com"
 
 $Global:environment="dev"
+
+$Global:TagsArray = @( `
+    "Cost center=$Global:TagCostCenter",`
+    "Business Department=$Global:TagDepartment")
