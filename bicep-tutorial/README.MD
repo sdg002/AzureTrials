@@ -227,6 +227,21 @@ import os
 files_in_share = os.listdir("/path/to/mount")
 ```
 
+---
+# Using the Complete mode when deploying Bicep
+The `mode` parameter is interesting and very powerful. The default value is `incremental`. In the following example - if you were run this command with mode set to `Complete` in a stand alone way, then all prior resources **will be deleted** in the resource group.
+
+```powershell
+Write-Host "Adding secrets to the key vault $Global:KeyVault"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\templates\keyvaultsecrets.bicep" `
+    --parameters `
+    keyvaultname=$Global:KeyVault `
+    storageaccount=$Global:FunctionStorageAccount `
+    --verbose --mode Complete
+
+```
+
 # Reference
 
 ## VS Code quick start - Microsoft link
@@ -248,3 +263,6 @@ https://learn.microsoft.com/en-us/azure/azure-functions/scripts/functions-cli-mo
 
 ## Getting a reference to Cosmos connection string
 https://github.com/Azure/bicep/discussions/8951
+
+## Complete mode and Incremental mode
+https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes#complete-mode

@@ -15,6 +15,13 @@ Write-Host "Going to create the resource group: '$Global:ResourceGroup' with the
 #--tags department=$Global:TagDepartment owner=$Global:TagOwner costcenter=$Global:TagCostCenter
 RaiseCliError -message "Failed to create the resource group $Global:ResourceGroup"
 
+<#
+Apply tags only
+#>
+& az group update  --resource-group $Global:ResourceGroup `
+    --tags $Global:TagsArray
+RaiseCliError -message "Failed to apply tas on the resource group $Global:ResourceGroup"
+
 
 Write-Host "Deploying storage account $Global:StorageAccount"
 & az deployment group create --resource-group $Global:ResourceGroup `
