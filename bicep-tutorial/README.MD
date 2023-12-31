@@ -275,6 +275,26 @@ Write-Host "Adding secrets to the key vault $Global:KeyVault"
 
 ```
 
+---
+
+# Firewall settings on a Storage Account (Refer folder 108)
+
+## Azure Storage Explorer would not let you browse the contents
+If you have restricted access to your firewall to 1 or more IP addresses, then Azure will not let you browse the contents of the Containers from other IP addresses. Example below:
+
+![storage-browser-after-firewall-applied](docs/images/storage-browser-after-firewall-applied.png)
+
+## Azure Cloud Shell should not work either
+
+` az storage blob list --account-name stosaudemofirewalldev --container-name mydemocontainer001` 
+
+```
+The request may be blocked by network rules of storage account. Please check network rule set using 'az storage account show -n accountname --query networkRuleSet'.
+If you want to change the default action to apply when no rule matches, please use 'az storage account update'.
+```
+
+---
+
 # Reference
 
 ## VS Code quick start - Microsoft link
