@@ -62,6 +62,8 @@ var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appi
 
 
 # Create a Blob container in an existing Storage account
+
+### When the bicep is only deploying a Container ?
 ```
 param storageaccount string
 param container string
@@ -72,6 +74,37 @@ resource rStorageAccountContainer 'Microsoft.Storage/storageAccounts/blobService
 }
 
 ```
+
+### When the bicep is deploying both the storage account and the Blob container ?
+
+If the bicep is deploying both the storage account and the Blob container(s) then the `dependsOn` field should be used to define the sequence of execution. Otherwise, your deployment is likely to fail.
+
+
+```
+param location string = resourceGroup().location
+param name string
+
+resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+  name: name
+  location: location
+  tags: resourceGroup().tags
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
+  }
+}
+
+resource symbolicName1 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+  name: '${name}/default/mydemocontainer001'
+  dependsOn: [storageaccount]
+  properties: {
+    defaultEncryptionScope: '$account-encryption-key'
+    denyEncryptionScopeOverride: false
+    publicAccess: 'None'
+  }
+}
+```
+
 
 ---
 
