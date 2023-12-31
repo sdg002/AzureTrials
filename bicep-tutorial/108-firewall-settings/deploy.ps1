@@ -21,3 +21,9 @@ Write-Host "Deploying storage account $Global:StorageAccount"
 RaiseCliError -message "Failed to create the storage account $Global:StorageAccount"
 
 
+Write-Host "Deploying VNET $Global:Vnet"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\templates\network.bicep" `
+    --parameters name=$Global:Vnet  --verbose
+RaiseCliError -message "Failed to deploy VNET $Global:Vnet"
+
