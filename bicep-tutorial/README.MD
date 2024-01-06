@@ -36,6 +36,12 @@ To specify the Python version, you will need to specify the property `linuxFxVer
 
 Refer folder [104-function-app-with-appinsight](104-function-app-with-appinsight)
 
+## How to test ?
+- Deploy the Azure function (steps further below)
+- Navigate to the Application Insights instance that got created and search for the `traces` table. You should the output from the `logging` getting captured
+
+![function-logging-appinsight.png](docs/images/function-logging-appinsight.png)
+
 ---
 
 
@@ -224,7 +230,7 @@ output mystorageaccountcnstring string=storagecnstring
 ```
 ---
 
-# Setting up the local development environment for Azure functions
+# Azure function-Setting up the local development environment and deploying
 
 ## Essential tools
 1. **Azure Functions Core tools** should be installed (64-bit, Version 4)
@@ -287,6 +293,19 @@ If you have restricted access to your firewall to 1 or more IP addresses, then A
 ## Azure Cloud Shell should not work either
 
 ` az storage blob list --account-name stosaudemofirewalldev --container-name mydemocontainer001` 
+
+## Where was I ?
+- You introduced VNET for outbound function app traffic.
+- 103 - Add a container and read/write to it from a new Timer trigger (No firewall)
+    - 103-add a container to `FunctionStorageAccount` (no need for a new storage account, use `stdemoservice`)
+    - 103-add a Write a Python trigger which writes and reads a Blob container and outputs via `logging.info`
+    - 103-Test that the trigger works when no fire wall settings are applied. Expected - Should work
+- 108-Apply firewall on storage account. **Expected** - Should fail
+- Do the following together
+    - 108-Add vnet to allow list
+    - 108-Add VNET to function app 
+    - Expected - Should work
+- Finish the Bicep
 
 ```
 The request may be blocked by network rules of storage account. Please check network rule set using 'az storage account show -n accountname --query networkRuleSet'.
