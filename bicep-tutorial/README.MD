@@ -82,6 +82,17 @@ Refer folder [106-function-app-with-keyvault-and-function-managed-identity](106-
 
 ---
 
+# 109-Cosmos ( to be done)
+
+## Overview
+In this example we are deploying an instance of Cosmos. **To be done**. Add the cn string to key vault
+
+## How to test ?
+
+Show picture of Key vault with cosmos connection string
+
+---
+
 # Retrieving the storage account key
 
 ```
