@@ -82,7 +82,21 @@ Refer folder [106-function-app-with-keyvault-and-function-managed-identity](106-
 
 ---
 
-# 108-Firewall settings on a Storage Account
+# 107-Function App which reads a blob container (to be done)
+
+## About
+- Add a container and read/write to it from a new Timer trigger (No firewall)
+- Add a Write a Python HTTP trigger which writes and reads a `readme.txt` file from the Blob container and outputs to the HTTP response stream
+- Test that the trigger works when no fire wall settings are applied. Expected - Should work
+
+
+## How to test ?
+
+Drop a readme.txt file
+
+---
+
+# 108-Firewall settings on a Storage Account (You were here)
 
 ## Azure Storage Explorer would not let you browse the contents
 If you have restricted access to your firewall to 1 or more IP addresses, then Azure will not let you browse the contents of the Containers from other IP addresses. Example below:
@@ -95,10 +109,6 @@ If you have restricted access to your firewall to 1 or more IP addresses, then A
 
 ## Where was I ?
 - You introduced VNET for outbound function app traffic.
-- 103 - Add a container and read/write to it from a new Timer trigger (No firewall)
-    - 103-add a container to `FunctionStorageAccount` (no need for a new storage account, use `stdemoservice`)
-    - 103-add a Write a Python trigger which writes and reads a Blob container and outputs via `logging.info`
-    - 103-Test that the trigger works when no fire wall settings are applied. Expected - Should work
 - 108-Apply firewall on storage account. **Expected** - Should fail
 - Do the following together
     - 108-Add vnet to allow list
