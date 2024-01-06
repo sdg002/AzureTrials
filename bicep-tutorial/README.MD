@@ -82,6 +82,38 @@ Refer folder [106-function-app-with-keyvault-and-function-managed-identity](106-
 
 ---
 
+# 108-Firewall settings on a Storage Account
+
+## Azure Storage Explorer would not let you browse the contents
+If you have restricted access to your firewall to 1 or more IP addresses, then Azure will not let you browse the contents of the Containers from other IP addresses. Example below:
+
+![storage-browser-after-firewall-applied](docs/images/storage-browser-after-firewall-applied.png)
+
+## Azure Cloud Shell should not work either
+
+` az storage blob list --account-name stosaudemofirewalldev --container-name mydemocontainer001` 
+
+## Where was I ?
+- You introduced VNET for outbound function app traffic.
+- 103 - Add a container and read/write to it from a new Timer trigger (No firewall)
+    - 103-add a container to `FunctionStorageAccount` (no need for a new storage account, use `stdemoservice`)
+    - 103-add a Write a Python trigger which writes and reads a Blob container and outputs via `logging.info`
+    - 103-Test that the trigger works when no fire wall settings are applied. Expected - Should work
+- 108-Apply firewall on storage account. **Expected** - Should fail
+- Do the following together
+    - 108-Add vnet to allow list
+    - 108-Add VNET to function app 
+    - Expected - Should work
+- Finish the Bicep
+
+```
+The request may be blocked by network rules of storage account. Please check network rule set using 'az storage account show -n accountname --query networkRuleSet'.
+If you want to change the default action to apply when no rule matches, please use 'az storage account update'.
+```
+
+---
+
+
 # 109-Cosmos ( to be done)
 
 ## Overview
@@ -93,7 +125,9 @@ Show picture of Key vault with cosmos connection string
 
 ---
 
-# Retrieving the storage account key
+# Snippets
+
+## Retrieving the storage account key
 
 ```
 param storageaccount string
@@ -104,7 +138,7 @@ var storagecnstring='DefaultEndpointsProtocol=https;AccountName=${storageaccount
 
 ---
 
-# Retrieving the Application Insights connection string
+## Retrieving the Application Insights connection string
 
 ```
 param appinsight string
@@ -115,7 +149,7 @@ var appinsightcnstring=reference(resourceId('Microsoft.Insights/components',appi
 ---
 
 
-# Create a Blob container in an existing Storage account
+## Create a Blob container in an existing Storage account
 
 ### When the bicep is only deploying a Container ?
 ```
@@ -162,7 +196,7 @@ resource symbolicName1 'Microsoft.Storage/storageAccounts/blobServices/container
 
 ---
 
-# Create an Azure file share in an existing Storage account
+## Create an Azure file share in an existing Storage account
 
 ```
 param storageaccount string
@@ -175,7 +209,7 @@ resource myShare2 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-09
 
 ```
 
-# Simple example of output values
+## Simple example of output values
 
 Simplest possible output 
 ```
@@ -226,7 +260,7 @@ You can see the element by the name `myparam` under the top level `outputs` node
 }
 ```
 
-# Get a reference to Cosmos connection string
+## Get a reference to Cosmos connection string
 
 Refer this [Github thread](https://github.com/Azure/bicep/discussions/8951) for more insight
 
@@ -265,7 +299,7 @@ You should see the connection string emitted under the `outputs` node
 ```
 ---
 
-# Get a Storage account connection string
+## Get a Storage account connection string
 
 ```
 param storageaccount string
@@ -331,36 +365,6 @@ Write-Host "Adding secrets to the key vault $Global:KeyVault"
 
 ---
 
-# Firewall settings on a Storage Account (Refer folder 108)
-
-## Azure Storage Explorer would not let you browse the contents
-If you have restricted access to your firewall to 1 or more IP addresses, then Azure will not let you browse the contents of the Containers from other IP addresses. Example below:
-
-![storage-browser-after-firewall-applied](docs/images/storage-browser-after-firewall-applied.png)
-
-## Azure Cloud Shell should not work either
-
-` az storage blob list --account-name stosaudemofirewalldev --container-name mydemocontainer001` 
-
-## Where was I ?
-- You introduced VNET for outbound function app traffic.
-- 103 - Add a container and read/write to it from a new Timer trigger (No firewall)
-    - 103-add a container to `FunctionStorageAccount` (no need for a new storage account, use `stdemoservice`)
-    - 103-add a Write a Python trigger which writes and reads a Blob container and outputs via `logging.info`
-    - 103-Test that the trigger works when no fire wall settings are applied. Expected - Should work
-- 108-Apply firewall on storage account. **Expected** - Should fail
-- Do the following together
-    - 108-Add vnet to allow list
-    - 108-Add VNET to function app 
-    - Expected - Should work
-- Finish the Bicep
-
-```
-The request may be blocked by network rules of storage account. Please check network rule set using 'az storage account show -n accountname --query networkRuleSet'.
-If you want to change the default action to apply when no rule matches, please use 'az storage account update'.
-```
-
----
 
 # Reference
 
