@@ -27,14 +27,24 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 
 ```
 
+---
+
 # 102-Deploy Application insights and Log analytics workspace
 
 Refer folder [102-applicationinsights](102-applicationinsights)
 
-# 104-Function App
+---
+
+# 104-Function App with Application Insights
+
+## About
+
 To specify the Python version, you will need to specify the property `linuxFxVersion` under `siteConfig` to `Python|3.9` of the functionapp bicep template.
 
 Refer folder [104-function-app-with-appinsight](104-function-app-with-appinsight)
+
+
+The Python Azure function app which logs to Application Insights using out of box `logging.info` statements
 
 ## How to test ?
 - Deploy the Azure function (steps further below)
@@ -44,6 +54,33 @@ Refer folder [104-function-app-with-appinsight](104-function-app-with-appinsight
 
 ---
 
+# 105-Function App with Azure file share mounted (to be done)
+
+## About 
+Refer folder [105-function-app-with-mounted-fileshare](105-function-app-with-mounted-fileshare)
+
+## How to test ?
+
+[to be done]
+Run the HttpTrigger2 , etc. etc.
+[show picture to be shown of application insights and file share]
+
+---
+
+# 106-Function App with a Key Vault (to be done)
+
+## Overview
+In this exercise we deploy an instance of **Azure Key Vault** and then grant the function identity rights to read the secrets from this key vault. This requires that the Azure Function app has a system assigned identity. Therefore, run the **deploy.ps1** under **103-function-app** folder first.
+
+Refer folder [106-function-app-with-keyvault-and-function-managed-identity](106-function-app-with-keyvault-and-function-managed-identity)
+
+
+## How to test ?
+
+1. You will need to write a Http trigger which reads a key vault given the key
+1. Show evidence via a picture
+
+---
 
 # Retrieving the storage account key
 
