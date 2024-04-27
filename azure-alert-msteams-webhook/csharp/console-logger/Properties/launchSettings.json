@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "console-logger": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=38445914-b3d0-4c2b-a498-a3a6839dbd35;IngestionEndpoint=https://uksouth-1.in.applicationinsights.azure.com/;LiveEndpoint=https://uksouth.livediagnostics.monitor.azure.com/"
+      }
+    }
+  }
+}

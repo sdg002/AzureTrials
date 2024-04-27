@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "defaultValue": "mysimplealertandaction",
+            "type": "String"
+        },
+        "appinsight": {
+            "type": "String"
+        },
+        "actionGroupEmail": {
+            "type": "String"
+        },
+        "actionGroupWebHook": {
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/scheduledqueryrules",
+            "apiVersion": "2023-03-15-preview",
+            "name": "[parameters('name')]",
+            "location": "uksouth",
+            "properties": {
+                "displayName": "[parameters('name')]",
+                "description": "this is a hand crafter alert and action",
+                "severity": 3,
+                "enabled": true,
+                "evaluationFrequency": "PT5M",
+                "scopes": [
+                    "[resourceId(subscription().subscriptionId, resourceGroup().name, 'microsoft.insights/components', parameters('appinsight'))]"
+                ],
+                "targetResourceTypes": [
+                    "microsoft.insights/components"
+                ],
+                "windowSize": "PT5M",
+                "criteria": {
+                    "allOf": [
+                        {
+                            "query": "exceptions\n| order by timestamp desc\n",
+                            "timeAggregation": "Count",
+                            "dimensions": [],
+                            "operator": "GreaterThan",
+                            "threshold": 0,
+                            "failingPeriods": {
+                                "numberOfEvaluationPeriods": 1,
+                                "minFailingPeriodsToAlert": 1
+                            }
+                        }
+                    ]
+                },
+                "autoMitigate": false,
+                "actions": {
+                    "actionGroups": [
+                        "[resourceId(subscription().subscriptionId,resourceGroup().name,'microsoft.insights/actionGroups',parameters('actionGroupEmail'))]",
+                        "[resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/actionGroups', parameters('actionGroupWebHook'))]"
+                    ],
+                    "customProperties": {
+                        "teamswebhookurl": "https://petroineos.webhook.office.com/webhookb2/27a85953-b219-48a9-8381-10515a7df0fd@65795a07-17bb-4e5a-a1fa-1c3d63e0a4fd/IncomingWebhook/7c76e7ba05c24cdc8b301f46772af8ea/61665664-9bff-4859-bd66-55797f42dada",
+                        "myprop2": "some value 2"
+                    },
+                    "actionProperties": {}
+                }
+            }
+        }
+    ]
+}

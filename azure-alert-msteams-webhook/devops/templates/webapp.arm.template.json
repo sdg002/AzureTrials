@@ -1,0 +1,80 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "alwaysOn": {
+            "type": "bool"
+        },
+        "ftpsState": {
+            "type": "string"
+        },
+        "linuxFxVersion": {
+            "type": "string"
+        },
+        "environment":{
+            "type": "string"
+        },
+        "appinsightResourceName":{
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [],
+            "properties": {
+                "name": "[parameters('name')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name" : "ENVIRONMENT",
+                            "value" : "[parameters('environment')]"
+                        },
+                        {
+                            "name" : "SCM_DO_BUILD_DURING_DEPLOYMENT",
+                            "value" : "0"
+                        },
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference(resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/components',parameters('appinsightResourceName')),'2015-05-01').ConnectionString]"
+                        }      
+                    ],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]",
+                    "ftpsState": "[parameters('ftpsState')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "virtualNetworkSubnetId": null,
+                "httpsOnly": true,
+                "publicNetworkAccess": "Enabled"
+            }
+        }
+    ]
+}
+
+/*
+This works
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference('/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-azure-alert-msteams-dev-uks/providers/microsoft.insights/components/appi-azurealertsmsteams-dev-uksouth','2015-05-01').ConnectionString]"
+                        }      
+
+                        {
+                            "name" : "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value" : "[reference(resourceId(subscription().subscriptionId, resourceGroup().name,'microsoft.insights/components','appi-azurealertsmsteams-dev-uksouth'),'2015-05-01').ConnectionString]"
+                        }      
+
+
+*/
