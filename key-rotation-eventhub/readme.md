@@ -228,6 +228,7 @@ Article
 
 https://learn.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual?tabs=azure-cli
 
+## Link to code on Github
 Azure function and ARM templates
 
 https://github.com/Azure-Samples/keyvault-rotation-storageaccountkey-powershell
@@ -237,6 +238,13 @@ https://github.com/Azure-Samples/keyvault-rotation-storageaccountkey-powershell
 ![msft-rotation-diagram.png](docs/images/msft-rotation-diagram.png)
 
 There is an event grid subscription to key vault expiration. The 
+
+
+## Understanding the code ? (to be done)
+
+- show a structure of the PowerShell functions
+- show key regeneration
+- how does it identify which key to rotate
 
 ---
 
@@ -259,6 +267,7 @@ https://github.com/Azure-Samples/KeyVault-Rotation-StorageAccountKey-PowerShell
 
 ## MS Article on fetching secrets from C# (not using IConfiguration)
 https://learn.microsoft.com/en-us/azure/key-vault/general/tutorial-net-create-vault-azure-web-app
+https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
 
 ## MS Article on fetching secrets from C# (using IConfiguration approach)
 https://learn.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-7.0
