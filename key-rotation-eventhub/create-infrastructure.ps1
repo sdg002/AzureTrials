@@ -39,3 +39,4 @@ Write-Host "Going to add secrets to the Key Vault $Global:KeyVault using ARM tem
     --verbose
 
 RaiseCliError -message "Failed to add secrets to the Key Vault"
+

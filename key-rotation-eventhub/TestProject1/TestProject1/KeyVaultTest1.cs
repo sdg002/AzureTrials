@@ -19,6 +19,12 @@ namespace TestProject1
         {
             try
             {
+                //
+                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
+                //you were about to install the package Azure.Security.KeyVault.Secrets
+
+                string keyVaultName = "saudemovault456";
+                var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
                 var options = new SecretClientOptions()
                 {
@@ -28,6 +34,8 @@ namespace TestProject1
                     }
                 };
                 var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(_kvUri), new DefaultAzureCredential(),options);
+
+                var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
 
                 var secretName = "eventhubcnstring";
@@ -45,13 +53,23 @@ namespace TestProject1
         [TestMethod]
         public void KeyVault_ConfigurationBuilder()
         {
+            //You were here, do some key vault stuff
+
             try
             {
+                //
+                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
+                //you were about to install the package Azure.Security.KeyVault.Secrets
+
                 var keyVaultConfigOptions = new Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions
                 {
                     ReloadInterval = TimeSpan.FromSeconds(30),
                 };
+                //var secretClient = new KeyVaultClient(new Defau)
+                string keyVaultName = "saudemovault456";
+                var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
+                //var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
                 var configuration = new ConfigurationBuilder()
                     .AddInMemoryCollection(new Dictionary<string, string?>()
@@ -78,17 +96,24 @@ namespace TestProject1
         [TestMethod]
         public void KeyVault_ConfigurationBuilder_Refresh()
         {
+            //You were here, do some key vault stuff
+
             try
             {
+                //
+                //you were reading this https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-net?tabs=azure-cli
+                //you were about to install the package Azure.Security.KeyVault.Secrets
 
                 const int RefreshSeconds = 30;
                 var keyVaultConfigOptions = new Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions
                 {
                     ReloadInterval = TimeSpan.FromSeconds(RefreshSeconds),
                 };
+                //var secretClient = new KeyVaultClient(new Defau)
                 string keyVaultName = "saudemovault456";
                 var kvUri = "https://" + keyVaultName + ".vault.azure.net";
 
+                //var client = new Azure.Security.KeyVault.Secrets.SecretClient(new Uri(kvUri), new DefaultAzureCredential());
 
                 var configuration = new ConfigurationBuilder()
                     .AddInMemoryCollection(new Dictionary<string, string?>()
