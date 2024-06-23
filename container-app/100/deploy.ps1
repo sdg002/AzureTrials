@@ -1,0 +1,1 @@
+. $PSScriptRoot/commonvariables.ps1
