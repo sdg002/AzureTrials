@@ -17,4 +17,11 @@ Write-Host "Deploying log analytics $Global:LogAnalytics"
     --parameters name=$Global:LogAnalytics  --verbose
 RaiseCliError -message "Failed to create log analytics workspace $Global:LogAnalytics"
 
+Write-Host "Deploying container apps environment $Global:ContainerAppsEnvironment"
+& az deployment group create --resource-group $Global:ResourceGroup `
+    --template-file "$PSScriptRoot\bicep\acaenvironment.bicep" `
+    --parameters name=$Global:ContainerAppsEnvironment  `
+    logworkspacename=$Global:LogAnalytics `
+    --verbose
+RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
 
