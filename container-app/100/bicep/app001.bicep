@@ -23,10 +23,15 @@ resource hello 'Microsoft.App/containerApps@2024-03-01' = {
       activeRevisionsMode: 'Single'
       ingress: {
         external: true
-        targetPort: 8080
+        targetPort: 80
         exposedPort: null
         transport: 'Auto'
-        traffic: null
+        traffic: [
+          {
+            latestRevision: true
+            weight: 100
+          }
+        ]
         customDomains: null
         allowInsecure: false
         ipSecurityRestrictions: null
@@ -47,7 +52,7 @@ resource hello 'Microsoft.App/containerApps@2024-03-01' = {
       terminationGracePeriodSeconds: null
       containers: [
         {
-          image: 'mcr.microsoft.com/mcr/hello-world:latest'
+          image: 'docker.io/nginx:latest'
           name: 'hello001'
           command: []
           env: [
@@ -66,7 +71,16 @@ resource hello 'Microsoft.App/containerApps@2024-03-01' = {
       scale: {
         minReplicas: 0
         maxReplicas: null
-        rules: null
+        rules: [
+          {
+            name: 'myhttprule'
+            http: {
+              metadata: {
+                concurrentRequests: '10'
+              }
+            }
+          }          
+        ]
       }
       volumes: null
       serviceBinds: null
