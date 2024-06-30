@@ -25,8 +25,7 @@ https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
 
 # What to do next ?
 You were reading the Medium article.
-- You got nginx to work
-- How to connect to Azure front door to your Container App
+- How to attach custom domain via Bicep 
 
 
 # Managed domain - you were reading this

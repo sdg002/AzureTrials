@@ -17,7 +17,7 @@ When an **App Service Domain** resource type is created, an instance of **DNS Zo
 # What domain are we creating when we create an App Service Domain ?
 We register a top level domain Example: **sau002.co.uk** . This itself does not point to any specific ip address - but just a top level domain.
 
-This will allow us to create sub-domains under contoso.com which map to various Azure Container Apps. Example: **crm.contoso.com**
+This will allow us to create sub-domains under contoso.com which map to various Azure Container Apps. Example: **crm.sau002.co.uk** or **crmdev.sau002.co.uk** or **crmprod.sau002.co.uk**
 
 **Attention** - Once the above resources are created you should be able to run `nslookup sau002.co.uk`
 
@@ -44,10 +44,16 @@ This will allow us to create sub-domains under contoso.com which map to various 
 
 ![asuid.blahapp.png](images/asuid.blahapp.png)
 
+![cname.blahapp.png](images/cname.blahapp.png)
+
+---
+
 
 # Step-2-Create a new asuid record for 'blahapp'
 
-Note - We create a TXT record with the name **asuid.blahapp** . We have pasted the identity string from the Azure Container App
+We need to prove to our DNS registrar (Azure in this case) that we have authority of the targe URL (ACA app in this case). The ACA app provides a digital id (asuid) which should be fed back to the DNS registrar 
+
+**Note** - We create a TXT record with the name **asuid.blahapp** . We have pasted the identity string from the Azure Container App
 
 ![asuid.blahapp-properties.png](images/asuid.blahapp-properties.png)
 
@@ -80,6 +86,7 @@ Aliases:  blahapp.sau002.co.uk
 
 ---
 
-# The changes take time to show up
+
+# Test-The changes take time to show up
 Few minutes.
 You can now test by navigating to `blahapp.sau002.co.uk`
