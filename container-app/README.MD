@@ -1,5 +1,8 @@
 Experiments with container apps
 
+# Step by step for attaching a new domain name to Azure Container app
+
+[Refer this document](docs/dnszone.md)
 
 # References
 
@@ -15,6 +18,10 @@ https://mcr.microsoft.com/en-us/product/mcr/hello-world/about
 
 ## Nice youtube
 https://www.youtube.com/watch?v=0Jb3RClw4jc
+
+## How to registe a new domain using Azure DNS Zone ?
+https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
+
 
 # What to do next ?
 You were reading the Medium article.
@@ -42,3 +49,18 @@ https://learn.microsoft.com/en-us/azure/container-apps/waf-app-gateway?tabs=defa
 
 # Create an App Service Domain
 https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain
+
+
+You were here
+try tagging domain to container app
+create bicep with domain
+create bicep for Domain
+
+```json
+    consent: {
+      agreedAt: '2024-06-26T21:17:22.5859535+01:00'
+      agreedBy: 'saurabh'
+    }
+
+```
+
