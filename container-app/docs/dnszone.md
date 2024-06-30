@@ -90,3 +90,20 @@ Aliases:  blahapp.sau002.co.uk
 # Test-The changes take time to show up
 Few minutes.
 You can now test by navigating to `blahapp.sau002.co.uk`
+
+---
+
+# ARM templates
+
+## App Service Domain
+
+[See sample](example.appservice.arm.json)
+
+
+## DNS Zone
+
+[See sample](example.appservicedomain.arm.json)
+
+- See every record is a resource
+- See how to pass asuid to the TXT record
+

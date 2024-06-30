@@ -1,0 +1,105 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "domains_sau002_co_uk_email": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameFirst": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameLast": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_phone": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_email_1": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameFirst_1": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameLast_1": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_phone_1": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_email_2": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameFirst_2": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameLast_2": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_phone_2": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_email_3": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameFirst_3": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_nameLast_3": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_phone_3": {
+            "type": "SecureString"
+        },
+        "domains_sau002_co_uk_name": {
+            "defaultValue": "sau002.co.uk",
+            "type": "String"
+        },
+        "dnszones_sau002_co_uk_externalid": {
+            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-container-apps-dev-uks/providers/Microsoft.Network/dnszones/sau002.co.uk",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DomainRegistration/domains",
+            "apiVersion": "2023-12-01",
+            "name": "[parameters('domains_sau002_co_uk_name')]",
+            "location": "global",
+            "tags": {
+                "costcenter": "123 456"
+            },
+            "properties": {
+                "privacy": false,
+                "autoRenew": false,
+                "dnsType": "AzureDns",
+                "dnsZoneId": "[parameters('dnszones_sau002_co_uk_externalid')]",
+                "contactAdmin": {
+                    "email": "[parameters('domains_sau002_co_uk_email')]",
+                    "nameFirst": "[parameters('domains_sau002_co_uk_nameFirst')]",
+                    "nameLast": "[parameters('domains_sau002_co_uk_nameLast')]",
+                    "phone": "[parameters('domains_sau002_co_uk_phone')]"
+                },
+                "contactBilling": {
+                    "email": "[parameters('domains_sau002_co_uk_email_1')]",
+                    "nameFirst": "[parameters('domains_sau002_co_uk_nameFirst_1')]",
+                    "nameLast": "[parameters('domains_sau002_co_uk_nameLast_1')]",
+                    "phone": "[parameters('domains_sau002_co_uk_phone_1')]"
+                },
+                "contactRegistrant": {
+                    "email": "[parameters('domains_sau002_co_uk_email_2')]",
+                    "nameFirst": "[parameters('domains_sau002_co_uk_nameFirst_2')]",
+                    "nameLast": "[parameters('domains_sau002_co_uk_nameLast_2')]",
+                    "phone": "[parameters('domains_sau002_co_uk_phone_2')]"
+                },
+                "contactTech": {
+                    "email": "[parameters('domains_sau002_co_uk_email_3')]",
+                    "nameFirst": "[parameters('domains_sau002_co_uk_nameFirst_3')]",
+                    "nameLast": "[parameters('domains_sau002_co_uk_nameLast_3')]",
+                    "phone": "[parameters('domains_sau002_co_uk_phone_3')]"
+                },
+                "consent": {}
+            }
+        }
+    ]
+}
