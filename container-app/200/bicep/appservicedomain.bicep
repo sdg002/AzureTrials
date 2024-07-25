@@ -58,7 +58,7 @@ resource saucom 'Microsoft.DomainRegistration/domains@2023-12-01' = {
     consent:{
       agreedAt: '2024-06-26T21:17:22'
       agreedBy: 'Sau'
-      agreementKeys: []
+      agreementKeys: ['DNRA','DNPA']
     }
     privacy: true
     autoRenew: false
