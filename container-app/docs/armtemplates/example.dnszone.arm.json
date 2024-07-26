@@ -1,0 +1,177 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dnszones_sau002_co_uk_name": {
+            "defaultValue": "sau002.co.uk",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/dnszones",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[parameters('dnszones_sau002_co_uk_name')]",
+            "location": "global",
+            "properties": {
+                "zoneType": "Public"
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/blahapp')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 300,
+                "CNAMERecord": {
+                    "cname": "casaudevuksouth.jollypond-d12792b5.uksouth.azurecontainerapps.io"
+                },
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/CNAME",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/dummy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "CNAMERecord": {
+                    "cname": "casaudevuksouth.jollypond-d12792b5.uksouth.azurecontainerapps.io"
+                },
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/NS",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/@')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 172800,
+                "NSRecords": [
+                    {
+                        "nsdname": "ns1-36.azure-dns.com."
+                    },
+                    {
+                        "nsdname": "ns2-36.azure-dns.net."
+                    },
+                    {
+                        "nsdname": "ns3-36.azure-dns.org."
+                    },
+                    {
+                        "nsdname": "ns4-36.azure-dns.info."
+                    }
+                ],
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/SOA",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/@')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "SOARecord": {
+                    "email": "azuredns-hostmaster.microsoft.com",
+                    "expireTime": 2419200,
+                    "host": "ns1-36.azure-dns.com.",
+                    "minimumTTL": 300,
+                    "refreshTime": 3600,
+                    "retryTime": 300,
+                    "serialNumber": 1
+                },
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/TXT",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/asuid.blahapp')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 60,
+                "TXTRecords": [
+                    {
+                        "value": [
+                            "85CFBE3C419174E53D3F4F4EFCE4ABD0E363F4096DD33290351AA8E63A0956D0"
+                        ]
+                    }
+                ],
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/TXT",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/asuid.blahapp.', parameters('dnszones_sau002_co_uk_name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "TXTRecords": [
+                    {
+                        "value": [
+                            "85CFBE3C419174E53D3F4F4EFCE4ABD0E363F4096DD33290351AA8E63A0956D0"
+                        ]
+                    }
+                ],
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/TXT",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/asuid.dummy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "TXTRecords": [
+                    {
+                        "value": [
+                            "85CFBE3C419174E53D3F4F4EFCE4ABD0E363F4096DD33290351AA8E63A0956D0"
+                        ]
+                    }
+                ],
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.Network/dnszones/TXT",
+            "apiVersion": "2023-07-01-preview",
+            "name": "[concat(parameters('dnszones_sau002_co_uk_name'), '/blahapps')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnszones', parameters('dnszones_sau002_co_uk_name'))]"
+            ],
+            "properties": {
+                "TTL": 3600,
+                "TXTRecords": [],
+                "targetResource": {},
+                "trafficManagementProfile": {}
+            }
+        }
+    ]
+}
