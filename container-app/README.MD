@@ -1,3 +1,4 @@
+[[_TOC_]]
 Experiments with container apps
 
 # Step by step for attaching a new domain name to Azure Container app
