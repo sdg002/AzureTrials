@@ -118,13 +118,14 @@ You can now test by navigating to `blahapp.sau002.co.uk`
 
 ## App Service Domain
 
-[See sample](example.appservice.arm.json)
+[See sample](armtemplates/example.appservice.arm.json)
 
 
 ## DNS Zone
 
-[See sample](example.appservicedomain.arm.json)
+[See sample](armtemplates/example.dnszone.arm.json)
 
-- See every record is a resource
-- See how to pass asuid to the TXT record
+The notable features of this ARM template is:
+- Every DNS record is a resource in the template
+- Take note of how to pass the long custom domain verification identifier string to the TXT record resource of the ARM template
 
