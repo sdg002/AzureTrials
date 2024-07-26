@@ -42,9 +42,12 @@ This will allow us to create sub-domains under contoso.com which map to various 
 
 # Step-1-Create a new child domain 'blahapp'
 
-![asuid.blahapp.png](images/asuid.blahapp.png)
 
-![cname.blahapp.png](images/cname.blahapp.png)
+![add a new child domain](images/domain-001-add-cname-record.PNG)
+
+after adding, there would be a new record
+
+![after adding cname](images/domain-002-after-adding-cname-record.png)
 
 ---
 
@@ -53,9 +56,9 @@ This will allow us to create sub-domains under contoso.com which map to various 
 
 We need to prove to our DNS registrar (Azure in this case) that we have authority of the targe URL (ACA app in this case). The ACA app provides a digital id (asuid) which should be fed back to the DNS registrar 
 
-**Note** - We create a TXT record with the name **asuid.blahapp** . We have pasted the identity string from the Azure Container App
+**Note** - We create a TXT record with the name **asuid.blahapp** . We have pasted the identity string from the Azure Container App (from the Settings->Custom domains blade of the container app)
 
-![asuid.blahapp-properties.png](images/asuid.blahapp-properties.png)
+![asuid record](images/domain-003-add-asuid.png)
 
 
 The indentifier string under the **Value** section comes from the Azure Container App's Domain section.
@@ -65,6 +68,8 @@ Verify using **nslookup**
 ```
 nslookup blahapp.co.uk
 ```
+
+Output from nslookup:
 
 ```
 C:\Users\saurabhd>nslookup blahapp.sau002.co.uk
@@ -77,12 +82,23 @@ Address:  52.151.106.199
 Aliases:  blahapp.sau002.co.uk
 ```
 
+We can see that blahapp.sau002.co.uk is redirecting to the internal host name of the container app
 
 ---
 
 # Step-3-Attach the new domain to the Azure Container App
 
+##  Custom domain settings of the container app
+![custom domain settings blad](images/domain-004-containerapp-custom-domain-settings.png)
+
+
+## Specify the fully qualified domain name
+
 ![aca-add-custom-domain-2](images/aca-add-custom-domain-2.png)
+
+
+## After Validating and adding the new domain
+![after attaching the new domain](images/domain-005-containerapp-after-adding-custom-domain.PNG)
 
 ---
 
