@@ -4,20 +4,21 @@
 
 $Global:ResourceGroup
 
-$resources=(az resource list --resource-group $Global:ResourceGroup | ConvertFrom-Json -AsHashTable)
-
-if ($null -eq $resources)
-{
-    Write-Host "No resources found"
-    exit
-}
-Write-host ("Found {0} resources" -f $resources.Count)
 
 
 
 function DeleteResources()
 {
     $count_deleted=0
+    $resources=(az resource list --resource-group $Global:ResourceGroup | ConvertFrom-Json -AsHashTable)
+
+    if ($null -eq $resources)
+    {
+        Write-Host "No resources found"
+        return $count_deleted
+    }
+    Write-host ("Found {0} resources" -f $resources.Count)
+    
     foreach($resource in $resources) 
     { 
     
