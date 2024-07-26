@@ -7,8 +7,13 @@ The manual steps neccessary to
 
 ---
 
+# What is an App Service Domain ?
+App Service domains are custom domains that are managed directly in Azure. They make it easy to manage custom domains for Azure App Service. Refer [this Microsoft link](https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain) for more information
+
+
 
 # How to create a DNS Zone in Azure ?
+
 When an **App Service Domain** resource type is created, an instance of **DNS Zone** type is automatically created.
 ![app-service-domain.png](images/app-service-domain-and-dns-zone.png)
 

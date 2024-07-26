@@ -17,10 +17,10 @@ https://learn.microsoft.com/en-us/azure/templates/microsoft.app/containerapps?pi
 ## Hello world image from Microsoft
 https://mcr.microsoft.com/en-us/product/mcr/hello-world/about
 
-## Nice youtube
+## Nice Youtube video
 https://www.youtube.com/watch?v=0Jb3RClw4jc
 
-## How to registe a new domain using Azure DNS Zone ?
+## How to registeR a new domain using Azure DNS Zone ?
 https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
 
 
@@ -51,6 +51,7 @@ https://learn.microsoft.com/en-us/azure/container-apps/waf-app-gateway?tabs=defa
 https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain
 
 
+# Remove this section or tidy it up!
 You were here
 try tagging domain to container app
 create bicep with domain
