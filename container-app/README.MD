@@ -53,6 +53,7 @@ https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
 - Deploy to custom Azure Custom registry
 - How do you push this image to an existing Azure Container App
 - Create a long running job
+- Deploy a web app and a long running job. Make the job interact to the web app via REST.
 
 ---
 
