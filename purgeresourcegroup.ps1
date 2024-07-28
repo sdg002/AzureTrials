@@ -1,8 +1,5 @@
-. $PSScriptRoot/common.ps1
-
-
-
-$Global:ResourceGroup
+param ([Parameter(Mandatory)][string]$ResourceGroup)
+#TODO make this parameter mandatory
 
 
 
@@ -10,7 +7,7 @@ $Global:ResourceGroup
 function DeleteResources()
 {
     $count_deleted=0
-    $resources=(az resource list --resource-group $Global:ResourceGroup | ConvertFrom-Json -AsHashTable)
+    $resources=(az resource list --resource-group $ResourceGroup | ConvertFrom-Json -AsHashTable)
 
     if ($null -eq $resources)
     {
