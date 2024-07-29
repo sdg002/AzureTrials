@@ -5,9 +5,11 @@ def do_some_long_running_operation():
     """
     Emulate a long running job by looping for ever and keep writing to the console
     """
+    counter=0
     while True:
-        print(f"Time now is {dt.datetime.now()}")        
-        time.sleep(0.5)    
+        counter+=1
+        print(f"Time now is {dt.datetime.now()}, {counter=}")
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":
