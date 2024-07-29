@@ -16,3 +16,13 @@ function RaiseCliError($message){
     }
     Write-Error -Message $message
 }
+
+<#
+ThrowErrorIfExitCode is more sensible
+#>
+function ThrowErrorIfExitCode($message){
+    if (0 -eq $LASTEXITCODE){
+        return
+    }
+    Write-Error -Message $message
+}
