@@ -1,5 +1,7 @@
 param ([Parameter(Mandatory)][string]$ResourceGroup)
-#TODO make this parameter mandatory
+#TODO warn the user that this will delete, 
+#TODO Comments in this script
+#TODO Show the current subscription details before you warn the user
 
 
 
