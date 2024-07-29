@@ -3,3 +3,4 @@
 
 
 $Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
+$Global:LocalImageName="junkpython"
