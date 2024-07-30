@@ -21,3 +21,7 @@ docker push  "$LocalImageWithRemoteTag"
 ThrowErrorIfExitCode -Message "Docker push failed"
 #& az acr
 Write-Host "Push complete"
+
+#How do you create a job using the image uploaded (YOU WERE HERE)?
+#https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest#az-containerapp-job-create
+# az container app job create
