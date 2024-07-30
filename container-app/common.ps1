@@ -7,6 +7,13 @@ if ([string]::IsNullOrWhiteSpace($Global:environment)){
 Write-Host "The environment is $Global:environment"
 $Global:ResourceGroup="rg-demo-container-apps-$Global:environment-uks"
 $Global:Location="uksouth"
+
+
+$Global:LogAnalytics="democontainerapplogworkspace$($Global:environment)"
+$Global:ContainerAppsEnvironment="caedemosau$($Location)001"
+$Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
+
+
 <#
 This function should be called after every invocation of Azure CLI to check for success
 #>
