@@ -19,3 +19,6 @@ Demonstrates a simple solution which can be useful in automating the rotation of
 
 # Cosmos Bulk Deletes using PowerShell
 [Link to Github folder](cosmos-bulk-delete/README.MD)
+
+# Purge all resources in a Resource Group
+Refer script [purgeresourcegroup.ps1](purgeresourcegroup.ps1)
