@@ -1,8 +1,17 @@
 param ([Parameter(Mandatory)][string]$ResourceGroup)
-#TODO warn the user that this will delete, 
-#TODO Comments in this script
-#TODO Show the current subscription details before you warn the user
 
+<#
+This PS script will delete all resources from the specified resource group
+
+Does it use Azure CLI?
+-----------------------
+Yes
+
+How does it work ?
+-----------------
+It attempts to delete in an infite loop till no more resources are left. This strategy takes care of resources
+which are hard to delete due to interdependencies
+#>
 
 
 
