@@ -8,6 +8,7 @@ param ([Parameter(Mandatory)][string]$ResourceGroup)
 
 function DeleteResources()
 {
+    Write-Host "Building list of resources in the resource group '$ResourceGroup'"
     $count_deleted=0
     $resources=(az resource list --resource-group $ResourceGroup | ConvertFrom-Json -AsHashTable)
 
@@ -34,13 +35,30 @@ function DeleteResources()
     return $count_deleted
 }
 
-while ($true) 
-{
-    $deleted=DeleteResources
-    if (0 -eq $deleted)
+function DeleteInLoop {
+    while ($true) 
     {
-        Write-Host "No more resources to delete"
-        break;
+        $deleted=DeleteResources
+        if (0 -eq $deleted)
+        {
+            Write-Host "No more resources to delete"
+            break;
+        }
+        Write-Host "No of resources deleted=$deleted Going to try again"
     }
-    Write-Host "No of resources deleted=$deleted Going to try again"
+}    
+
+$subscription=& az account show --query name
+Write-Host "Current subscription is: $subscription"
+
+Write-Host "You entered Resource Grou: $ResourceGroup"
+
+$passphrase= ("iamsure{0}" -f (Get-date).Millisecond)
+$choice=Read-Host -Prompt "This script will delete all resources from the specified resource group. Type $passphrase to coninue"
+if ($passphrase -ne $choice)
+{
+    Write-Host "Does not match the expected pass phrase $passphrase. Quitting"
+    exit
 }
+DeleteInLoop
+
