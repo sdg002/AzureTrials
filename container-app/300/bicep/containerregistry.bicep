@@ -2,6 +2,12 @@ param name string
 param location string = resourceGroup().location
 
 
+resource registryManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: '${name}identity'
+  location: location
+  tags: resourceGroup().tags
+}
+
 resource saupycontainerregistrydev 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   sku: {
     name: 'Basic'
@@ -10,7 +16,10 @@ resource saupycontainerregistrydev 'Microsoft.ContainerRegistry/registries@2023-
   location: location
   tags: resourceGroup().tags
   identity:{
-    type:'SystemAssigned'
+    type:'SystemAssigned, UserAssigned'
+    userAssignedIdentities:{
+      '${registryManagedIdentity.id}': {}
+    }
   }
   
   properties: {
