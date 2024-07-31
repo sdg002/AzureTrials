@@ -29,7 +29,17 @@ resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
       certificateValue: null
       certificatePassword: null
     }
-    workloadProfiles: null
+    workloadProfiles: [
+/*      
+NOT ACCEPTED
+      {
+        maximumCount: 1
+        minimumCount: 1
+        name: ''
+        workloadProfileType:'Consumption'
+      }
+*/
+]
     infrastructureResourceGroup: null
     peerAuthentication: {
       mtls: {

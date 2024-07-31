@@ -28,6 +28,15 @@ In this exercise:
 
 ---
 
+# 300 - Creating an ACR and deploying a Job
+
+https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest#az-containerapp-job-create
+
+## Workload profile types
+https://learn.microsoft.com/en-us/azure/container-apps/workload-profiles-overview
+
+Look at the table of possible values. The Consumption type must have the name Consumption
+
 # References
 
 ## Medium-Bicep template for Azure Container Environment
