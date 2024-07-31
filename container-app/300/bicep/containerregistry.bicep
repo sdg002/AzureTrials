@@ -8,7 +8,10 @@ resource saupycontainerregistrydev 'Microsoft.ContainerRegistry/registries@2023-
   }
   name: name
   location: location
-  tags: {}
+  tags: resourceGroup().tags
+  identity:{
+    type:'SystemAssigned'
+  }
   
   properties: {
     adminUserEnabled: true
