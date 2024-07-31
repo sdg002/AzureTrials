@@ -11,6 +11,10 @@ resource logworkspaceresource 'Microsoft.OperationalInsights/workspaces@2023-09-
 resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: name
   location: location
+  tags: resourceGroup().tags
+  identity: {
+    type:'SystemAssigned'
+  }
   properties: {
     daprAIInstrumentationKey: null
     daprAIConnectionString: null
