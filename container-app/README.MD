@@ -37,6 +37,19 @@ https://learn.microsoft.com/en-us/azure/container-apps/workload-profiles-overvie
 
 Look at the table of possible values. The Consumption type must have the name Consumption
 
+## Container-registry role assignment
+https://stackoverflow.com/questions/74413085/how-do-i-configure-my-bicep-scripts-to-allow-a-container-app-to-pull-an-image-fr
+
+## Azure built in role ids
+https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
+Refer 7f951dda-4ed3-4680-a7ca-43fe172d538d for AcrPull
+
+## When using system assigned identity, bicep deployment with acr pull fails 
+https://github.com/microsoft/azure-container-apps/issues/836
+
+## Example of assigning managed identity
+https://larry.claman.net/post/2021-08-19-21-bicep-uami/
+
 # References
 
 ## Medium-Bicep template for Azure Container Environment

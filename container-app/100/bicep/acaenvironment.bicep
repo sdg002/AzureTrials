@@ -13,7 +13,10 @@ resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   location: location
   tags: resourceGroup().tags
   identity: {
-    type:'SystemAssigned'
+    type:'SystemAssigned, UserAssigned'
+    userAssignedIdentities:{
+      '${acaManagedIdentity.id}': {}
+    }
   }
   properties: {
     daprAIInstrumentationKey: null
@@ -56,4 +59,10 @@ NOT ACCEPTED
       }
     }
   }
+}
+
+resource acaManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: '${name}identity'
+  location: location
+  tags: resourceGroup().tags
 }
