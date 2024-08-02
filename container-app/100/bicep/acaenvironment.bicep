@@ -1,6 +1,7 @@
 param location string = resourceGroup().location
 param name string
 param logworkspacename string
+param identityname string
 
 resource logworkspaceresource 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
   name: logworkspacename
@@ -62,7 +63,7 @@ NOT ACCEPTED
 }
 
 resource acaManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: '${name}identity'
+  name: identityname
   location: location
   tags: resourceGroup().tags
 }

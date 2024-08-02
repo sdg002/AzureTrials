@@ -25,6 +25,7 @@ Write-Host "Deploying container apps environment $Global:ContainerAppsEnvironmen
     --template-file "$PSScriptRoot\bicep\acaenvironment.bicep" `
     --parameters name=$Global:ContainerAppsEnvironment  `
     logworkspacename=$Global:LogAnalytics `
+    identityname=$Global:ContainerAppsEnvironmentManagedIdentity `
     --verbose
 RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
 
