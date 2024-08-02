@@ -32,6 +32,30 @@ In this exercise:
 
 https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest#az-containerapp-job-create
 
+## How to create a managed identity ?
+
+```
+resource acaManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: "name_of_the_identity"
+  location: location
+  tags: resourceGroup().tags
+}
+```
+
+
+## How to assign a managed identity ?
+
+You will need to have an identity reference as shown below:
+```
+  identity: {
+    type:'SystemAssigned, UserAssigned'
+    userAssignedIdentities:{
+      '${acaManagedIdentity.id}': {}
+    }
+  }
+
+```
+
 ## Workload profile types
 https://learn.microsoft.com/en-us/azure/container-apps/workload-profiles-overview
 
