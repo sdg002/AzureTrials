@@ -37,14 +37,3 @@ RaiseCliError -message "Failed to create container apps environment $Global:Cont
 # & az acr create --resource-group $Global:ResourceGroup --name $ContainerRegistry --sku Basic --admin-enabled true
 # RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
 
-<#
-Create Container App 
-#>
-Write-Host "Creating container app $Global:ContainerApp001"
-& az deployment group create --resource-group $Global:ResourceGroup `
-    --template-file "$PSScriptRoot\bicep\app001.bicep" `
-    --parameters `
-    acaenvironmentname=$Global:ContainerAppsEnvironment  `
-    name=$Global:ContainerApp001 `
-    --verbose
-RaiseCliError -message "Failed to create container app  $Global:ContainerApp001"
