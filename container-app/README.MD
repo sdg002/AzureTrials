@@ -1,5 +1,11 @@
 [[_TOC_]]
-Experiments with container apps
+
+# Experiments with container apps
+
+
+# Overview
+
+![resourcegroup.png](docs/ppt-images/resourcegroup.png)
 
 ---
 
@@ -174,8 +180,8 @@ https://www.youtube.com/watch?v=WLIU18WF77c
 
 
 # Next steps
-    - How to start the Job and disply the logs on the Console (via az)
-    - Explain how to monitor
-    - KQL queries    
-    - Explain the table
-    - How to use Bicep Viewer in VS Code
+    1.How to start the Job and disply the logs on the Console (via az)
+    1. Explain how to monitor
+    1. KQL queries    
+    1. Explain the table
+    1. How to use Bicep Viewer in VS Code
