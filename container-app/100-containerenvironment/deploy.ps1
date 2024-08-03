@@ -29,11 +29,3 @@ Write-Host "Deploying container apps environment $Global:ContainerAppsEnvironmen
     --verbose
 RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
 
-# do it via Bicep
-# <#
-# Create Azure Container Registry
-# #>
-# Write-Host "Creating container registry $ContainerRegistry"
-# & az acr create --resource-group $Global:ResourceGroup --name $ContainerRegistry --sku Basic --admin-enabled true
-# RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
-
