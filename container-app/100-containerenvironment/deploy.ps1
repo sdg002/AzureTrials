@@ -25,24 +25,7 @@ Write-Host "Deploying container apps environment $Global:ContainerAppsEnvironmen
     --template-file "$PSScriptRoot\bicep\acaenvironment.bicep" `
     --parameters name=$Global:ContainerAppsEnvironment  `
     logworkspacename=$Global:LogAnalytics `
+    identityname=$Global:ContainerAppsEnvironmentManagedIdentity `
     --verbose
 RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
 
-<#
-Create Azure Container Registry
-#>
-Write-Host "Creating container registry $ContainerRegistry"
-& az acr create --resource-group $Global:ResourceGroup --name $ContainerRegistry --sku Basic --admin-enabled true
-RaiseCliError -message "Failed to create container apps environment $Global:ContainerAppsEnvironment"
-
-<#
-Create Container App 
-#>
-Write-Host "Creating container app $Global:ContainerApp001"
-& az deployment group create --resource-group $Global:ResourceGroup `
-    --template-file "$PSScriptRoot\bicep\app001.bicep" `
-    --parameters `
-    acaenvironmentname=$Global:ContainerAppsEnvironment  `
-    name=$Global:ContainerApp001 `
-    --verbose
-RaiseCliError -message "Failed to create container app  $Global:ContainerApp001"

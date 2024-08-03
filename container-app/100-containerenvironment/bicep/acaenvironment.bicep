@@ -1,6 +1,7 @@
 param location string = resourceGroup().location
 param name string
 param logworkspacename string
+param identityname string
 
 resource logworkspaceresource 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
   name: logworkspacename
@@ -11,6 +12,13 @@ resource logworkspaceresource 'Microsoft.OperationalInsights/workspaces@2023-09-
 resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: name
   location: location
+  tags: resourceGroup().tags
+  identity: {
+    type:'SystemAssigned, UserAssigned'
+    userAssignedIdentities:{
+      '${acaManagedIdentity.id}': {}
+    }
+  }
   properties: {
     daprAIInstrumentationKey: null
     daprAIConnectionString: null
@@ -29,7 +37,9 @@ resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
       certificateValue: null
       certificatePassword: null
     }
-    workloadProfiles: null
+    workloadProfiles: [
+
+]
     infrastructureResourceGroup: null
     peerAuthentication: {
       mtls: {
@@ -42,4 +52,10 @@ resource lalaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
       }
     }
   }
+}
+
+resource acaManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: identityname
+  location: location
+  tags: resourceGroup().tags
 }
