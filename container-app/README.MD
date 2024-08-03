@@ -24,7 +24,7 @@ In this exercise:
 
 # 300-Registry
 1. Create an instance of Azure Container Registry
-1. Assign AcrPull permissions to the Azure Container Environment so that images can be pulled without the need for login and password
+1. Add the system and user assigned identity of the Azure Container Environment to the AcrPull RBAC role of the Azure Container Registry,  so that images can be pulled without the need for login and password
 
 # xxx-Step by step for creating and attaching a new domain name to Azure Container app
 
