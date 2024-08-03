@@ -94,6 +94,19 @@ You will need to have an identity reference as shown below:
   }
 
 ```
+---
+
+# Lessons learnt
+
+## When locks are applied
+
+You are likely to ecounter this error while trying to delete objects connected to DNS zone. Refer error messages in [locks.md](docs/locks.md)
+
+## System identity does not work well when ACA tries an ACR pull
+
+See role assignment in [300-registry](300-registry)
+
+---
 
 # References
 
