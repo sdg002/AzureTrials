@@ -26,6 +26,16 @@ In this exercise:
 1. Create an instance of Azure Container Registry
 1. Add the system and user assigned identity of the Azure Container Environment to the AcrPull RBAC role of the Azure Container Registry,  so that images can be pulled without the need for login and password
 
+# 400-Job
+1. How to do a local docker build
+1. Link to [sample Python source code](sample-job-app/)
+1. Attention - In practice, there would be a CI/CD pipeline that would be responsible for Docker build and push operations. For this exercise please refer to the following scripts:
+1. How to initiate a Docker build ? Run the script [buildimage.ps1](400-job/buildimage.ps1)
+1. How to push the local Docker image to Azure Container Registry? Run the script [buildimage.ps1](400-job/pushimage.ps1)
+
+---
+
+
 # xxx-Step by step for creating and attaching a new domain name to Azure Container app
 
 In this exercise:
