@@ -64,7 +64,24 @@ resource acaManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@20
 }
 ```
 
+## Permissions needed by Container app on ACR
 
+This is a critical configuration without which the container app cannot pull the specified image from the Azure Container Registry. The managed identity of the 
+
+```
+var acrPullId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+
+resource roleAssignmentContainerEnvironmentManagedIdentityAcrPull 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  scope: registryresource
+  name: guid(resourceGroup().id,acaidentity.name,acrPullId)
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions',acrPullId)
+    principalId: acaidentity.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+```
 ## How to assign a managed identity ?
 
 You will need to have an identity reference as shown below:
@@ -77,24 +94,6 @@ You will need to have an identity reference as shown below:
   }
 
 ```
-
-## Workload profile types
-https://learn.microsoft.com/en-us/azure/container-apps/workload-profiles-overview
-
-Look at the table of possible values. The Consumption type must have the name Consumption
-
-## Container-registry role assignment
-https://stackoverflow.com/questions/74413085/how-do-i-configure-my-bicep-scripts-to-allow-a-container-app-to-pull-an-image-fr
-
-## Azure built in role ids
-https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
-Refer 7f951dda-4ed3-4680-a7ca-43fe172d538d for AcrPull
-
-## When using system assigned identity, bicep deployment with acr pull fails 
-https://github.com/microsoft/azure-container-apps/issues/836
-
-## Example of assigning managed identity
-https://larry.claman.net/post/2021-08-19-21-bicep-uami/
 
 # References
 
@@ -127,13 +126,31 @@ https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
 
 # References
 
+## Workload profile types
+https://learn.microsoft.com/en-us/azure/container-apps/workload-profiles-overview
+
+Look at the table of possible values. The Consumption type must have the name Consumption
+
+## Container-registry role assignment
+https://stackoverflow.com/questions/74413085/how-do-i-configure-my-bicep-scripts-to-allow-a-container-app-to-pull-an-image-fr
+
+## Azure built in role ids
+https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
+Refer 7f951dda-4ed3-4680-a7ca-43fe172d538d for AcrPull
+
+## When using system assigned identity, bicep deployment with acr pull fails 
+https://github.com/microsoft/azure-container-apps/issues/836
+
+## Example of assigning managed identity
+https://larry.claman.net/post/2021-08-19-21-bicep-uami/
+
+
+
 ## Managed domain 
 https://learn.microsoft.com/en-us/azure/container-apps/custom-domains-managed-certificates?pivots=azure-portal
 
 
-
 ## Create a private Zone
-
 https://learn.microsoft.com/en-us/azure/container-apps/waf-app-gateway?tabs=default-domain
 
 ---
@@ -141,6 +158,8 @@ https://learn.microsoft.com/en-us/azure/container-apps/waf-app-gateway?tabs=defa
 ## Create an App Service Domain
 https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain
 
+
+---
 
 
 # Tidy up
