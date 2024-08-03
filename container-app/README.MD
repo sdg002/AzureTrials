@@ -3,18 +3,30 @@ Experiments with container apps
 
 ---
 
-# 100 - Create Azure Container Environment and Container App via Bicep
+# 100-Container Environment
 
 In this exercise:
 1. Create an instance of Azure Container Environment (via Bicep)
+1. Assign a managed identityt to the Azure Container Environment (will be used for simplifiyng image pull in subsequent steps)
 1. Creaet an instance of Log Analytics (via Bicep)
-1. Create an Azure Container App with a well known image  (via Bicep)
-1. Click [here](100) to see the folder files.
-1. Click on `deploy.ps1` to deploy the resources
+1. Click [here](100-containerenvironment) to browse the files in this folder
+1. Click on [deploy.ps1](100-containerenvironment/deploy.ps1) to deploy the resources
 
 ---
 
-# 200-Step by step for creating and attaching a new domain name to Azure Container app
+# 200-Webapp
+
+1. Create an Azure Container App with a well known image  (via Bicep)
+1. We are not yet creating our own images at this stage
+1. Click [here](200-webapp) to browse the files in this folder
+
+---
+
+# 300-Registry
+1. Create an instance of Azure Container Registry
+1. Assign AcrPull permissions to the Azure Container Environment so that images can be pulled without the need for login and password
+
+# xxx-Step by step for creating and attaching a new domain name to Azure Container app
 
 In this exercise:
 
