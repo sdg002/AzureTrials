@@ -1,6 +1,10 @@
 param acaenvironmentname string
 param registryname string
 
+/*
+The Container environment must have permissions to pull from ACR. 
+The identity should be added to AcrPull role.
+*/
 var acrPullId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
 resource acaenvironment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
