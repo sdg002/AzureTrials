@@ -97,18 +97,17 @@ You will need to have an identity reference as shown below:
 
 # References
 
-## Medium-Bicep template for Azure Container Environment
-https://willvelida.medium.com/creating-and-provisioning-azure-container-apps-with-bicep-ebe83d733b02
-
-
-##  Bicep reference for container apps
+##  Microsoft-Bicep reference for container apps
+This is the source of truth for any Bicep. But examples are often lacking
 https://learn.microsoft.com/en-us/azure/templates/microsoft.app/containerapps?pivots=deployment-language-bicep
+
+## Medium-Bicep template for Azure Container Environment
+A short and sweet example with biceps
+https://willvelida.medium.com/creating-and-provisioning-azure-container-apps-with-bicep-ebe83d733b02
 
 ## Hello world image from Microsoft
 https://mcr.microsoft.com/en-us/product/mcr/hello-world/about
 
-## Nice Youtube video
-https://www.youtube.com/watch?v=0Jb3RClw4jc
 
 ## How to register a new domain using Azure DNS Zone ?
 https://learn.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns
@@ -125,6 +124,7 @@ Look at the table of possible values. The Consumption type must have the name Co
 https://stackoverflow.com/questions/74413085/how-do-i-configure-my-bicep-scripts-to-allow-a-container-app-to-pull-an-image-fr
 
 ## Azure built in role ids
+We need to use these guids to when we want to do a role assignment to any built in role. E.g. ACA should be in AcrPull role of the registry
 https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 Refer 7f951dda-4ed3-4680-a7ca-43fe172d538d for AcrPull
 
@@ -149,10 +149,17 @@ https://learn.microsoft.com/en-us/azure/container-apps/waf-app-gateway?tabs=defa
 https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain
 
 
+## Nice Youtube video on Azure Front Door on top of Azure Container Apps
+https://www.youtube.com/watch?v=0Jb3RClw4jc
+
+## Nice Youtube video on Azure Application Gateway on top of Azure Container Apps
+With lots of Bicep templates explained. See Bicep viewer in VS Code
+https://www.youtube.com/watch?v=WLIU18WF77c
+
 ---
 
 
-# Tidy up
+# Tidy up (Remove everything below this)
 - Bring in junk.ps1 into mainstream deploy.ps1
 - Registry creation as a separate chapter  -no need for environment
 - Move role assignment out of 300 into registry creation
@@ -173,3 +180,7 @@ https://learn.microsoft.com/en-us/azure/app-service/manage-custom-dns-buy-domain
     KQL queries
     Explain the table
     How to start the Job and disply the logs on the Console (via az)
+
+## How to use Bicep Viewer in VS Code
+?? Find out
+    
