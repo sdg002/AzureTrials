@@ -1,9 +1,12 @@
 param acaenvironmentname string
 param registryname string
+param acaidentityname string
+
 
 /*
 The Container environment must have permissions to pull from ACR. 
-The identity should be added to AcrPull role.
+The identity should be added to AcrPull role. Refer Builtin RBAC role ids
+https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 */
 var acrPullId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
@@ -15,7 +18,6 @@ resource registryresource 'Microsoft.ContainerRegistry/registries@2023-11-01-pre
   name: registryname
 }
 
-//var functionIdentity  = reference(resourceId('Microsoft.Web/sites/',acaenvironment),'2020-12-01','full').identity.principalId
 
 resource roleAssignmentContainerEnvironmentSystemIdentityAcrPull 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   scope: registryresource
@@ -28,7 +30,7 @@ resource roleAssignmentContainerEnvironmentSystemIdentityAcrPull 'Microsoft.Auth
 }
 
 resource acaidentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'caedemosauuksouth001identity'
+  name: acaidentityname
   location:resourceGroup().location
 }
 

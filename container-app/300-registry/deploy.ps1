@@ -18,6 +18,7 @@ Write-Host "Deploying registryroleassignment.bicep"
     --parameters `
     registryname=$Global:ContainerRegistry `
     acaenvironmentname=$Global:ContainerAppsEnvironment `
+    acaidentityname=$Global:ContainerAppsEnvironmentManagedIdentity `
     --verbose
 RaiseCliError -message "Failed to do role assignment"
 
