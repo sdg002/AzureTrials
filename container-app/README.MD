@@ -36,7 +36,7 @@ In this exercise:
 ---
 
 
-# xxx-Step by step for creating and attaching a new domain name to Azure Container app
+# 500-Step by step for creating and attaching a new domain name to Azure Container app
 
 In this exercise:
 
@@ -44,8 +44,8 @@ In this exercise:
 1. Create an instance of App Service Domain (via Bicep)
 1. [Refer this document for the manual steps](docs/dnszone.md)
 1. Manually create the CNAME and TXT records in the DNS Zone  (example: myapp.contoso.com)
-1. Manually add the new domain (myapp.contoso.com) to the Container app of Lab 100
-1. Click [here](200) to see the folder files.
+1. Manually add the new domain (myapp.contoso.com) to the Container app of Lab 200
+1. Click [here](500-dnszone) to see the folder files.
 1. Click on `deploy.ps1` to deploy the resources
 
 ---
