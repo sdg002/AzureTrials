@@ -106,6 +106,9 @@ You are likely to ecounter this error while trying to delete objects connected t
 
 See role assignment in [300-registry](300-registry)
 
+## When using system assigned identity, bicep deployment with acr pull fails 
+https://github.com/microsoft/azure-container-apps/issues/836
+
 ---
 
 # References
@@ -141,8 +144,6 @@ We need to use these guids to when we want to do a role assignment to any built 
 https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 Refer 7f951dda-4ed3-4680-a7ca-43fe172d538d for AcrPull
 
-## When using system assigned identity, bicep deployment with acr pull fails 
-https://github.com/microsoft/azure-container-apps/issues/836
 
 ## Example of assigning managed identity
 https://larry.claman.net/post/2021-08-19-21-bicep-uami/
@@ -172,28 +173,9 @@ https://www.youtube.com/watch?v=WLIU18WF77c
 ---
 
 
-# Tidy up (Remove everything below this)
-- Bring in junk.ps1 into mainstream deploy.ps1
-- Registry creation as a separate chapter  -no need for environment
-- Move role assignment out of 300 into registry creation
-- No need for environment name in ACR
-- Separate web app into a separate chapter
-- 
-## Section 100-Create ACA
-    Just ACA and required components like log analytics
-## Section 200-Deploy web app
-    Just web app from an image in Docker registry
-## Section 300-Create ACR and role assignment
-    Create ACR
-    ACA gets the rights to pull from ACR
-## Section 300-Deploy Job
-    Deploy job
-    Display logs
-    Explain how to monitor
-    KQL queries
-    Explain the table
-    How to start the Job and disply the logs on the Console (via az)
-
-## How to use Bicep Viewer in VS Code
-?? Find out
-    
+# Next steps
+    - How to start the Job and disply the logs on the Console (via az)
+    - Explain how to monitor
+    - KQL queries    
+    - Explain the table
+    - How to use Bicep Viewer in VS Code
