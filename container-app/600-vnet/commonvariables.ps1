@@ -3,3 +3,5 @@
 <#
 any vnet specific variables come here
 #>
+
+$Global:Vnet="vnetdev001"

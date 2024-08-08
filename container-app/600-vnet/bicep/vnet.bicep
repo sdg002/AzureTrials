@@ -1,4 +1,4 @@
-param vnetname string = 'vnet001'
+param vnetname string
 param subnetvmname string = 'subnetvm'
 param subnetcontainerenvname string = 'subnetcontainerenv'
 

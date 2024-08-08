@@ -2,19 +2,20 @@ param location string = resourceGroup().location
 param name string
 param logworkspacename string
 param identityname string
+param vnetname string
 
-param subnet string = 'subnetcontainerenv'
+var subnet  = 'subnetcontainerenv'
 
 resource logworkspaceresource 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
   name: logworkspacename
 }
 
-resource vnet001 'Microsoft.Network/virtualNetworks@2024-01-01' existing = {
-  name:'vnet001'
+resource vnet 'Microsoft.Network/virtualNetworks@2024-01-01' existing = {
+  name:vnetname
 }
 resource subnet001 'Microsoft.Network/virtualNetworks/subnets@2023-11-01' existing = {
   name: subnet
-  parent:vnet001
+  parent:vnet
 }
 
 @description('Generated from /subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-container-apps-dev-uks/providers/Microsoft.App/managedEnvironments/lala-environment')
