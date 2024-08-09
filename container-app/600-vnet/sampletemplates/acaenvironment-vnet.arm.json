@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "managedEnvironments_lalaa01123_name": {
+            "defaultValue": "lalaa01123",
+            "type": "String"
+        },
+        "virtualNetworks_vnetdev001_externalid": {
+            "defaultValue": "/subscriptions/635a2074-cc31-43ac-bebe-2bcd67e1abfe/resourceGroups/rg-demo-container-apps-dev-uks/providers/Microsoft.Network/virtualNetworks/vnetdev001",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.App/managedEnvironments",
+            "apiVersion": "2024-03-01",
+            "name": "[parameters('managedEnvironments_lalaa01123_name')]",
+            "location": "UK South",
+            "properties": {
+                "vnetConfiguration": {
+                    "internal": true,
+                    "infrastructureSubnetId": "[concat(parameters('virtualNetworks_vnetdev001_externalid'), '/subnets/newsubnetportal001')]"
+                },
+                "appLogsConfiguration": {},
+                "zoneRedundant": false,
+                "kedaConfiguration": {},
+                "daprConfiguration": {},
+                "customDomainConfiguration": {},
+                "workloadProfiles": [
+                    {
+                        "workloadProfileType": "Consumption",
+                        "name": "Consumption"
+                    }
+                ],
+                "infrastructureResourceGroup": "[concat('ME_', parameters('managedEnvironments_lalaa01123_name'), '_rg-demo-container-apps-dev-uks_uksouth')]",
+                "peerAuthentication": {
+                    "mtls": {
+                        "enabled": false
+                    }
+                },
+                "peerTrafficConfiguration": {
+                    "encryption": {
+                        "enabled": false
+                    }
+                }
+            }
+        }
+    ]
+}

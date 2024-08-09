@@ -56,6 +56,25 @@ In this exercise:
 
 ---
 
+# 600 - VNET integration
+
+# #MS guidance on creating ACA
+https://learn.microsoft.com/en-us/samples/azure/azure-quickstart-templates/container-app-vnet-external-environment/
+
+
+## MS article on ACA and locking down
+https://techcommunity.microsoft.com/t5/apps-on-azure-blog/azure-container-apps-virtual-network-integration/ba-p/3096932#:~:text=It%20is%20important%20to%20note,0.0%2F16
+
+
+## Caveats about CIDR range of subnet
+The default settings do not work. You need to select a CIDR with 23
+
+## How to examine a CIDR
+https://www.ipaddressguide.com/cidr
+
+
+---
+
 # 300 - Creating an ACR and deploying a Job
 
 https://learn.microsoft.com/en-us/cli/azure/containerapp/job?view=azure-cli-latest#az-containerapp-job-create
