@@ -58,6 +58,11 @@ In this exercise:
 
 # 600 - VNET integration
 
+
+## Good step by step article on ACA and VNET
+https://rikhepworth.com/post/2024/05/2024-05-17-deploying-an-azure-container-app-environment-within-a-virtual-network-using-bicep/
+
+
 # #MS guidance on creating ACA
 https://learn.microsoft.com/en-us/samples/azure/azure-quickstart-templates/container-app-vnet-external-environment/
 
