@@ -38,4 +38,91 @@ users:
 
 ```
 
+---
 
+# KubeCtl
+
+This is the CLI for dealing with Kubernetes
+
+## Where to download ?
+https://kubernetes.io/releases/download/#binaries
+
+Note  - this does not have an EXE extension. This is not zipped up. The file comes down read to be executed
+
+## Version check
+
+```
+kubectl version
+
+Client Version: v1.28.2
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+Server Version: v1.29.7
+```
+
+## cluster-info
+
+```
+kubectl cluster-info
+```
+
+
+Expected output
+```
+Kubernetes control plane is running at https://aks-dev-portal-dns-xs6owjf7.hcp.uksouth.azmk8s.io:443
+CoreDNS is running at https://aks-dev-portal-dns-xs6owjf7.hcp.uksouth.azmk8s.io:443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Metrics-server is running at https://aks-dev-portal-dns-xs6owjf7.hcp.uksouth.azmk8s.io:443/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+
+---
+
+## cluster-info with dump option
+
+```
+kubectl cluster-info dump --output-directory .\kube-dump
+```
+
+Expected output
+```
+root
+    -default
+    -kube-system
+```
+
+
+## get nodes
+
+```
+kubectl get nodes
+```
+Expected output:
+```
+NAME                                  STATUS   ROLES    AGE   VERSION
+aks-mysystempol-70397340-vmss000000   Ready    <none>   38m   v1.29.7
+```
+
+## kubectl config view
+
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://aks-dev-portal-dns-xs6owjf7.hcp.uksouth.azmk8s.io:443
+  name: AKS-DEV-PORTAL
+contexts:
+- context:
+    cluster: AKS-DEV-PORTAL
+    user: clusterUser_RG-AKS-DEMO-001_AKS-DEV-PORTAL
+  name: AKS-DEV-PORTAL
+current-context: AKS-DEV-PORTAL
+kind: Config
+preferences: {}
+users:
+- name: clusterUser_RG-AKS-DEMO-001_AKS-DEV-PORTAL
+  user:
+    client-certificate-data: DATA+OMITTED
+    client-key-data: DATA+OMITTED
+    token: REDACTED
+```
