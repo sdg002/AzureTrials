@@ -23,3 +23,6 @@ $Global:TagsArray = @( `
     "Cost center=$Global:TagCostCenter",`
     "Business Department=$Global:TagDepartment",`
     "Owner=$Global:TagOwner")
+
+$Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
+
