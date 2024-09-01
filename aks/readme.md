@@ -126,3 +126,9 @@ users:
     client-key-data: DATA+OMITTED
     token: REDACTED
 ```
+
+## kubectl config  current-context
+
+```
+AKS-DEV-PORTAL
+```
