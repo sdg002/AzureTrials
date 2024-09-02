@@ -15,3 +15,14 @@ Write-Host "Deploying container registry $Global:ContainerRegistry"
     --template-file "$PSScriptRoot\bicep\containerregistry.bicep" `
     --parameters name=$Global:ContainerRegistry  --verbose
 RaiseCliError -message "Failed to create Container registry $Global:ContainerRegistry"
+
+Write-Host "Deploying AKS $Global:Aks"
+az aks create `
+    --resource-group $Global:ResourceGroup `
+    --name $Global:Aks `
+    --node-count 2 `
+    --generate-ssh-keys `
+    --attach-acr $Global:ContainerRegistry
+RaiseCliError -message "Failed to create AKS $Global:Aks"
+
+

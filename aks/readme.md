@@ -178,3 +178,7 @@ users:
 ```
 AKS-DEV-PORTAL
 ```
+# MS Tutorials
+
+- https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-application?tabs=azure-cli
+- https://learn.microsoft.com/en-us/training/modules/aks-deploy-container-app/

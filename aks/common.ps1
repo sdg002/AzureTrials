@@ -25,4 +25,5 @@ $Global:TagsArray = @( `
     "Owner=$Global:TagOwner")
 
 $Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
+$Global:Aks=("aks-viacli-{0}" -f $env:environment)
 
