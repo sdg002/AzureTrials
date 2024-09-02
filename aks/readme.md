@@ -18,11 +18,11 @@ https://github.com/Azure/kubernetes-hackfest/blob/master/labs/create-aks-cluster
 kubectl apply --filename $PSScriptRoot/namespaces.yaml
 ```
 
+and also read this
 
-Follow this MS tutorial:
-Finding it difficult. Very large YAML
-- https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-app?tabs=azure-cli#before-you-begin
-- https://github.com/Azure-Samples/aks-store-demo
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces
+
+
 
 ## How to delete a namespace ?
 
@@ -30,7 +30,30 @@ Finding it difficult. Very large YAML
 kubectl delete namespaces uat
 ```
 
+## Good article on understanding deployment YAML structure
 
+https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment#basics
+
+
+## Creating Pods in the namespace
+
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces
+
+```powershell
+kubectl apply --filename $PSScriptRoot/pod.yaml --namespace=demoapp
+```
+
+```
+kubectl get pods
+```
+
+## MS Tutorial
+I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
+- https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-app?tabs=azure-cli#before-you-begin
+- https://github.com/Azure-Samples/aks-store-demo
+
+
+---
 
 # Getting AKS credentials
 
