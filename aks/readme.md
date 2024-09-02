@@ -68,7 +68,8 @@ $ENV:KUBECONFIG="$env:USERPROFILE\.kube\config"
 ## Convertingthe Kube config
 
 ```
-kubelogin convert-kubeconfig
+# There are other options besides azurecli. E.g. spn
+kubelogin convert-kubeconfig -l azurecli
 ```
 
 ## Getting the namespace
