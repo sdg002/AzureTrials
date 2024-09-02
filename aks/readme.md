@@ -40,6 +40,51 @@ users:
 
 ---
 
+# KubeLogin
+
+You will need kubelogin for authenticating KubeCtl with AKS
+
+## How to install ?
+
+When working with Azure, there is a specific version that is needed. The following recommended by MS:
+
+```
+az aks install-cli
+```
+
+## Where does KubeLogin get installed ?
+
+```
+$env:USERPROFILE\.azure-kubelogin
+```
+
+
+## Setting the path to KubeConfig
+
+```
+$ENV:KUBECONFIG="$env:USERPROFILE\.kube\config"
+```
+
+## Convertingthe Kube config
+
+```
+kubelogin convert-kubeconfig
+```
+
+## Getting the namespace
+
+This will open up a browser for authentication:
+
+```
+kubectl get namespaces
+```
+
+## MS Documentation
+
+https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication
+
+
+
 # KubeCtl
 
 This is the CLI for dealing with Kubernetes
