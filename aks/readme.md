@@ -3,6 +3,35 @@
 # My lessons on Azure AKS
 
 
+# 101-deploy
+In this section we deploy an AKS using the simplest possible Azure CLI commands and do some experiments using `Kubectl` and `KubeLogin`.
+
+
+# 200-sample-worker
+
+## How to create a namespace ?
+
+Look at the YAML here. This just has the name spaces
+https://github.com/Azure/kubernetes-hackfest/blob/master/labs/create-aks-cluster/README.md
+
+```powershell
+kubectl apply --filename $PSScriptRoot/namespaces.yaml
+```
+
+
+Follow this MS tutorial:
+Finding it difficult. Very large YAML
+- https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-app?tabs=azure-cli#before-you-begin
+- https://github.com/Azure-Samples/aks-store-demo
+
+## How to delete a namespace ?
+
+```
+kubectl delete namespaces uat
+```
+
+
+
 # Getting AKS credentials
 
 ## AZ CLI
