@@ -112,6 +112,25 @@ trading-app-lse-consumer        ClusterIP   10.0.42.48     <none>        80/TCP 
 trading-app-nys-mapper          ClusterIP   10.0.65.152    <none>        80/TCP    592d
 ```
 
+## Get services under a namespace
+
+```
+kubectl get service --namespace mynamespace001
+```
+
+## Get deployments under a namespace
+
+```
+kubectl get deployment --namespace mynamespace001
+```
+
+Sample output:
+```
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+trading-app-nys-consumer          1/1     1            1           459d
+trading-app-lse-broker            0/0     0            0           300d
+```
+
 
 ## MS Tutorial
 I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
