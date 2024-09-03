@@ -103,6 +103,14 @@ kubectl top pod --namespace=ingress-nginx
 kubectl get service
 ```
 
+Sample output
+
+```
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+kubernetes                  ClusterIP   10.0.0.1       <none>        443/TCP   662d
+trading-app-lse-consumer        ClusterIP   10.0.42.48     <none>        80/TCP    573d
+trading-app-nys-mapper          ClusterIP   10.0.65.152    <none>        80/TCP    592d
+```
 
 
 ## MS Tutorial
@@ -175,7 +183,7 @@ $env:USERPROFILE\.azure-kubelogin
 $ENV:KUBECONFIG="$env:USERPROFILE\.kube\config"
 ```
 
-## Convertingthe Kube config
+## Converting the Kube config
 
 ```
 # There are other options besides azurecli. E.g. spn
