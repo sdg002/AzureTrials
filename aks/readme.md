@@ -230,10 +230,21 @@ This will open up a browser for authentication:
 kubectl get namespaces
 ```
 
+---
+
+# 300-Deploy-web-app
+
+## Good samples on YAML
+Explains the nuances of selector labels
+https://spacelift.io/blog/kubernetes-deployment-yaml
+
+
 ## MS Documentation
 
 https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication
 
+
+---
 
 
 # KubeCtl
