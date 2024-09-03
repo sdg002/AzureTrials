@@ -30,6 +30,19 @@ https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-pra
 kubectl delete namespaces uat
 ```
 
+## How to get all namespaces ?
+
+```
+kubectl get namespace
+```
+
+Example output:
+```
+NAME                   STATUS   AGE
+thisnamespace            Active   353d
+thatnamespace            Active   586d
+```
+
 ## Good article on understanding deployment YAML structure
 
 https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment#basics
@@ -47,10 +60,17 @@ kubectl apply --filename $PSScriptRoot/pod.yaml --namespace=demoapp
 kubectl get pods
 ```
 
-## Problem! How to know the pods in a namespace
+## How to know the pods in a namespace 
 
 ```
 kubectl get pods --namespace ingress-nginx
+```
+
+Example output:
+```
+NAME                                              READY   STATUS                   RESTARTS        AGE
+trading-lse-consumer-123a7f754d-v8tzl             1/1     Running                  0               38d
+trading-nys-consumer-1234dd74d-8ng9k              1/1     Running                  0               16h
 ```
 
 https://spacelift.io/blog/kubernetes-namespaces
@@ -67,6 +87,14 @@ kubectl describe namespace nginx-ingress
 ```
 kubectl top pod --namespace=ingress-nginx
 ```
+
+## Show all services 
+
+```
+kubectl get service
+```
+
+
 
 ## MS Tutorial
 I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
