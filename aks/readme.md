@@ -69,8 +69,8 @@ kubectl get pods --namespace ingress-nginx
 Example output:
 ```
 NAME                                              READY   STATUS                   RESTARTS        AGE
-trading-lse-consumer-123a7f754d-v8tzl             1/1     Running                  0               38d
-trading-nys-consumer-1234dd74d-8ng9k              1/1     Running                  0               16h
+trading-lse-receiver-123a7f754d-v8tzl             1/1     Running                  0               38d
+trading-nys-receiver-1234dd74d-8ng9k              1/1     Running                  0               16h
 ```
 
 https://spacelift.io/blog/kubernetes-namespaces
@@ -79,7 +79,16 @@ https://spacelift.io/blog/kubernetes-namespaces
 ## See details of a namespace
 
 ```
-kubectl describe namespace nginx-ingress
+kubectl describe namespace mynamespace
+```
+
+Sample output:
+```
+Name:         mynamespace
+Labels:       kubernetes.io/metadata.name=mynamespace
+              name=mynamespace
+Annotations:  <none>
+Status:       Active
 ```
 
 ## Show resource usage of pods in a namespace
