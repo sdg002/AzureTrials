@@ -153,6 +153,25 @@ I was trying to follow this MS tutorial, but found it difficult. Very large YAML
 
 ---
 
+# 300-Deploy-web-app
+
+## Good samples on YAML
+Explains the nuances of selector labels
+https://spacelift.io/blog/kubernetes-deployment-yaml
+
+
+## Getting the external IP address
+
+![external ip address](docs/images/portal-externalip.png)
+
+## View the logs
+
+![alt text](docs/images/workloads.png)
+
+![log view](docs/images/logview.png)
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -230,17 +249,7 @@ This will open up a browser for authentication:
 kubectl get namespaces
 ```
 
----
-
-# 300-Deploy-web-app
-
-## Good samples on YAML
-Explains the nuances of selector labels
-https://spacelift.io/blog/kubernetes-deployment-yaml
-
-
-## MS Documentation
-
+## MS documentation on doing the KubeCtl login sequence
 https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication
 
 
