@@ -3,6 +3,156 @@
 # My lessons on Azure AKS
 
 
+# 101-deploy-aks
+In this section we deploy an AKS using the simplest possible Azure CLI commands and do some experiments using `Kubectl` and `KubeLogin`.
+
+
+# 200-create-namespace
+
+## How to create a namespace ?
+
+Look at the YAML here. This just has the name spaces
+https://github.com/Azure/kubernetes-hackfest/blob/master/labs/create-aks-cluster/README.md
+
+```powershell
+kubectl apply --filename $PSScriptRoot/namespaces.yaml
+```
+
+and also read this
+
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces
+
+
+
+## How to delete a namespace ?
+
+```
+kubectl delete namespaces uat
+```
+
+## How to get all namespaces ?
+
+```
+kubectl get namespace
+```
+
+Example output:
+```
+NAME                   STATUS   AGE
+thisnamespace            Active   353d
+thatnamespace            Active   586d
+```
+
+## Good article on understanding deployment YAML structure
+
+https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment#basics
+
+
+## Creating Pods in the namespace
+
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces
+
+```powershell
+kubectl apply --filename $PSScriptRoot/pod.yaml --namespace=demoapp
+```
+
+```
+kubectl get pods
+```
+
+## How to know the pods in a namespace 
+
+```
+kubectl get pods --namespace ingress-nginx
+```
+
+Example output:
+```
+NAME                                              READY   STATUS                   RESTARTS        AGE
+trading-lse-receiver-123a7f754d-v8tzl             1/1     Running                  0               38d
+trading-nys-receiver-1234dd74d-8ng9k              1/1     Running                  0               16h
+```
+
+https://spacelift.io/blog/kubernetes-namespaces
+
+
+## See details of a namespace
+
+```
+kubectl describe namespace mynamespace
+```
+
+Sample output:
+```
+Name:         mynamespace
+Labels:       kubernetes.io/metadata.name=mynamespace
+              name=mynamespace
+Annotations:  <none>
+Status:       Active
+```
+
+## Show resource usage of pods in a namespace
+
+```
+kubectl top pod --namespace=ingress-nginx
+```
+
+## Show all services 
+
+```
+kubectl get service
+```
+
+Sample output
+
+```
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+kubernetes                  ClusterIP   10.0.0.1       <none>        443/TCP   662d
+trading-app-lse-consumer        ClusterIP   10.0.42.48     <none>        80/TCP    573d
+trading-app-nys-mapper          ClusterIP   10.0.65.152    <none>        80/TCP    592d
+```
+
+## Get services under a namespace
+
+```
+kubectl get service --namespace mynamespace001
+```
+
+## Get deployments under a namespace
+
+```
+kubectl get deployment --namespace mynamespace001
+```
+
+Sample output:
+```
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+trading-app-nys-consumer          1/1     1            1           459d
+trading-app-lse-broker            0/0     0            0           300d
+```
+
+## Get the YAML of a service
+
+```
+kubectl get service myservice --output yaml
+```
+
+## Get the YAML of a deployment
+
+```
+kubectl get deployment mydeployment001 --namespace mynamespace001 --output yaml
+```
+
+
+
+## MS Tutorial
+I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
+- https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-app?tabs=azure-cli#before-you-begin
+- https://github.com/Azure-Samples/aks-store-demo
+
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -65,7 +215,7 @@ $env:USERPROFILE\.azure-kubelogin
 $ENV:KUBECONFIG="$env:USERPROFILE\.kube\config"
 ```
 
-## Convertingthe Kube config
+## Converting the Kube config
 
 ```
 # There are other options besides azurecli. E.g. spn
