@@ -3,11 +3,11 @@
 # My lessons on Azure AKS
 
 
-# 101-deploy
+# 101-deploy-aks
 In this section we deploy an AKS using the simplest possible Azure CLI commands and do some experiments using `Kubectl` and `KubeLogin`.
 
 
-# 200-sample-worker
+# 200-create-namespace
 
 ## How to create a namespace ?
 
