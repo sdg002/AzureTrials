@@ -332,3 +332,11 @@ AKS-DEV-PORTAL
 
 - https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-application?tabs=azure-cli
 - https://learn.microsoft.com/en-us/training/modules/aks-deploy-container-app/
+
+# Lessons learnt
+
+## How to use az acr build command ?
+This is convenient because we do not need local docker
+```
+az acr build --registry NAME_OF_ACR --image demo:v1 ABSOLUTE_PATH_TO_FOLDER_WITH_DOCKERFILE
+```
