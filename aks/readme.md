@@ -47,6 +47,27 @@ kubectl apply --filename $PSScriptRoot/pod.yaml --namespace=demoapp
 kubectl get pods
 ```
 
+## Problem! How to know the pods in a namespace
+
+```
+kubectl get pods --namespace ingress-nginx
+```
+
+https://spacelift.io/blog/kubernetes-namespaces
+
+
+## See details of a namespace
+
+```
+kubectl describe namespace nginx-ingress
+```
+
+## Show resource usage of pods in a namespace
+
+```
+kubectl top pod --namespace=ingress-nginx
+```
+
 ## MS Tutorial
 I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
 - https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-app?tabs=azure-cli#before-you-begin
