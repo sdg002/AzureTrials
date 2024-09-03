@@ -12,3 +12,9 @@ This is a very basic Flask web app. The intent was to deploy this to AKS
 - Run the command `flask run`
 
 ---
+
+# How to do a Docker build?
+
+```
+ docker build .\ -t junk
+```
