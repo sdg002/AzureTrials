@@ -4,7 +4,8 @@ metadata:
   name: flask-app-service
 spec:
   selector:
-    app: example-flask-app
+    name: mypod
+    #We are targetting the containers in the specified pod
   ports:
     - protocol: TCP
       port: 80
