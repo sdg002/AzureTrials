@@ -131,6 +131,19 @@ trading-app-nys-consumer          1/1     1            1           459d
 trading-app-lse-broker            0/0     0            0           300d
 ```
 
+## Get the YAML of a service
+
+```
+kubectl get service myservice --output yaml
+```
+
+## Get the YAML of a deployment
+
+```
+kubectl get deployment mydeployment001 --namespace mynamespace001 --output yaml
+```
+
+
 
 ## MS Tutorial
 I was trying to follow this MS tutorial, but found it difficult. Very large YAML!
