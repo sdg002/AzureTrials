@@ -28,3 +28,5 @@ $Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
 $Global:Aks=("aks-viacli-{0}" -f $env:environment)
 
 $Global:WebAppDockerTagName="flaskwebapp:v2"
+
+$Global:DemoJobDockerTagName="demojob:v2"
