@@ -17,6 +17,11 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: saupycontainerregistry001dev.azurecr.io/flaskwebapp:v1
+        image: saupycontainerregistry001dev.azurecr.io/flaskwebapp:v2
         ports:
         - containerPort: 5000
+        env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"

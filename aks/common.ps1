@@ -27,4 +27,4 @@ $Global:TagsArray = @( `
 $Global:ContainerRegistry=("saupycontainerregistry001{0}" -f $env:environment)
 $Global:Aks=("aks-viacli-{0}" -f $env:environment)
 
-$Global:WebAppDockerTagName="flaskwebapp:v1"
+$Global:WebAppDockerTagName="flaskwebapp:v2"
