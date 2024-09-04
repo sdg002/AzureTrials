@@ -153,6 +153,58 @@ I was trying to follow this MS tutorial, but found it difficult. Very large YAML
 
 ---
 
+# 300-Deploy-web-app
+In this lab we will deply a simple Flask web app.
+
+## Where is the code for the web app ?
+
+[app.py](demo-flask-app/src/app.py)
+
+
+## Understanding the YAML files
+
+We need the following
+- deployment YAML (has the container image name, environment variables)
+- service YAML (has the outer ports, load balancer)
+
+The `selector/matchLabels` element must point to the name of the pod through `name: mypod`
+
+## Good samples on YAML
+Explains the nuances of selector labels
+https://spacelift.io/blog/kubernetes-deployment-yaml
+
+
+## Getting the external IP address
+
+![external ip address](docs/images/portal-externalip.png)
+
+## View the logs
+
+![alt text](docs/images/workloads.png)
+
+![log view](docs/images/logview.png)
+
+
+## Image pull policy
+
+### No policy specified
+I updated the image , the tag remained unchanged. I did the AKS deployment. 
+**Outcome** - The new image was not picked up.
+
+### Always
+
+If I were to simply push a modified image (with same tag) then AKS does not update itself. However, if run the following command, then AKS does pull the new image
+```
+kubectl rollout restart deployment example-flask-app --namespace demoapp
+```
+In the above example, the name of the deployment can be obtained from the following command:
+
+```
+kubectl get deployments --namespace demoapp
+```
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -230,10 +282,11 @@ This will open up a browser for authentication:
 kubectl get namespaces
 ```
 
-## MS Documentation
-
+## MS documentation on doing the KubeCtl login sequence
 https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication
 
+
+---
 
 
 # KubeCtl
@@ -332,3 +385,11 @@ AKS-DEV-PORTAL
 
 - https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-application?tabs=azure-cli
 - https://learn.microsoft.com/en-us/training/modules/aks-deploy-container-app/
+
+# Lessons learnt
+
+## How to use az acr build command ?
+This is convenient because we do not need local docker
+```
+az acr build --registry NAME_OF_ACR --image demo:v1 ABSOLUTE_PATH_TO_FOLDER_WITH_DOCKERFILE
+```
