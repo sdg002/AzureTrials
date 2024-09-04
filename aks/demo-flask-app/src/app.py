@@ -6,7 +6,7 @@ from flask import Flask
 import os
 
 app = Flask(__name__)
-APP_VERSION=1.2
+APP_VERSION=1.6
 
 @app.route('/')
 def hello():

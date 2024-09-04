@@ -18,6 +18,7 @@ spec:
       containers:
       - name: flask-app
         image: saupycontainerregistry001dev.azurecr.io/flaskwebapp:v2
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:

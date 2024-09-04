@@ -179,7 +179,15 @@ I updated the image , the tag remained unchanged. I did the AKS deployment.
 
 ### Always
 
-to be done
+If I were to simply push a modified image (with same tag) then AKS does not update itself. However, if run the following command, then AKS does pull the new image
+```
+kubectl rollout restart deployment example-flask-app --namespace demoapp
+```
+In the above example, the name of the deployment can be obtained from the following command:
+
+```
+kubectl get deployments --namespace demoapp
+```
 
 ---
 
