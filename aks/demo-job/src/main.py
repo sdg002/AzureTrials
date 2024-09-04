@@ -2,6 +2,7 @@
 Long running job
 """
 from time import sleep
+import datetime
 import os
 APP_VERSION=1.6
 
@@ -24,7 +25,8 @@ if __name__ == "__main__":
     print("Begin")
     display_variables()
     for idx in range(COUNT):
-        print(f"This is attempt number {idx}\n")
+        now=datetime.datetime.now()
+        print(f"This is attempt number {idx} at {now}\n")
         print("--------------------------\n")
         sleep(0.5)
     print("All done")

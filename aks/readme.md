@@ -210,9 +210,31 @@ kubectl get deployments --namespace demoapp
 ## Where is the source code ?
 [sourc code](demo-job/src/main.py)
 
+
+## How to get a list of jobs in a namespace ?
+
+```
+kubectl get jobs  --namespace demoapp
+```
+
+
 ## Lessons learnt???
 
-you were here
+- You need to use a Job deployment
+
+## How to restart a job ?
+
+```
+kubectl delete job example-python-job --namespace demoapp
+kubectl apply -f job.yaml
+```
+
+## How to view the logs ?
+
+```
+kubectl logs POD_NAME --namespace demoapp
+# The POD_NAME is the output from kubectl get pods
+```
 
 ---
 
