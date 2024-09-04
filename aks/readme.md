@@ -154,6 +154,20 @@ I was trying to follow this MS tutorial, but found it difficult. Very large YAML
 ---
 
 # 300-Deploy-web-app
+In this lab we will deply a simple Flask web app.
+
+## Where is the code for the web app ?
+
+[app.py](demo-flask-app/src/app.py)
+
+
+## Understanding the YAML files
+
+We need the following
+- deployment YAML (has the container image name, environment variables)
+- service YAML (has the outer ports, load balancer)
+
+The `selector/matchLabels` element must point to the name of the pod through `name: mypod`
 
 ## Good samples on YAML
 Explains the nuances of selector labels
