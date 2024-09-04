@@ -205,6 +205,17 @@ kubectl get deployments --namespace demoapp
 
 ---
 
+# 400-Deploy a job
+
+## Where is the source code ?
+[sourc code](demo-job/src/main.py)
+
+## Lessons learnt???
+
+you were here
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI

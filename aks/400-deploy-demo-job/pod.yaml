@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myjobpod
+  labels:
+    name: myjobpod
+spec:
+  containers:
+  - name: mypod
+    image: docker.io/nginx:latest

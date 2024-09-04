@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-python-job
+spec:
+  replicas: 1
+  selector:
+    #this must match the label of a pod
+    matchLabels:
+      name: myjobpod
+  strategy:
+  template:
+    metadata:
+      #this must match the label of a pod
+      labels:
+        name: myjobpod
+    spec:
+      containers:
+      - name: demo-job
+        image: saupycontainerregistry001dev.azurecr.io/demojob:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+        - name: DEMO_ANOTHER_VAR1
+          value: "demo another var2"
