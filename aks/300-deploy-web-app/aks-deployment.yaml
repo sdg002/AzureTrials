@@ -25,3 +25,5 @@ spec:
           value: "Hello from the environment"
         - name: DEMO_FAREWELL
           value: "Such a sweet sorrow"
+        - name: DEMO_ANOTHER_VAR1
+          value: "demo another var2"

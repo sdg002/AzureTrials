@@ -6,6 +6,7 @@ from flask import Flask
 import os
 
 app = Flask(__name__)
+APP_VERSION=1.2
 
 @app.route('/')
 def hello():
@@ -18,6 +19,8 @@ def display_variables()->str:
     keys.sort()
     print("----------------------")
     result=""
+    result+=f"Version:{APP_VERSION}<br/>"
+    result+="----------------<br/>"
     for key in keys:
         line=(f"{key}={os.environ[key]}<br/>")
         result+=line

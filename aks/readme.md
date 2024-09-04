@@ -170,6 +170,17 @@ https://spacelift.io/blog/kubernetes-deployment-yaml
 
 ![log view](docs/images/logview.png)
 
+
+## Image pull policy
+
+### No policy specified
+I updated the image , the tag remained unchanged. I did the AKS deployment. 
+**Outcome** - The new image was not picked up.
+
+### Always
+
+to be done
+
 ---
 
 # Getting AKS credentials
