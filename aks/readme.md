@@ -261,9 +261,28 @@ Specify the `commmand` element in the YAML of the cron job deployment
 command: [ "python", "src/chronmain.py" ]
 ```
 
+## How to view all cron jobs ?
+
+```
+kubectl get cronjobs --namespace demoapp
+```
+
+Example output:
+
+```
+NAME            SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+demo-cron-job   */2 * * * *   False     0        33s             28m
+```
+
 ## How to view the logs ?
 
-**Step-1**-Get the list of cron jobs `kubectl get jobs --namespace demoapp`
+**Step-1**-Get the list of cron jobs 
+
+```
+kubectl get jobs --namespace demoapp
+```
+
+Example output:
 ```
 NAME                     COMPLETIONS   DURATION   AGE
 demo-cron-job-28758896   1/1           3s         5m43s
@@ -271,7 +290,12 @@ demo-cron-job-28758898   1/1           3s         3m43s
 demo-cron-job-28758900   1/1           3s         103s
 ```
 
-**Step-2**-Fetch the logs for the specified instance `kubectl logs job/demo-cron-job-28758900 --namespace demoapp`
+**Step-2**-Fetch the logs for the specified instance
+
+```
+kubectl logs job/demo-cron-job-28758900 --namespace demoapp
+```
+Example output:
 
 ```
 Begin
