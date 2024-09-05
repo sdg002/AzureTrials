@@ -303,6 +303,18 @@ Current time is 2024-09-05 11:00:01.077809
 End
 ```
 
+## Delete a Cron job
+
+```
+kubectl delete cronjobs demo-cron-job --namespace demoapp
+```
+
+Example output:
+
+```
+cronjob.batch "demo-cron-job" deleted
+```
+
 ---
 
 # Getting AKS credentials
