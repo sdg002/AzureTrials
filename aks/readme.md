@@ -388,53 +388,6 @@ s.connect(("SERVICENAME.NAMESPACE.svc.cluster.local",80))
 
 
 
-## kubectl create configmap (TO BE DONE)
-
-### 1-Deploy the first web app
-
-```
-kubectl apply -f my-web-app-service.yaml
-```
-
-### 2-Get the Cluster IP
-
-```
-kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
-```
-
-### 3-Create the Config map
-
-```
-kubectl create configmap webapp-config --from-literal=WEBAPP_CLUSTERIP=$(kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
-```
-
-### Use the ConfigMap
-
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-job
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: my-job
-    spec:
-      containers:
-      - name: my-job-container
-        image: my-job-image
-        env:
-        - name: WEBAPP_CLUSTERIP
-          valueFrom:
-            configMapKeyRef:
-              name: webapp-config
-              key: WEBAPP_CLUSTERIP
-
-```
-
-
 ---
 
 # Getting AKS credentials
@@ -645,3 +598,55 @@ I installed Red hat extension,but it did not reflect. Finally, the steps were:
 
 This SFO was useful:
 https://stackoverflow.com/questions/68811153/yaml-support-for-kubernetes-in-vscode
+
+
+
+# kubectl create configmap (TO BE DONE)
+
+I wrote this down with a half understanding
+
+## 1-Deploy the first web app
+
+```
+kubectl apply -f my-web-app-service.yaml
+```
+
+## 2-Get the Cluster IP
+
+```
+kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+## 3-Create the Config map
+
+```
+kubectl create configmap webapp-config --from-literal=WEBAPP_CLUSTERIP=$(kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+## Use the ConfigMap
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-job
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-job
+    spec:
+      containers:
+      - name: my-job-container
+        image: my-job-image
+        env:
+        - name: WEBAPP_CLUSTERIP
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-config
+              key: WEBAPP_CLUSTERIP
+
+```
+
+
