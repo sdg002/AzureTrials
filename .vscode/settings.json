@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "Kubernetes": ["*.yaml"],
+    },
+    "yaml.schemaStore.enable": true
+}
