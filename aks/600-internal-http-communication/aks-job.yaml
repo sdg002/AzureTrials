@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-python-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: demo-job
+        image: saupycontainerregistry001dev.azurecr.io/demojob:v2
+        imagePullPolicy: Always
+        command: [ "python", "src/webclient.py" ]
+        env:
+        - name: MYWEBAPP
+          value: "http://flask-app-service.demoapp.svc.cluster.local/"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+      restartPolicy: Never
+  backoffLimit: 4
