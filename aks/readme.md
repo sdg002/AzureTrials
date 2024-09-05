@@ -317,7 +317,7 @@ cronjob.batch "demo-cron-job" deleted
 
 ---
 
-# 500-internal-http-communication
+# 600-internal-http-communication
 
 ## Objective
 A python worker which talks to an internal python Flask web app
@@ -341,6 +341,7 @@ some-other-service               ClusterIP   10.0.143.254   <none>        80/TCP
 Get specific service
 ```
 kubectl get svc flask-app-service
+
 # Can use -o json option as well
 ```
 
@@ -352,6 +353,54 @@ flask-app-service   ClusterIP   10.0.226.215   <none>        80/TCP    462d
 ```
 
 The `CLUSTER-IP` and the `PORT` combination gives us the complete end point
+
+
+## kubectl create configmap (TO BE DONE)
+
+### 1-Deploy the first web app
+
+```
+kubectl apply -f my-web-app-service.yaml
+```
+
+### 2-Get the Cluster IP
+
+```
+kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+### 3-Create the Config map
+
+```
+kubectl create configmap webapp-config --from-literal=WEBAPP_CLUSTERIP=$(kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+### Use the ConfigMap
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-job
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-job
+    spec:
+      containers:
+      - name: my-job-container
+        image: my-job-image
+        env:
+        - name: WEBAPP_CLUSTERIP
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-config
+              key: WEBAPP_CLUSTERIP
+
+```
+
 
 ---
 
