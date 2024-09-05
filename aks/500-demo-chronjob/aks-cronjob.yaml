@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-cron-job
+spec:    
+  schedule: "*/2 * * * *" #Job will run every 2 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: demo-cron-job
+              image: saupycontainerregistry001dev.azurecr.io/demojob:v2
+              imagePullPolicy: Always
+              command: [ "python", "src/chronmain.py" ]
+              env:
+                - name: DEMO_VAR1
+                  value: "value of demo var 1"

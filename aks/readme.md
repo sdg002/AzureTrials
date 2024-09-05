@@ -249,6 +249,14 @@ https://medium.com/google-cloud/kubernetes-running-background-tasks-with-batch-j
 
 ---
 
+# 500-Chron job
+
+## How to override the CMD of the Dockerfile ?
+???
+
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -437,3 +445,23 @@ This is convenient because we do not need local docker
 ```
 az acr build --registry NAME_OF_ACR --image demo:v1 ABSOLUTE_PATH_TO_FOLDER_WITH_DOCKERFILE
 ```
+
+
+## Configuring a Json schema store
+I was tyring to get the intellisense sorted for YAML files inside of VSCODE.
+I installed Red hat extension,but it did not reflect. Finally, the steps were:
+1. Created a `settings.json` inside the `.vscode` folder
+1. Added the following to the settings.json:
+
+
+```json
+{
+    "yaml.schemas": {
+        "Kubernetes": ["*.yaml"],
+    },
+    "yaml.schemaStore.enable": true
+}
+```
+
+This SFO was useful:
+https://stackoverflow.com/questions/68811153/yaml-support-for-kubernetes-in-vscode
