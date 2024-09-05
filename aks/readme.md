@@ -251,9 +251,33 @@ https://medium.com/google-cloud/kubernetes-running-background-tasks-with-batch-j
 
 # 500-Chron job
 
-## How to override the CMD of the Dockerfile ?
-???
+## Azure portal does not show up the cron job
+This could be because of the ephemeral nature of a container. It dies off immediately after the job is done.
 
+## How to override the CMD of the Dockerfile ?
+Specify the `commmand` element in the YAML of the cron job deployment
+
+```
+command: [ "python", "src/chronmain.py" ]
+```
+
+## How to view the logs ?
+
+**Step-1**-Get the list of cron jobs `kubectl get jobs --namespace demoapp`
+```
+NAME                     COMPLETIONS   DURATION   AGE
+demo-cron-job-28758896   1/1           3s         5m43s
+demo-cron-job-28758898   1/1           3s         3m43s
+demo-cron-job-28758900   1/1           3s         103s
+```
+
+**Step-2**-Fetch the logs for the specified instance `kubectl logs job/demo-cron-job-28758900 --namespace demoapp`
+
+```
+Begin
+Current time is 2024-09-05 11:00:01.077809
+End
+```
 
 ---
 
