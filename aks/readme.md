@@ -224,7 +224,8 @@ kubectl get jobs  --namespace demoapp
 ## Lessons learnt
 
 - Kubernetes has Jobs and ChronJob
-- The restartPolicy of a job can be `Never` or `OnFailure`
+- The `restartPolicy` of a job can be `Never` or `OnFailure`
+- The `backoffLimit` specifies the number of retries before a job is considered a failure.
 
 ## How to restart a job ?
 
