@@ -383,7 +383,7 @@ Run `pyhon` within the `sh` of the pod
 ```
 import socket
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("flask-app-service.demoapp.svc.cluster.local",80))
+s.connect(("SERVICENAME.NAMESPACE.svc.cluster.local",80))
 ```
 
 
