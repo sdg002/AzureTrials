@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-python-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: demo-job
+        image: saupycontainerregistry001dev.azurecr.io/demojob:v2
+        imagePullPolicy: Always
+        env:
+        - name: DEMO_GREETING
+          value: "Hello from the Job Deployment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+        - name: DEMO_ANOTHER_VAR1
+          value: "demo another var3"
+      restartPolicy: Never
+  backoffLimit: 4

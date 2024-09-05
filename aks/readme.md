@@ -205,6 +205,50 @@ kubectl get deployments --namespace demoapp
 
 ---
 
+# 400-Deploy a job
+
+## What is a Job in Kubernetes ?
+Jobs represent one-off tasks that run to completion and then stop. See [Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/job/#completion-mode).
+
+## Where is the source code ?
+[sourc code](demo-job/src/main.py)
+
+
+## How to get a list of jobs in a namespace ?
+
+```
+kubectl get jobs  --namespace demoapp
+```
+
+
+## Lessons learnt
+
+- Kubernetes has Jobs and ChronJob
+- The `restartPolicy` of a job can be `Never` or `OnFailure`
+- The `backoffLimit` specifies the number of retries before a job is considered a failure.
+
+## How to restart a job ?
+
+You need this to kick start a job
+```
+kubectl delete job example-python-job --namespace demoapp
+kubectl apply -f job.yaml
+```
+
+## How to view the logs ?
+
+```
+kubectl logs YOUR_POD_NAME --namespace demoapp
+# The YOUR_POD_NAME is the output from kubectl get pods
+```
+
+## Further reading
+
+https://medium.com/google-cloud/kubernetes-running-background-tasks-with-batch-jobs-56482fbc853
+
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
