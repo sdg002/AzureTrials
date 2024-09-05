@@ -317,6 +317,44 @@ cronjob.batch "demo-cron-job" deleted
 
 ---
 
+# 500-internal-http-communication
+
+## Objective
+A python worker which talks to an internal python Flask web app
+
+
+## How to get the IP address of a web app ?
+
+
+Get all services
+```
+kubectl get svc --namespace demoapp
+```
+
+Sample output:
+```
+NAME                                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+flask-app-service                ClusterIP   10.0.45.201    <none>        80/TCP    461d
+some-other-service               ClusterIP   10.0.143.254   <none>        80/TCP    454d
+```
+
+Get specific service
+```
+kubectl get svc flask-app-service
+# Can use -o json option as well
+```
+
+Sample output:
+
+```
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+flask-app-service   ClusterIP   10.0.226.215   <none>        80/TCP    462d
+```
+
+The `CLUSTER-IP` and the `PORT` combination gives us the complete end point
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
