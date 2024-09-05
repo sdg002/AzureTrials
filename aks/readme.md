@@ -354,6 +354,39 @@ flask-app-service   ClusterIP   10.0.226.215   <none>        80/TCP    462d
 
 The `CLUSTER-IP` and the `PORT` combination gives us the complete end point
 
+## Using the internal FQDN
+
+If a service with the name `my-web-app` is deployed to the namespace `my-demo-app` then the internal hostname is `my-web-app.my-demo-app.svc.cluster.local`
+
+### Step-1-Get the pod name
+
+```
+kubectl get pods --namespace demoapp
+```
+
+### Step-2-Open a remote shell into the pod
+
+```
+kubectl exec -it POD_NAME --namespace demoapp sh
+```
+
+### Step-3-Run the ping command
+
+```
+ping SERVICE_NAME.NAMESPACE.svc.cluster.local
+```
+
+### Step-4-Run the Python Socket to connect
+
+Run `pyhon` within the `sh` of the pod
+
+```
+import socket
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("flask-app-service.demoapp.svc.cluster.local",80))
+```
+
+
 
 ## kubectl create configmap (TO BE DONE)
 
