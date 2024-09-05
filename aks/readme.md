@@ -386,7 +386,16 @@ s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("SERVICENAME.NAMESPACE.svc.cluster.local",80))
 ```
 
+### Step-5-Putting it all together
 
+We have added an environment variable to the deployment YAML of the web client job
+
+```yaml
+        env:
+        - name: MYWEBAPP
+          value: "http://flask-app-service.demoapp.svc.cluster.local/"
+
+```
 
 ---
 
