@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-memcached
+spec:
+  replicas: 1
+  selector:
+    #this must match the label of a pod
+    matchLabels:
+      name: memcachedpod
+  template:
+    metadata:
+      #this must match the label of a pod
+      labels:
+        name: memcachedpod
+    spec:
+      containers:
+      - name: memcached
+        image: docker.io/memcached:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 11211
