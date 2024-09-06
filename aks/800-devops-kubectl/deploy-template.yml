@@ -22,3 +22,22 @@ jobs:
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: 'az account show'
+
+  - task: KubectlInstaller@0
+    displayName: 'Install Kubectl latest'
+
+  - task: KubeloginInstaller@0
+    displayName: 'Install Kubelogin latest'
+
+  - task: HelmDeploy@1
+    displayName: 'helm upgrade'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection}}
+      azureResourceGroup: 'RG-AKS-DEMO-001' #parameterize this
+      kubernetesCluster: 'aks-viacli-dev' #parameterize this
+      namespace: demoapp
+      command: upgrade
+      chartType: FilePath
+      chartPath: 'aks/800-devops-kubectl/helmcharts'
+      releaseName: myaksdemo
+      arguments: '--create-namespace'

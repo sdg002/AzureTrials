@@ -462,6 +462,46 @@ Press CTRL+C in the CMD window to kill it
 
 ---
 
+# 800-devops-kubectl
+
+## Lessons learnt 
+Using `kubectl apply` is tedious. No easy way to templatize..
+
+## helm install-What worked?
+`helm install  myaksdemo .\helmcharts --namespace demoapp --create-namespace`
+
+## helm upgrade
+```
+helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
+```
+- Any subsequent actions done by helm should use the `upgrade` command
+- should have the same release name
+
+
+You will need to delete any prior installations done using `kubectl apply`
+
+## Objective
+- A single devops pipeline (YAML)
+- Has a build stage
+- Has a ACR push stage
+- Has a DEV deploy stage
+- Has a PROD deploy stage
+
+```
+    cicd.yaml
+    build-template.yml (pytest,acr build )
+    deploy-template.yml (kubectl apply)
+    akstemplates
+        memcached-deployment.yml
+        memcached-service.yml
+        flask-app-deployment.yml
+        flask-app-service.yml
+        cronjob-memcached-writer
+```
+
+---
+
+
 # Getting AKS credentials
 
 ## AZ CLI
