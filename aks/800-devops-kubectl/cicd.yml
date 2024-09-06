@@ -45,7 +45,9 @@ stages:
   displayName: Dev Deploy stage
   dependsOn: BUILD_STAGE
   variables: 
-    environment: DEV
+  - group: my-variable-group
+  - name: environment
+    value: DEV
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
@@ -63,8 +65,11 @@ stages:
   dependsOn: DEV_DEPLOY_STAGE
   displayName: Prod Deploy stage
   variables:
-    environment: PROD
-    isMainBranch: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
+  - group: my-variable-group
+  - name: environment
+    value: PROD
+  - name: isMainBranch
+    value: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
