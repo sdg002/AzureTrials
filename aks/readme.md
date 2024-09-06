@@ -659,3 +659,17 @@ spec:
 ```
 
 
+# Memcached
+
+https://hub.docker.com/_/memcached
+
+docker pull memcached:1.6-bookworm
+
+You were reading this:
+https://cloud.google.com/kubernetes-engine/docs/tutorials/deploying-memcached-on-kubernetes-engine
+
+uses the bitnami and helm repo
+
+## What is helm repo ?
+
+find out
