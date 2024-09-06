@@ -19,6 +19,17 @@ variables:
   value: '3.9'
 - name: BuildName
   ${{ if eq(variables['Build.SourceBranchName'],'main') }}:
-    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.${{ Build.BuildId }}"
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.$(Build.BuildId)"
   ${{else}}:
-    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.${{ Build.BuildId }}"
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.$(Build.BuildId)"
+
+name: "${{ variables.BUILDNAME }}"
+
+stages:
+- stage: BUILD
+  displayName: Build stage
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  jobs:
+    - template: ./build-template.yml
