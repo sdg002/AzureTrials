@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-cron-job-memcachedwriter
+spec:    
+  schedule: "*/1 * * * *" #Job will run every 1 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: demo-cron-job
+              image: "{{ .Values.acr }}.azurecr.io/{{ .Values.demojobdockertagname}}"
+              imagePullPolicy: Always
+              command: [ "python", "src/chron_memcachedwriter.py" ]
+              env:
+                - name: MEMCACHED_SERVER
+                  value: "memcached-app-service.demoapp.svc.cluster.local"

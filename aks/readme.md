@@ -477,6 +477,13 @@ helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
 - Any subsequent actions done by helm should use the `upgrade` command
 - should have the same release name
 
+## setting values in the template
+
+Temp example
+```
+helm template .\helmcharts\ --values .\helmcharts\values.yaml --set acr=coolacr --set demojobdockertagname=blahjobtag
+```
+
 
 You will need to delete any prior installations done using `kubectl apply`
 

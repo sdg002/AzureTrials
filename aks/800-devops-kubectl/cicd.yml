@@ -28,6 +28,7 @@ variables:
   value: "demojob:${{ variables.BuildName }}"
 - name: WebAppDockerTagName
   value: "flaskwebapp:${{ variables.BuildName }}"
+  #value: "saupycontainerregistry001dev.azurecr.io"
 
 name: "${{ variables.BUILDNAME }}"
 
