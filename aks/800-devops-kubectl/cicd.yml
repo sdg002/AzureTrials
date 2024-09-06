@@ -24,9 +24,9 @@ variables:
     value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.$(Build.BuildId)"
 - name: CONTAINERREGISTRY
   value: saupycontainerregistry001dev
-- name: DemoJobDockerTagName
+- name: DEMOJOBDOCKERTAGNAME
   value: "demojob:${{ variables.BuildName }}"
-- name: DemoWebAppDockerTagName
+- name: DEMOWEBAPPDOCKERTAGNAME
   value: "flaskwebapp:${{ variables.BuildName }}"
 
 name: "${{ variables.BUILDNAME }}"

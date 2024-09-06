@@ -36,8 +36,8 @@ jobs:
       chartPath: 'aks/800-devops-kubectl/helmcharts'
       releaseName: myaksdemo
       overrideValues: |
-        demojobdockertagname=$(DemoJobDockerTagName)
-        demowebappdockertagname=$(DemoWebAppDockerTagName)
+        demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
+        demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
         acr=$(CONTAINERREGISTRY)
         namespace=${{ parameters.aksnamespace}}
       arguments: '--create-namespace'
