@@ -7,7 +7,8 @@ parameters:
     type: string
   - name: aksresourcename
     type: string
-    default: 
+  - name: aksnamespace
+    type: string
 
 jobs:
 - job: Deploy
@@ -29,7 +30,7 @@ jobs:
       azureSubscription: ${{ parameters.azserviceconnection }}
       azureResourceGroup: ${{ parameters.aksresourcegroup }}
       kubernetesCluster: ${{ parameters.aksresourcename }}
-      namespace: demoapp
+      namespace: ${{ parameters.aksnamespace}}
       command: upgrade
       chartType: FilePath
       chartPath: 'aks/800-devops-kubectl/helmcharts'

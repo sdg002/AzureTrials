@@ -58,6 +58,7 @@ stages:
         aksresourcegroup: RG-AKS-DEMO-001
         aksresourcename: aks-viacli-dev
         environment: DEV
+        aksnamespace: demoapp
         # reference a library variable here
 
 - stage: PROD_DEPLOY
@@ -77,4 +78,5 @@ stages:
         aksresourcegroup: RG-AKS-DEMO-001
         aksresourcename: aks-viacli-prod
         environment: PROD
+        aksnamespace: demoapp
         # reference a library variable to get full independence from specifying the Azure resources within the YAML
