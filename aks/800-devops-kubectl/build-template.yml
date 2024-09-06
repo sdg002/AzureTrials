@@ -29,4 +29,4 @@ jobs:
       azureSubscription: ${{ parameters.azserviceconnection}}
       scriptType: pscore
       scriptLocation: inlineScript
-      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(WebAppDockerTagName)  aks/demo-flask-app/'
+      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(DemoWebAppDockerTagName)  aks/demo-flask-app/'
