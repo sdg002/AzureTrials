@@ -7,12 +7,12 @@ spec:
   selector:
     #this must match the label of a pod
     matchLabels:
-      name: mypod
+      name: flaskapppod
   template:
     metadata:
       #this must match the label of a pod
       labels:
-        name: mypod
+        name: flaskapppod
     spec:
       containers:
       - name: flask-app
