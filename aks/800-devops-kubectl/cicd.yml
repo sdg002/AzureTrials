@@ -56,7 +56,8 @@ stages:
       parameters:
         azserviceconnection: 'azure pay as you go demo (sep 21)'
         aksresourcegroup: RG-AKS-DEMO-001
-        aksresourcename: aks-viacli-$(environment)
+        aksresourcename: aks-viacli-dev
+        environment: DEV
         # reference a library variable here
 
 - stage: PROD_DEPLOY
@@ -74,5 +75,6 @@ stages:
       parameters:
         azserviceconnection: 'azure pay as you go demo (sep 21)'
         aksresourcegroup: RG-AKS-DEMO-001
-        aksresourcename: aks-viacli-$(environment)
+        aksresourcename: aks-viacli-prod
+        environment: PROD
         # reference a library variable to get full independence from specifying the Azure resources within the YAML
