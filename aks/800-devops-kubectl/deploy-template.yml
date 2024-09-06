@@ -40,5 +40,5 @@ jobs:
       chartType: FilePath
       chartPath: 'aks/800-devops-kubectl/helmcharts'
       releaseName: myaksdemo
-      overrideValues: 'demojobdockertagname=$(DemoJobDockerTagName), acr=$(CONTAINERREGISTRY) '
+      overrideValues: 'demojobdockertagname=$(DemoJobDockerTagName),acr=$(CONTAINERREGISTRY) '
       arguments: '--create-namespace'
