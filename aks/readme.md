@@ -317,6 +317,88 @@ cronjob.batch "demo-cron-job" deleted
 
 ---
 
+# 600-internal-http-communication
+
+## Objective
+A python worker which talks to an internal python Flask web app
+
+
+## How to get the IP address of a web app ?
+
+
+Get all services
+```
+kubectl get svc --namespace demoapp
+```
+
+Sample output:
+```
+NAME                                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+flask-app-service                ClusterIP   10.0.45.201    <none>        80/TCP    461d
+some-other-service               ClusterIP   10.0.143.254   <none>        80/TCP    454d
+```
+
+Get specific service
+```
+kubectl get svc flask-app-service
+
+# Can use -o json option as well
+```
+
+Sample output:
+
+```
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+flask-app-service   ClusterIP   10.0.226.215   <none>        80/TCP    462d
+```
+
+The `CLUSTER-IP` and the `PORT` combination gives us the complete end point
+
+## Using the internal FQDN
+
+If a service with the name `my-web-app` is deployed to the namespace `my-demo-app` then the internal hostname is `my-web-app.my-demo-app.svc.cluster.local`
+
+### Step-1-Get the pod name
+
+```
+kubectl get pods --namespace demoapp
+```
+
+### Step-2-Open a remote shell into the pod
+
+```
+kubectl exec -it POD_NAME --namespace demoapp sh
+```
+
+### Step-3-Run the ping command
+
+```
+ping SERVICE_NAME.NAMESPACE.svc.cluster.local
+```
+
+### Step-4-Run the Python Socket to connect
+
+The docker image does not have the `ping` utility. Hence taking the longer route via `socket` client connection. Run `pyhon` within the `sh` of the pod to bring up the Python shell and then type the following commands:
+
+```
+import socket
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("SERVICENAME.NAMESPACE.svc.cluster.local",80))
+```
+
+### Step-5-Putting it all together
+
+We have added an environment variable to the deployment YAML of the web client job
+
+```yaml
+        env:
+        - name: MYWEBAPP
+          value: "http://flask-app-service.demoapp.svc.cluster.local/"
+
+```
+
+---
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -525,3 +607,78 @@ I installed Red hat extension,but it did not reflect. Finally, the steps were:
 
 This SFO was useful:
 https://stackoverflow.com/questions/68811153/yaml-support-for-kubernetes-in-vscode
+
+
+
+# kubectl create configmap (TO BE DONE)
+
+I wrote this down with a half understanding
+
+## 1-Deploy the first web app
+
+```
+kubectl apply -f my-web-app-service.yaml
+```
+
+## 2-Get the Cluster IP
+
+```
+kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+## 3-Create the Config map
+
+```
+kubectl create configmap webapp-config --from-literal=WEBAPP_CLUSTERIP=$(kubectl get svc my-web-app -o jsonpath='{.spec.clusterIP}'
+```
+
+## Use the ConfigMap
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-job
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-job
+    spec:
+      containers:
+      - name: my-job-container
+        image: my-job-image
+        env:
+        - name: WEBAPP_CLUSTERIP
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-config
+              key: WEBAPP_CLUSTERIP
+
+```
+
+
+# Memcached
+
+https://hub.docker.com/_/memcached
+
+docker pull memcached:1.6-bookworm
+
+## Google guidance on deploying memcache
+They are using `helm repo` and `bitnami` image
+https://cloud.google.com/kubernetes-engine/docs/tutorials/deploying-memcached-on-kubernetes-engine
+
+## Documentation on memcached parameters
+Refer comments in thus [GitHub issue](https://github.com/docker-library/memcached/issues/7). 
+
+## What is helm repo ?
+
+find out
+
+## Why memcached over memcache ?
+https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached
+
+## Example of docker compose ?
+
+https://stackoverflow.com/questions/47292669/memcached-not-working-in-docker-compose
