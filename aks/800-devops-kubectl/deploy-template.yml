@@ -1,0 +1,7 @@
+jobs:
+- job: Deploy
+  steps:
+  - script: |
+      echo Hello world in deploy template
+      set
+    displayName: Display all variables

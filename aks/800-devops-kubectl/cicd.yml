@@ -33,3 +33,25 @@ stages:
     vmImage: ubuntu-latest
   jobs:
     - template: ./build-template.yml
+
+- stage: DEV_DEPLOY
+  displayName: Dev Deploy stage
+  variables:
+    ENVIRONMENT: prod
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  jobs:
+    - template: ./deploy-template.yml
+
+- stage: PROD_DEPLOY
+  dependsOn: DEV_DEPLOY
+  displayName: Prod Deploy stage
+  variables:
+    ENVIRONMENT: prod
+    isMainBranch: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  jobs:
+    - template: ./deploy-template.yml
