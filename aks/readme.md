@@ -665,11 +665,20 @@ https://hub.docker.com/_/memcached
 
 docker pull memcached:1.6-bookworm
 
-You were reading this:
+## Google guidance on deploying memcache
+They are using `helm repo` and `bitnami` image
 https://cloud.google.com/kubernetes-engine/docs/tutorials/deploying-memcached-on-kubernetes-engine
 
-uses the bitnami and helm repo
+## Documentation on memcached parameters
+Refer comments in thus [GitHub issue](https://github.com/docker-library/memcached/issues/7). 
 
 ## What is helm repo ?
 
 find out
+
+## Why memcached over memcache ?
+https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached
+
+## Example of docker compose ?
+
+https://stackoverflow.com/questions/47292669/memcached-not-working-in-docker-compose
