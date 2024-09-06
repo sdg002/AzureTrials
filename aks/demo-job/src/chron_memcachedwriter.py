@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     client=base.Client((memcached_server,"11211"))
     print(f"Connected to the memcached server {memcached_server}")
-    message=f"This a sample payload {dt.datetime.now}"
+    message=f"This a sample payload {dt.datetime.now()}"
     print(f"Going to set the payload {message} into the key: {MEMCACHED_KEY}")
     client.set(MEMCACHED_KEY, message)
     print("All done")
