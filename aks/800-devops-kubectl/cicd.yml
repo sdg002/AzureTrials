@@ -1,0 +1,24 @@
+trigger: 
+  branches:
+    include: [main,master]
+  paths:
+    include: [aks/800-devops-kubectl, aks/demo-flask-app, aks/demo-job]
+
+pr:
+  paths:
+    include: [aks/800-devops-kubectl, aks/demo-flask-app, aks/demo-job]
+
+variables:
+- name: MajorVersion
+  value: '1'
+- name: MinorVersion
+  value: '0'
+- name: PatchNumber
+  value: '1'
+- name: PYTHONVERSION
+  value: '3.9'
+- name: BuildName
+  ${{ if eq(variables['Build.SourceBranchName'],'main') }}:
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.${{ Build.BuildId }}"
+  ${{else}}:
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.${{ Build.BuildId }}"
