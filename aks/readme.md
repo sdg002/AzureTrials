@@ -501,9 +501,15 @@ helm template .\helmcharts\ --values .\helmcharts\values.yaml --set acr=coolacr 
 
 You will need to delete any prior installations done using `kubectl apply`
 
-## Complete the helm charts by adding Flask
-?????
+## Caveat about helm erroring if we change the pod name after the first install
 
+This was when we changed the pod selector labels from `mypod` to `flaskapppod`. 
+
+```
+##[error]Error: UPGRADE FAILED: cannot patch "example-flask-app" with kind Deployment: Deployment.apps "example-flask-app" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"name":"flaskapppod"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+
+```
+The solution was to drop the entire namespace using `kubectl delete namespace demoapp`
 
 ---
 

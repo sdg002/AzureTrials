@@ -38,6 +38,6 @@ jobs:
       overrideValues: |
         demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
         demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
-        acr=$(CONTAINERREGISTRY)
+        acr=$(CONTAINERREGISTRYURL)
         namespace=${{ parameters.aksnamespace}}
       arguments: '--create-namespace'

@@ -21,7 +21,7 @@ jobs:
       azureSubscription: ${{ parameters.azserviceconnection}}
       scriptType: pscore
       scriptLocation: inlineScript
-      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(DemoJobDockerTagName)  aks/demo-job/'
+      inlineScript: 'az acr build --registry  $(CONTAINERREGISTRYNAME) --image  $(DemoJobDockerTagName)  aks/demo-job/'
 
   - task: AzureCLI@2
     displayName: 'acr build web'
@@ -29,4 +29,4 @@ jobs:
       azureSubscription: ${{ parameters.azserviceconnection}}
       scriptType: pscore
       scriptLocation: inlineScript
-      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(DemoWebAppDockerTagName)  aks/demo-flask-app/'
+      inlineScript: 'az acr build --registry  $(CONTAINERREGISTRYNAME) --image  $(DemoWebAppDockerTagName)  aks/demo-flask-app/'

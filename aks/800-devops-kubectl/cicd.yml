@@ -22,12 +22,11 @@ variables:
     value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.$(Build.BuildId)"
   ${{else}}:
     value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.$(Build.BuildId)"
-- name: CONTAINERREGISTRY
-  value: saupycontainerregistry001dev
 - name: DEMOJOBDOCKERTAGNAME
   value: "demojob:${{ variables.BuildName }}"
 - name: DEMOWEBAPPDOCKERTAGNAME
   value: "flaskwebapp:${{ variables.BuildName }}"
+- group: aks-demo-from-azuretrials-repo
 
 name: "${{ variables.BUILDNAME }}"
 
