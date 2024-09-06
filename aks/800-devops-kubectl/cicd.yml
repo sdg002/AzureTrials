@@ -26,7 +26,7 @@ variables:
 name: "${{ variables.BUILDNAME }}"
 
 stages:
-- stage: BUILD
+- stage: BUILD_STAGE
   displayName: Build stage
   pool: 
     name: Azure Pipelines
@@ -34,24 +34,31 @@ stages:
   jobs:
     - template: ./build-template.yml
 
-- stage: DEV_DEPLOY
+- stage: DEV_DEPLOY_STAGE
   displayName: Dev Deploy stage
-  variables:
-    ENVIRONMENT: prod
+  dependsOn: BUILD_STAGE
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
   jobs:
     - template: ./deploy-template.yml
+      parameters:
+        ENVIRONMENT: DEV
+        azserviceconnection: 'azure pay as you go demo (sep 21)'
+        # reference a library variable here
 
 - stage: PROD_DEPLOY
-  dependsOn: DEV_DEPLOY
+  dependsOn: DEV_DEPLOY_STAGE
   displayName: Prod Deploy stage
   variables:
-    ENVIRONMENT: prod
     isMainBranch: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
+  condition: eq(variables.isMainBranch,true)
   jobs:
     - template: ./deploy-template.yml
+      parameters:
+        ENVIRONMENT: PROD
+        azserviceconnection: 'azure pay as you go demo (sep 21)'
+        # reference a library variable here

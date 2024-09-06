@@ -1,7 +1,24 @@
+parameters:
+  - name: environment
+    type: string
+  - name: azserviceconnection
+    type: string
+
 jobs:
 - job: Deploy
   steps:
   - script: |
       echo Hello world in deploy template
       set
-    displayName: Display all variables
+    displayName: Display all variables ${{ parameters.environment}}
+
+#Your build pipeline references an undefined variable named ‘ContainerRegistry’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘DemoJobDockerTagName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+  - task: AzureCLI@2
+    displayName: 'acr build job'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection}}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: 'az account show'
