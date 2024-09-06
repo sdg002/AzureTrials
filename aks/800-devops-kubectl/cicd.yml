@@ -45,7 +45,7 @@ stages:
   displayName: Dev Deploy stage
   dependsOn: BUILD_STAGE
   variables: 
-  - group: my-variable-group
+  - group: aks-demo-from-azuretrials-repo
   - name: environment
     value: DEV
   pool: 
@@ -55,17 +55,17 @@ stages:
     - template: ./deploy-template.yml
       parameters:
         azserviceconnection: 'azure pay as you go demo (sep 21)'
-        aksresourcegroup: RG-AKS-DEMO-001
-        aksresourcename: aks-viacli-dev
+        aksresourcegroup: $(DEV_AKS_RESOURCEGROUP)
+        aksresourcename: $(DEV_AKS_NAME)
         environment: DEV
-        aksnamespace: demoapp
+        aksnamespace: $(AKS_NAMESPACE)
         # reference a library variable here
 
 - stage: PROD_DEPLOY
   dependsOn: DEV_DEPLOY_STAGE
   displayName: Prod Deploy stage
   variables:
-  - group: my-variable-group
+  - group: aks-demo-from-azuretrials-repo
   - name: environment
     value: PROD
   - name: isMainBranch
@@ -78,8 +78,8 @@ stages:
     - template: ./deploy-template.yml
       parameters:
         azserviceconnection: 'azure pay as you go demo (sep 21)'
-        aksresourcegroup: RG-AKS-DEMO-001
-        aksresourcename: aks-viacli-prod
+        aksresourcegroup: $(PROD_AKS_RESOURCEGROUP)
+        aksresourcename: $(PROD_AKS_NAME)
         environment: PROD
-        aksnamespace: demoapp
+        aksnamespace: $(AKS_NAMESPACE)
         # reference a library variable to get full independence from specifying the Azure resources within the YAML
