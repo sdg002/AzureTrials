@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-flask-app
+spec:
+  replicas: 1
+  selector:
+    #this must match the label of a pod
+    matchLabels:
+      name: mypod
+  template:
+    metadata:
+      #this must match the label of a pod
+      labels:
+        name: mypod
+    spec:
+      containers:
+      - name: flask-app
+        image: saupycontainerregistry001dev.azurecr.io/flaskwebapp:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+        - name: MEMCACHED_SERVER
+          value: "memcached-app-service.demoapp.svc.cluster.local"

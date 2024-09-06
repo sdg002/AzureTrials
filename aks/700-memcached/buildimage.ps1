@@ -7,3 +7,11 @@ $dockerfilefolder=Resolve-Path -Path $dockerfilefolder
 Write-Host "Do a Docker build using ACR $dockerfilefolder"
 az acr build --registry $Global:ContainerRegistry --image $Global:DemoJobDockerTagName $dockerfilefolder
 RaiseCliError -message "Failed to create namespaces"
+Write-Host "Done"
+
+$dockerfilefolder=Join-Path -Path $PSScriptRoot -ChildPath "../demo-flask-app/"
+$dockerfilefolder=Resolve-Path -Path $dockerfilefolder
+Write-Host "Do a Docker build using ACR $dockerfilefolder"
+az acr build --registry $Global:ContainerRegistry --image $Global:WebAppDockerTagName $dockerfilefolder
+RaiseCliError -message "Failed to create namespaces"
+Write-Host "Done"
