@@ -396,7 +396,64 @@ We have added an environment variable to the deployment YAML of the web client j
           value: "http://flask-app-service.demoapp.svc.cluster.local/"
 
 ```
+---
 
+# 700-memcached
+
+## Overview
+- We will deploy the official docker image **memcached** to the AKS cluster
+- We will have a cron job that will write some data to the cache every N minutes
+- We will have a Flask web page that will read the contents from the cache
+
+## How to deploy ?
+- Ensure that flask web app is deployed 
+- Deploy the memcached container
+- Build the job container
+- Deploy the job container
+- 
+- 
+
+## How to run memcached locally during development ?
+
+### Pull the image
+```
+docker pull memcached:latest
+```
+
+### Run the image
+
+The `-vv` option will display get/set activity on the console
+
+```
+docker run --name mymemcached -p 11211:11211 --rm memcached:latest -vv
+```
+
+### Verify that the container is running
+```
+docker ps
+```
+Expected output:
+```
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                      NAMES
+03d8ed4fe72c   memcached:latest   "docker-entrypoint.s…"   28 seconds ago   Up 27 seconds   0.0.0.0:11211->11211/tcp   mymemcached
+```
+
+### Run the Python code for setting a key
+
+Expected output on the Docker terminal:
+
+```
+<26 server listening (auto-negotiate)
+<27 server listening (auto-negotiate)
+<28 new auto-negotiating client connection
+28: Client using the ascii protocol
+<28 set mykey001 0 0 80 noreply
+>28 NOREPLY STORED
+<28 connection closed.
+```
+
+### Terminate the container
+Press CTRL+C in the CMD window to kill it
 ---
 
 # Getting AKS credentials
