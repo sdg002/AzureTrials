@@ -378,7 +378,7 @@ ping SERVICE_NAME.NAMESPACE.svc.cluster.local
 
 ### Step-4-Run the Python Socket to connect
 
-Run `pyhon` within the `sh` of the pod
+The docker image does not have the `ping` utility. Hence taking the longer route via `socket` client connection. Run `pyhon` within the `sh` of the pod to bring up the Python shell and then type the following commands:
 
 ```
 import socket
