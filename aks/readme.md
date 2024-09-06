@@ -464,11 +464,23 @@ Press CTRL+C in the CMD window to kill it
 
 # 800-devops-kubectl
 
-## Lessons learnt 
-Using `kubectl apply` is tedious. No easy way to templatize..
+## Objective
+A single Devops YAML based pipeline that is made of the following stages
+- **Build**-Run the unit tests and push to container registry
+- **DEV deploy**-Deploy to DEV AKS
+- **PROD deploy**-Deploy to PROD AKS
 
-## helm install-What worked?
-`helm install  myaksdemo .\helmcharts --namespace demoapp --create-namespace`
+## Why Helm and why not kubectl apply
+Using `kubectl apply` is tedious for the following reasons
+1. No easy way to templatize..
+1. You will need to invoke `apply` for each and every Kubernetes resource YAML
+
+## How to use helm install command ?
+In the following example the release name is `myaksdemorelease`. For subsequent deployments, we should use `upgrade` and the same release name
+
+```
+helm install  myaksdemorelease .\helmcharts --namespace demoapp --create-namespace
+```
 
 ## helm upgrade
 ```
@@ -477,34 +489,21 @@ helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
 - Any subsequent actions done by helm should use the `upgrade` command
 - should have the same release name
 
-## setting values in the template
+## The basics of setting values deep within the template
 
-Temp example
+The following will produce the substituted results on the stdout:
+
 ```
 helm template .\helmcharts\ --values .\helmcharts\values.yaml --set acr=coolacr --set demojobdockertagname=blahjobtag
 ```
 
+## Caveat about helm and kubectl
 
 You will need to delete any prior installations done using `kubectl apply`
 
-## Objective
-- A single devops pipeline (YAML)
-- Has a build stage
-- Has a ACR push stage
-- Has a DEV deploy stage
-- Has a PROD deploy stage
+## Complete the helm charts by adding Flask
+?????
 
-```
-    cicd.yaml
-    build-template.yml (pytest,acr build )
-    deploy-template.yml (kubectl apply)
-    akstemplates
-        memcached-deployment.yml
-        memcached-service.yml
-        flask-app-deployment.yml
-        flask-app-service.yml
-        cronjob-memcached-writer
-```
 
 ---
 

@@ -16,4 +16,4 @@ spec:
               command: [ "python", "src/chron_memcachedwriter.py" ]
               env:
                 - name: MEMCACHED_SERVER
-                  value: "memcached-app-service.demoapp.svc.cluster.local"
+                  value: "memcached-app-service.{{ $.Values.namespace }}.svc.cluster.local"

@@ -38,4 +38,5 @@ jobs:
       overrideValues: |
         demojobdockertagname=$(DemoJobDockerTagName)
         acr=$(CONTAINERREGISTRY)
+        namespace=${{ parameters.aksnamespace}}
       arguments: '--create-namespace'
