@@ -1,3 +1,7 @@
+parameters:
+  - name: azserviceconnection
+    type: string
+
 jobs:
 - job: Build
   steps:
@@ -10,3 +14,19 @@ jobs:
     displayName: 'Use Python $(PYTHONVERSION)'
     inputs:
       versionSpec: $(PYTHONVERSION)
+
+  - task: AzureCLI@2
+    displayName: 'acr build job'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection}}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(DemoJobDockerTagName)  aks/demo-job/'
+
+  - task: AzureCLI@2
+    displayName: 'acr build web'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection}}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: 'az acr build --registry  $(ContainerRegistry) --image  $(WebAppDockerTagName)  aks/demo-flask-app/'

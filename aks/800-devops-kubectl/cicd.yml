@@ -22,6 +22,12 @@ variables:
     value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.$(Build.BuildId)"
   ${{else}}:
     value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.$(Build.BuildId)"
+- name: CONTAINERREGISTRY
+  value: saupycontainerregistry001dev
+- name: DemoJobDockerTagName
+  value: "demojob:${{ variables.BuildName }}"
+- name: WebAppDockerTagName
+  value: "flaskwebapp:${{ variables.BuildName }}"
 
 name: "${{ variables.BUILDNAME }}"
 
@@ -33,6 +39,8 @@ stages:
     vmImage: ubuntu-latest
   jobs:
     - template: ./build-template.yml
+      parameters:
+        azserviceconnection: 'azure pay as you go demo (sep 21)'
 
 - stage: DEV_DEPLOY_STAGE
   displayName: Dev Deploy stage
