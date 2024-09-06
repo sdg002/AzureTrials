@@ -406,14 +406,19 @@ We have added an environment variable to the deployment YAML of the web client j
 - We will have a Flask web page that will read the contents from the cache
 
 ## How to deploy ?
-- Ensure that flask web app is deployed 
-- Deploy the memcached container
-- Build the job container
-- Deploy the job container
-- 
-- 
+- Run the script `buildimage.ps1`  to ensure that both the flask web app and cron job images are pushed
+- Deploy to Kubernetes by running the script `aksdeploy.ps1`
+
+## How to test the deployment ?
+- Verify that the memcached pod has been deployed by running `kubectl.exe get pods --namespace demoapp`
+- Verify that the memcached service has been deployed by running `kubectl.exe get service --namespace demoapp`
+- Verify that the cron job for writing to memcached has been deployed by runing `kubectl.exe get jobs --namespace demoapp`
+- Verify from the logs of the cron job is able to access the memcached service by viewing the logs of the `demo-cron-job-memcachedwriter` pod
+- Access the public ip of the `flask-app-service` service and then hit the `/memcached` page to see the most recent payload in the memcached service that was pushed by the `demo-cron-job-memcachedwriter` job
 
 ## How to run memcached locally during development ?
+
+You will need this for testing the Python script that writes the payload to memcached and the Flask web app that reads from memcached
 
 ### Pull the image
 ```
@@ -454,6 +459,7 @@ Expected output on the Docker terminal:
 
 ### Terminate the container
 Press CTRL+C in the CMD window to kill it
+
 ---
 
 # Getting AKS credentials
