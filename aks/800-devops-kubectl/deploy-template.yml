@@ -3,6 +3,11 @@ parameters:
     type: string
   - name: azserviceconnection
     type: string
+  - name: aksresourcegroup
+    type: string
+  - name: aksresourcename
+    type: string
+    default: 
 
 jobs:
 - job: Deploy
@@ -11,17 +16,6 @@ jobs:
       echo Hello world in deploy template
       set
     displayName: Display all variables ${{ parameters.environment}}
-
-#Your build pipeline references an undefined variable named ‘ContainerRegistry’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘DemoJobDockerTagName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-
-  - task: AzureCLI@2
-    displayName: 'acr build job'
-    inputs:
-      azureSubscription: ${{ parameters.azserviceconnection}}
-      scriptType: pscore
-      scriptLocation: inlineScript
-      inlineScript: 'az account show'
 
   - task: KubectlInstaller@0
     displayName: 'Install Kubectl latest'
@@ -32,9 +26,9 @@ jobs:
   - task: HelmDeploy@1
     displayName: 'helm upgrade'
     inputs:
-      azureSubscription: ${{ parameters.azserviceconnection}}
-      azureResourceGroup: 'RG-AKS-DEMO-001' #parameterize this
-      kubernetesCluster: 'aks-viacli-dev' #parameterize this
+      azureSubscription: ${{ parameters.azserviceconnection }}
+      azureResourceGroup: ${{ parameters.aksresourcegroup }}
+      kubernetesCluster: ${{ parameters.aksresourcename }}
       namespace: demoapp
       command: upgrade
       chartType: FilePath

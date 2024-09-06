@@ -46,20 +46,24 @@ stages:
 - stage: DEV_DEPLOY_STAGE
   displayName: Dev Deploy stage
   dependsOn: BUILD_STAGE
+  variables: 
+    environment: DEV
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
   jobs:
     - template: ./deploy-template.yml
       parameters:
-        ENVIRONMENT: DEV
         azserviceconnection: 'azure pay as you go demo (sep 21)'
+        aksresourcegroup: RG-AKS-DEMO-001
+        aksresourcename: aks-viacli-$(environment)
         # reference a library variable here
 
 - stage: PROD_DEPLOY
   dependsOn: DEV_DEPLOY_STAGE
   displayName: Prod Deploy stage
   variables:
+    environment: PROD
     isMainBranch: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
   pool: 
     name: Azure Pipelines
@@ -68,6 +72,7 @@ stages:
   jobs:
     - template: ./deploy-template.yml
       parameters:
-        ENVIRONMENT: PROD
         azserviceconnection: 'azure pay as you go demo (sep 21)'
-        # reference a library variable here
+        aksresourcegroup: RG-AKS-DEMO-001
+        aksresourcename: aks-viacli-$(environment)
+        # reference a library variable to get full independence from specifying the Azure resources within the YAML
