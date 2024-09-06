@@ -1,7 +1,7 @@
 jobs:
 - job: Build
-steps:
-- script: |
-    echo Hello world
-    set
-  displayName: Display all variables
+  steps:
+  - script: |
+      echo Hello world
+      set
+    displayName: Display all variables
