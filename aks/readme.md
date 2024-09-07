@@ -538,7 +538,10 @@ helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
 
 ## Using Azure Devops task to do the helm upgrade
 
-The `HelmDeploy` task abstracts away the 
+In the following example, the `HelmDeploy` task abstracts away the `uprgade` operation . Take note of the following:
+- overriding values using `overrideValues`
+- specifying `--create-namespace` for the first execution 
+- Specifying the Azure parameters using `azureSubscription`, `azureResourceGroup` and `kubernetesCluster`
 
 ```yaml
   - task: HelmDeploy@1
