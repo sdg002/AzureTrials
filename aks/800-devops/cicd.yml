@@ -19,7 +19,9 @@ pr:
     - 'aks/demo-flask-app/*'
     - 'aks/demo-job/*'
     exclude:
-    - '*'
+    - aks/readme.md
+# trying exclude   aks/readme.md  
+# the exclude '*' did not work
 
 variables:
 - name: MajorVersion
