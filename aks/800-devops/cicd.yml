@@ -12,9 +12,6 @@ trigger:
 # using a path include like aks/demo-job/**  causes the pr triggering to stop entirely
 
 pr:
-  branches:
-    include:
-      - feature/*
   paths:
     include: 
     - aks/800-devops
