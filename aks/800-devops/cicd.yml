@@ -8,7 +8,8 @@ trigger:
     - 'aks/800-devops/*'
     - 'aks/demo-flask-app/*'
     - 'aks/demo-job/*'
-
+    exclude:
+    - '*'
 # using a path include like aks/demo-job/**  causes the pr triggering to stop entirely
 
 pr:
@@ -17,6 +18,8 @@ pr:
     - 'aks/800-devops/*'
     - 'aks/demo-flask-app/*'
     - 'aks/demo-job/*'
+    exclude:
+    - '*'
 
 variables:
 - name: MajorVersion
