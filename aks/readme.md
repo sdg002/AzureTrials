@@ -878,3 +878,5 @@ https://stackoverflow.com/questions/47292669/memcached-not-working-in-docker-com
 Getting the path `exclude` and `include` right under `pr:` element can get complex!
 
 https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml
+
+https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops
