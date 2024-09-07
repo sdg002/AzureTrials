@@ -54,12 +54,11 @@ stages:
   jobs:
     - template: ./deploy-template.yml
       parameters:
-        azserviceconnection: 'azure pay as you go demo (sep 21)'
+        azserviceconnection: $(DEV_AZURE_SERVICE_CONNECTION)
         aksresourcegroup: $(DEV_AKS_RESOURCEGROUP)
         aksresourcename: $(DEV_AKS_NAME)
         environment: DEV
         aksnamespace: $(AKS_NAMESPACE)
-        # reference a library variable here
 
 - stage: PROD_DEPLOY
   dependsOn: DEV_DEPLOY_STAGE
@@ -77,7 +76,7 @@ stages:
   jobs:
     - template: ./deploy-template.yml
       parameters:
-        azserviceconnection: 'azure pay as you go demo (sep 21)'
+        azserviceconnection: $(PROD_AZURE_SERVICE_CONNECTION)
         aksresourcegroup: $(PROD_AKS_RESOURCEGROUP)
         aksresourcename: $(PROD_AKS_NAME)
         environment: PROD
