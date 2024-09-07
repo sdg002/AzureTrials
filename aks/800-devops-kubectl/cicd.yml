@@ -39,7 +39,7 @@ stages:
   jobs:
     - template: ./build-template.yml
       parameters:
-        azserviceconnection: 'azure pay as you go demo (sep 21)'
+        azserviceconnection: $(DEV_AZURE_SERVICE_CONNECTION)
 
 - stage: DEV_DEPLOY_STAGE
   displayName: Dev Deploy stage
