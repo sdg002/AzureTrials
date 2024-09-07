@@ -873,3 +873,8 @@ https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-o
 ## Example of docker compose ?
 
 https://stackoverflow.com/questions/47292669/memcached-not-working-in-docker-compose
+
+## Azure Devops Path trigger
+Getting the path `exclude` and `include` right under `pr:` element can get complex!
+
+https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml
