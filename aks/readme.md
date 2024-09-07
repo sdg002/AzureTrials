@@ -462,7 +462,7 @@ Press CTRL+C in the CMD window to kill it
 
 ---
 
-# 800-devops-kubectl
+# 800-devops
 
 ## Objective
 A single Devops YAML based pipeline that is made of the following stages
@@ -474,6 +474,44 @@ A single Devops YAML based pipeline that is made of the following stages
 Using `kubectl apply` is tedious for the following reasons
 1. No easy way to templatize..
 1. You will need to invoke `apply` for each and every Kubernetes resource YAML
+
+## How to create a folder with template helm charts ?
+
+```
+helm create myfolder001
+```
+This will create the folder `myfolder00` with 
+
+```
+└───myfolder00
+    ├───charts
+    └───templates
+        └───tests
+    
+```
+
+The files are as follows:
+
+```
+C:.
+└───myfolder00
+    │   .helmignore
+    │   Chart.yaml
+    │   values.yaml
+    │
+    ├───charts
+    └───templates
+        │   deployment.yaml
+        │   hpa.yaml
+        │   ingress.yaml
+        │   NOTES.txt
+        │   service.yaml
+        │   serviceaccount.yaml
+        │   _helpers.tpl
+        │
+        └───tests
+                test-connection.yaml
+```
 
 ## How to use helm install command ?
 In the following example the release name is `myaksdemorelease`. For subsequent deployments, we should use `upgrade` and the same release name
