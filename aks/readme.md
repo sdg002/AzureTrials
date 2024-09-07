@@ -880,3 +880,8 @@ Getting the path `exclude` and `include` right under `pr:` element can get compl
 https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml
 
 https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops
+
+See this article by one Julie Ng. Section "Sub-projects must include paths"
+https://julie.io/writing/monorepo-pipelines-in-azure-devops/
+
+
