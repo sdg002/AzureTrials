@@ -27,19 +27,20 @@ jobs:
   - task: HelmDeploy@1
     displayName: 'helm upgrade'
     inputs:
-      azureSubscription: ${{ parameters.azserviceconnection }}
-      azureResourceGroup: ${{ parameters.aksresourcegroup }}
-      kubernetesCluster: ${{ parameters.aksresourcename }}
-      namespace: ${{ parameters.aksnamespace}}
+      azureSubscription: ${{ parameters.azserviceconnection }} # name of the Azure Service connection
+      azureResourceGroup: ${{ parameters.aksresourcegroup }} # the resource group which has the AKS cluster
+      kubernetesCluster: ${{ parameters.aksresourcename }} # the name of the AKS resource
+      namespace: ${{ parameters.aksnamespace}} # the resource group which has the AKS cluster
       command: upgrade
       chartType: FilePath
       chartPath: 'aks/800-devops/helmcharts'
-      releaseName: myaksdemo
+      releaseName: myaksdemo # The release name should remain unchanged
+      # The following values will be substituted in the templates
       overrideValues: |
         demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
         demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
         acr=$(CONTAINERREGISTRYURL)
         namespace=${{ parameters.aksnamespace}}
-      arguments: '--create-namespace'
-      valueFile: 'aks/800-devops/helmcharts/values.yaml'
+      arguments: '--create-namespace' # will create the namespace if not found
+      valueFile: 'aks/800-devops/helmcharts/values.yaml' # values in this file will be used for subsitution (Not sure of the precedence!)
   
