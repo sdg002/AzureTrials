@@ -884,4 +884,6 @@ https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azu
 See this article by one Julie Ng. Section "Sub-projects must include paths"
 https://julie.io/writing/monorepo-pipelines-in-azure-devops/
 
+SFO on PR path include still getting trigerred from all paths
+https://stackoverflow.com/questions/68023833/azure-pipeline-trigger-regardless-of-paths-includes
 
