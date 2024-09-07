@@ -887,3 +887,7 @@ https://julie.io/writing/monorepo-pipelines-in-azure-devops/
 SFO on PR path include still getting trigerred from all paths
 https://stackoverflow.com/questions/68023833/azure-pipeline-trigger-regardless-of-paths-includes
 
+## PR commit as a whole caveat
+See this link on `developercommunity`. The post seems to indicate that when you are within a PR branch, the triggers act on the summation of files from all the commits in that branch. Example - In the current commit, if you make a change to file that is in the `path-exclude` list and the previous commit had changes to files in the `path-include` list, then the path trigger is evaluated to `True` because the sum of all commits meet the `path-include` criteria.
+
+https://developercommunity.visualstudio.com/t/azure-pipelines-triggers-pathsexclude-in-pr-is-not/1046653

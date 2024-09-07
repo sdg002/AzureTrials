@@ -9,7 +9,7 @@ trigger:
     - 'aks/demo-flask-app/*'
     - 'aks/demo-job/*'
     exclude:
-    - '*'
+    - aks/readme.md
 # using a path include like aks/demo-job/**  causes the pr triggering to stop entirely
 
 pr:
