@@ -536,6 +536,32 @@ helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
 - Any subsequent actions done by helm should use the `upgrade` command
 - should have the same release name
 
+## Using Azure Devops task to do the helm upgrade
+
+The `HelmDeploy` task abstracts away the 
+
+```yaml
+  - task: HelmDeploy@1
+    displayName: 'helm upgrade'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection }}
+      azureResourceGroup: ${{ parameters.aksresourcegroup }}
+      kubernetesCluster: ${{ parameters.aksresourcename }}
+      namespace: ${{ parameters.aksnamespace}}
+      command: upgrade
+      chartType: FilePath
+      chartPath: 'aks/800-devops/helmcharts'
+      releaseName: myaksdemo
+      overrideValues: |
+        demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
+        demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
+        acr=$(CONTAINERREGISTRYURL)
+        namespace=${{ parameters.aksnamespace}}
+      arguments: '--create-namespace'
+      valueFile: 'aks/800-devops/helmcharts/values.yaml'
+```
+
+
 ## The basics of setting values deep within the template
 
 The following will produce the substituted results on the stdout:
