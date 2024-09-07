@@ -475,7 +475,7 @@ Using `kubectl apply` is tedious for the following reasons
 1. No easy way to templatize..
 1. You will need to invoke `apply` for each and every Kubernetes resource YAML
 
-## How to create a folder with template helm charts ?
+## How to use the helm creaet option to create a folder with template helm charts ?
 
 ```
 helm create myfolder001
@@ -513,8 +513,17 @@ C:.
                 test-connection.yaml
 ```
 
+## how to do the templating with helm template command?
+
+Running the following command will replace values in each of the YAML templates in `templates` directory with values in the `myfolder00/values.yaml` file
+
+```
+helm template  myfolder00 --values myfolder00\values.yaml
+```
+
+
 ## How to use helm install command ?
-In the following example the release name is `myaksdemorelease`. For subsequent deployments, we should use `upgrade` and the same release name
+In the following example the release name is `myaksdemorelease`. For subsequent deployments, we should use `upgrade` and the same release name. This will do the actual deployment on Kubernetes
 
 ```
 helm install  myaksdemorelease .\helmcharts --namespace demoapp --create-namespace
