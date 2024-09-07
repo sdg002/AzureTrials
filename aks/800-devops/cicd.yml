@@ -2,11 +2,11 @@ trigger:
   branches:
     include: [main,master]
   paths:
-    include: [aks/800-devops-kubectl, aks/demo-flask-app, aks/demo-job]
+    include: [aks/800-devops, aks/demo-flask-app, aks/demo-job]
 
 pr:
   paths:
-    include: [aks/800-devops-kubectl, aks/demo-flask-app, aks/demo-job]
+    include: [aks/800-devops, aks/demo-flask-app, aks/demo-job]
 
 variables:
 - name: MajorVersion
