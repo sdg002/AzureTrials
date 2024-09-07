@@ -33,7 +33,7 @@ jobs:
       namespace: ${{ parameters.aksnamespace}}
       command: upgrade
       chartType: FilePath
-      chartPath: 'aks/800-devops-kubectl/helmcharts'
+      chartPath: 'aks/800-devops/helmcharts'
       releaseName: myaksdemo
       overrideValues: |
         demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
@@ -41,5 +41,5 @@ jobs:
         acr=$(CONTAINERREGISTRYURL)
         namespace=${{ parameters.aksnamespace}}
       arguments: '--create-namespace'
-      valueFile: 'aks/800-devops-kubectl/helmcharts/values.yaml'
+      valueFile: 'aks/800-devops/helmcharts/values.yaml'
   
