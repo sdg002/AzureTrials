@@ -83,7 +83,7 @@ stages:
   - name: environment
     value: PROD
   - name: isMainBranch
-    value: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   pool: 
     name: Azure Pipelines
     vmImage: ubuntu-latest
