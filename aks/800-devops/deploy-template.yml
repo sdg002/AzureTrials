@@ -1,0 +1,46 @@
+parameters:
+  - name: environment
+    type: string
+  - name: azserviceconnection
+    type: string
+  - name: aksresourcegroup
+    type: string
+  - name: aksresourcename
+    type: string
+  - name: aksnamespace
+    type: string
+
+jobs:
+- job: Deploy
+  steps:
+  - script: |
+      echo Hello world in deploy template
+      set
+    displayName: Display all variables ${{ parameters.environment}}
+
+  - task: KubectlInstaller@0
+    displayName: 'Install Kubectl latest'
+
+  - task: KubeloginInstaller@0
+    displayName: 'Install Kubelogin latest'
+
+  - task: HelmDeploy@1
+    displayName: 'helm upgrade'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection }} # name of the Azure Service connection
+      azureResourceGroup: ${{ parameters.aksresourcegroup }} # the resource group which has the AKS cluster
+      kubernetesCluster: ${{ parameters.aksresourcename }} # the name of the AKS resource
+      namespace: ${{ parameters.aksnamespace}} # the resource group which has the AKS cluster
+      command: upgrade
+      chartType: FilePath
+      chartPath: 'aks/800-devops/helmcharts'
+      releaseName: myaksdemo # The release name should remain unchanged
+      # The following values will be substituted in the templates
+      overrideValues: |
+        demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
+        demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
+        acr=$(CONTAINERREGISTRYURL)
+        namespace=${{ parameters.aksnamespace}}
+      arguments: '--create-namespace' # will create the namespace if not found
+      valueFile: 'aks/800-devops/helmcharts/values.yaml' # values in this file will be used for subsitution (Not sure of the precedence!)
+  

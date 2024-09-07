@@ -1,0 +1,99 @@
+trigger: 
+  branches:
+    include:
+    - master
+    - main
+  paths:
+    include:
+    - 'aks/800-devops/*'
+    - 'aks/demo-flask-app/*'
+    - 'aks/demo-job/*'
+    exclude:
+    - aks/readme.md
+# using a path include like aks/demo-job/**  causes the pr triggering to stop entirely
+
+pr:
+  paths:
+    include: 
+    - 'aks/800-devops/*'
+    - 'aks/demo-flask-app/*'
+    - 'aks/demo-job/*'
+    exclude:
+    - aks/readme.md
+# trying exclude   aks/readme.md  
+# the exclude '*' did not work
+
+variables:
+- name: MajorVersion
+  value: '1'
+- name: MinorVersion
+  value: '0'
+- name: PatchNumber
+  value: '1'
+- name: PYTHONVERSION
+  value: '3.9'
+- name: BuildName
+  ${{ if eq(variables['Build.SourceBranchName'],'main') }}:
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}.$(Build.BuildId)"
+  ${{else}}:
+    value: "${{ variables.MajorVersion}}.${{ variables.MinorVersion }}.${{ variables.PatchNumber }}-prerelease.$(Build.BuildId)"
+- name: DEMOJOBDOCKERTAGNAME
+  value: "demojob:${{ variables.BuildName }}"
+- name: DEMOWEBAPPDOCKERTAGNAME
+  value: "flaskwebapp:${{ variables.BuildName }}"
+- group: aks-demo-from-azuretrials-repo
+
+name: "${{ variables.BUILDNAME }}"
+
+stages:
+- stage: BUILD_STAGE
+  displayName: Build stage
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  jobs:
+    - template: ./build-template.yml
+      parameters:
+        azserviceconnection: $(DEV_AZURE_SERVICE_CONNECTION)
+
+- stage: DEV_DEPLOY_STAGE
+  displayName: Dev Deploy stage
+  dependsOn: BUILD_STAGE
+  variables: 
+  - group: aks-demo-from-azuretrials-repo
+  - name: environment
+    value: DEV
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  jobs:
+    - template: ./deploy-template.yml
+      parameters:
+        azserviceconnection: $(DEV_AZURE_SERVICE_CONNECTION)
+        aksresourcegroup: $(DEV_AKS_RESOURCEGROUP)
+        aksresourcename: $(DEV_AKS_NAME)
+        environment: DEV
+        aksnamespace: $(AKS_NAMESPACE)
+
+- stage: PROD_DEPLOY
+  dependsOn: DEV_DEPLOY_STAGE
+  displayName: Prod Deploy stage
+  variables:
+  - group: aks-demo-from-azuretrials-repo
+  - name: environment
+    value: PROD
+  - name: isMainBranch
+    value: $[eq(variables['Build.SourceBranchName'], 'refs/heads/main')]
+  pool: 
+    name: Azure Pipelines
+    vmImage: ubuntu-latest
+  condition: eq(variables.isMainBranch,true)
+  jobs:
+    - template: ./deploy-template.yml
+      parameters:
+        azserviceconnection: $(PROD_AZURE_SERVICE_CONNECTION)
+        aksresourcegroup: $(PROD_AKS_RESOURCEGROUP)
+        aksresourcename: $(PROD_AKS_NAME)
+        environment: PROD
+        aksnamespace: $(AKS_NAMESPACE)
+        # reference a library variable to get full independence from specifying the Azure resources within the YAML

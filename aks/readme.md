@@ -462,6 +462,134 @@ Press CTRL+C in the CMD window to kill it
 
 ---
 
+# 800-devops
+
+## Objective
+A single Devops YAML based pipeline that is made of the following stages
+- **Build**-Run the unit tests and push to container registry
+- **DEV deploy**-Deploy to DEV AKS
+- **PROD deploy**-Deploy to PROD AKS
+
+## Why Helm and why not kubectl apply
+Using `kubectl apply` is tedious for the following reasons
+1. No easy way to templatize..
+1. You will need to invoke `apply` for each and every Kubernetes resource YAML
+
+## How to use the helm creaet option to create a folder with template helm charts ?
+
+```
+helm create myfolder001
+```
+This will create the folder `myfolder00` with 
+
+```
+└───myfolder00
+    ├───charts
+    └───templates
+        └───tests
+    
+```
+
+The files are as follows:
+
+```
+C:.
+└───myfolder00
+    │   .helmignore
+    │   Chart.yaml
+    │   values.yaml
+    │
+    ├───charts
+    └───templates
+        │   deployment.yaml
+        │   hpa.yaml
+        │   ingress.yaml
+        │   NOTES.txt
+        │   service.yaml
+        │   serviceaccount.yaml
+        │   _helpers.tpl
+        │
+        └───tests
+                test-connection.yaml
+```
+
+## how to do the templating with helm template command?
+
+Running the following command will replace values in each of the YAML templates in `templates` directory with values in the `myfolder00/values.yaml` file
+
+```
+helm template  myfolder00 --values myfolder00\values.yaml
+```
+
+
+## How to use helm install command ?
+In the following example the release name is `myaksdemorelease`. For subsequent deployments, we should use `upgrade` and the same release name. This will do the actual deployment on Kubernetes
+
+```
+helm install  myaksdemorelease .\helmcharts --namespace demoapp --create-namespace
+```
+
+## helm upgrade
+```
+helm upgrade  myaksdemo .\helmcharts --namespace demoapp --create-namespace
+```
+- Any subsequent actions done by helm should use the `upgrade` command
+- should have the same release name
+
+## Using Azure Devops task to do the helm upgrade
+
+In the following example, the `HelmDeploy` task abstracts away the `uprgade` operation . Take note of the following:
+- overriding values using `overrideValues`
+- specifying `--create-namespace` for the first execution 
+- Specifying the Azure parameters using `azureSubscription`, `azureResourceGroup` and `kubernetesCluster`
+
+```yaml
+  - task: HelmDeploy@1
+    displayName: 'helm upgrade'
+    inputs:
+      azureSubscription: ${{ parameters.azserviceconnection }}
+      azureResourceGroup: ${{ parameters.aksresourcegroup }}
+      kubernetesCluster: ${{ parameters.aksresourcename }}
+      namespace: ${{ parameters.aksnamespace}}
+      command: upgrade
+      chartType: FilePath
+      chartPath: 'aks/800-devops/helmcharts'
+      releaseName: myaksdemo
+      overrideValues: |
+        demojobdockertagname=$(DEMOJOBDOCKERTAGNAME)
+        demowebappdockertagname=$(DEMOWEBAPPDOCKERTAGNAME)
+        acr=$(CONTAINERREGISTRYURL)
+        namespace=${{ parameters.aksnamespace}}
+      arguments: '--create-namespace'
+      valueFile: 'aks/800-devops/helmcharts/values.yaml'
+```
+
+
+## The basics of setting values deep within the template
+
+The following will produce the substituted results on the stdout:
+
+```
+helm template .\helmcharts\ --values .\helmcharts\values.yaml --set acr=coolacr --set demojobdockertagname=blahjobtag
+```
+
+## Caveat about helm and kubectl
+
+You will need to delete any prior installations done using `kubectl apply`
+
+## Caveat about helm erroring if we change the pod name after the first install
+
+This was when we changed the pod selector labels from `mypod` to `flaskapppod`. 
+
+```
+##[error]Error: UPGRADE FAILED: cannot patch "example-flask-app" with kind Deployment: Deployment.apps "example-flask-app" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"name":"flaskapppod"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+
+```
+The solution was to drop the entire namespace using `kubectl delete namespace demoapp`
+
+---
+
+
 # Getting AKS credentials
 
 ## AZ CLI
@@ -745,3 +873,21 @@ https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-o
 ## Example of docker compose ?
 
 https://stackoverflow.com/questions/47292669/memcached-not-working-in-docker-compose
+
+## Azure Devops Path trigger
+Getting the path `exclude` and `include` right under `pr:` element can get complex!
+
+https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml
+
+https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops
+
+See this article by one Julie Ng. Section "Sub-projects must include paths"
+https://julie.io/writing/monorepo-pipelines-in-azure-devops/
+
+SFO on PR path include still getting trigerred from all paths
+https://stackoverflow.com/questions/68023833/azure-pipeline-trigger-regardless-of-paths-includes
+
+## PR commit as a whole caveat
+See this link on `developercommunity`. The post seems to indicate that when you are within a PR branch, the triggers act on the summation of files from all the commits in that branch. Example - In the current commit, if you make a change to file that is in the `path-exclude` list and the previous commit had changes to files in the `path-include` list, then the path trigger is evaluated to `True` because the sum of all commits meet the `path-include` criteria.
+
+https://developercommunity.visualstudio.com/t/azure-pipelines-triggers-pathsexclude-in-pr-is-not/1046653
