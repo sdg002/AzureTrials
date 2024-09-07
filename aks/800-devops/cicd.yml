@@ -5,9 +5,11 @@ trigger:
     - main
   paths:
     include:
-    - aks/800-devops/**
-    - aks/demo-flask-app/**
-    - aks/demo-job/**
+    - aks/800-devops
+    - aks/demo-flask-app
+    - aks/demo-job
+
+# using a path include like aks/demo-job/**  causes the pr triggering to stop entirely
 
 pr:
   branches:
@@ -15,9 +17,9 @@ pr:
       - feature/*
   paths:
     include: 
-    - aks/800-devops/**
-    - aks/demo-flask-app/**
-    - aks/demo-job/**
+    - aks/800-devops
+    - aks/demo-flask-app
+    - aks/demo-job
 
 variables:
 - name: MajorVersion
