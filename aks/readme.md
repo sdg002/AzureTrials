@@ -976,3 +976,11 @@ type: Opaque
 ```
 kubectl patch secret mysecret002  -p "{\"data\": {\"password\": \"aGVsbG93b3JsZDEyMw==\" }}"
 ```
+
+## How to delete a specific secret ?
+
+```
+kubectl delete secret  mysecret002 --namespace powertrading-dev
+```
+
+---
