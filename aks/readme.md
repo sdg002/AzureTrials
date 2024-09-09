@@ -895,3 +895,84 @@ https://github.com/microsoft/azure-pipelines-yaml/issues/366
 See this link on `developercommunity`. The post seems to indicate that when you are within a PR branch, the triggers act on the summation of files from all the commits in that branch. Example - In the current commit, if you make a change to file that is in the `path-exclude` list and the previous commit had changes to files in the `path-include` list, then the path trigger is evaluated to `True` because the sum of all commits meet the `path-include` criteria.
 
 https://developercommunity.visualstudio.com/t/azure-pipelines-triggers-pathsexclude-in-pr-is-not/1046653
+
+
+# Kubectl secrets
+
+## Creating a new secret
+
+In the following example we are creating a `generic` secret.
+```
+kubectl create secret generic mysecret002 --from-literal username=john --from-literal password=1234009
+```
+
+## How to view all secrets ?
+
+```
+kubectl get secrets -o json
+```
+
+Expected output below. Notice the secret name-value pairs inside the `/items/data` element
+
+```json
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "data": {
+                "password": "MTIzNDAwOQ==",
+                "username": "am9obg=="
+            },
+            "kind": "Secret",
+            "metadata": {
+                "creationTimestamp": "2024-09-09T12:29:22Z",
+                "name": "mysecret002",
+                "namespace": "default",
+                "resourceVersion": "894920",
+                "uid": "9a276426-e973-4f27-96f3-c6fd5ebb6029"
+            },
+            "type": "Opaque"
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}
+```
+
+The secret value is base64 encoded and you can easily get back the original value using a site like https://www.base64decode.org/
+
+
+## How to retrieve a specific secret ?
+
+```
+kubectl get secret mysecret002 -o yaml
+```
+
+Expected output:
+
+```YAML
+apiVersion: v1
+data:
+  password: MTIzNDAwOQ==
+  username: am9obg==
+kind: Secret
+metadata:
+  creationTimestamp: "2024-09-09T12:29:22Z"
+  name: mysecret002
+  namespace: default
+  resourceVersion: "894920"
+  uid: 9a276426-e973-4f27-96f3-c6fd5ebb6029
+type: Opaque
+```
+
+## How to update an existing secret ?
+
+- You will need to specify the base64 encoded value
+- Pay attention to the [escaping of double quotes](https://stackoverflow.com/questions/73031650/error-unable-to-parse-spec-yaml-found-unexpected-end-of-stream-while). The documented way does not work.
+
+```
+kubectl patch secret mysecret002  -p "{\"data\": {\"password\": \"aGVsbG93b3JsZDEyMw==\" }}"
+```
