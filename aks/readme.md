@@ -906,7 +906,22 @@ In the following example we are creating a `generic` secret.
 kubectl create secret generic mysecret002 --from-literal username=john --from-literal password=1234009
 ```
 
-## How to view all secrets ?
+## How to view all secrets  as a table?
+
+```
+kubectl get secrets --namespace powertrading-dev
+```
+
+Expected output:
+```
+NAME                                                  TYPE                 DATA   AGE
+sh.helm.release.v1.jobrelease.v10                     helm.sh/release.v1   1      24h
+sh.helm.release.v1.jobrelease.v11                     helm.sh/release.v1   1      6h55m
+sh.helm.release.v1.jobrelease.v12                     helm.sh/release.v1   1      6h11m
+sh.helm.release.v1.jobrelease.v13                     helm.sh/release.v1   1      4h34m
+```
+
+## How to view all secrets as JSON?
 
 ```
 kubectl get secrets -o json
