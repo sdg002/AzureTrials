@@ -800,11 +800,6 @@ This SFO was useful:
 https://stackoverflow.com/questions/68811153/yaml-support-for-kubernetes-in-vscode
 
 
-
-# kubectl create configmap (TO BE DONE)
-
-I wrote this down with a half understanding
-
 ## 1-Deploy the first web app
 
 ```
@@ -1038,3 +1033,82 @@ Sample output:
 secret "mysecret001" deleted
 secret "mysecret002" deleted
 ```
+
+## Adding secerts from a JSON file
+
+```
+kubectl create secret generic allkeyvaultsecrets --from-file akssecrets.temp.json --namespace powertrading-dev
+```
+
+---
+
+# Config Map
+
+## kubectl create configmap 
+
+```
+kubectl create configmaps --namespace powertrading-dev --from-literal user1=john --from-literal user2=jane
+```
+
+## kubectl get configmaps
+
+```
+kubectl get configmaps --namespace powertrading-dev
+```
+
+Sample output:
+
+```
+NAME               DATA   AGE
+kube-root-ca.crt   1      2d5h
+myconfigmap        2      79s
+```
+
+
+## How to read the contents of a configmap
+
+```
+kubectl get configmap myconfigmap --namespace powertrading-dev
+```
+
+Sample output:
+
+```
+{
+    "apiVersion": "v1",
+    "data": {
+        "user1": "john",
+        "user2": "jane"
+    },
+    "kind": "ConfigMap",
+    "metadata": {
+        "creationTimestamp": "2024-09-11T15:03:40Z",
+        "name": "myconfigmap",
+        "namespace": "powertrading-dev",
+        "resourceVersion": "1464307",
+        "uid": "2e02581c-c4d0-46c3-860e-017ceb9e8b56"
+    }
+}
+```
+
+## How to pass all variables from ConfigMap as environment variables
+
+In the following example we all items from the ConfigMap are exposed as environment variables of the pod.
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dapi-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: registry.k8s.io/busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      envFrom:
+      - configMapRef:
+          name: myconfigmap
+  restartPolicy: Never
+
+```
+
+----
