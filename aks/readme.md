@@ -959,6 +959,33 @@ Expected output below. Notice the secret name-value pairs inside the `/items/dat
 
 The secret value is base64 encoded and you can easily get back the original value using a site like https://www.base64decode.org/
 
+## How to view all secrets as a table ?
+
+```
+kubectl get secrets --namespace powertrading-dev
+```
+
+Sample output:
+```
+NAME                                                  TYPE                 DATA   AGE
+mysecretfromyaml001                                   Opaque               2      10h
+sh.helm.release.v1.jobrelease.v11                     helm.sh/release.v1   1      17h
+sh.helm.release.v1.jobrelease.v12                     helm.sh/release.v1   1      16h
+sh.helm.release.v1.jobrelease.v13                     helm.sh/release.v1   1      14h
+```
+
+## How to view Opaque secrets ?
+
+```
+kubectl get secrets --namespace powertrading-dev --field-selector type==Opaque
+```
+
+Sample output:
+```
+NAME                  TYPE     DATA   AGE
+mysecretfromyaml001   Opaque   2      10h
+```
+
 
 ## How to retrieve a specific secret ?
 
@@ -999,3 +1026,15 @@ kubectl delete secret  mysecret002 --namespace powertrading-dev
 ```
 
 ---
+
+## How to delete all Opaque secrets ?
+
+```
+kubectl delete secrets  --namespace demoapp --field-selector type==Opaque
+```
+
+Sample output:
+```
+secret "mysecret001" deleted
+secret "mysecret002" deleted
+```
