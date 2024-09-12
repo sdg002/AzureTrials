@@ -370,6 +370,12 @@ kubectl get pods --namespace demoapp
 kubectl exec -it POD_NAME --namespace demoapp sh
 ```
 
+**Attention!** You cannot execute a shell in a pod that has died. Example - A cron job.
+
+```
+error: cannot exec into a container in a completed pod; current phase is Succeeded
+```
+
 ### Step-3-Run the ping command
 
 ```
