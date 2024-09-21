@@ -12,3 +12,4 @@ function RaiseCliError($message){
 }
 
 $global:ResourceGroup="RG-AKS-DEMO-001"
+$Global:Aks="aks-viacli-dev"
